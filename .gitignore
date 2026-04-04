@@ -1,0 +1,88 @@
+venv/
+.venv/# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment variables / secrets
+.env
+.env.*
+*.env
+secrets.json
+config.local.*
+
+# API keys and credentials
+*_key.txt
+*_secret.txt
+credentials.json
+token.json
+# Ignore the massive data folders
+data/
+raw_recipes/
+*.json
+*.csv
+*.xlsx
+
+# Vector DB / embeddings cache
+*.faiss
+*.index
+chroma_db/
+vectorstore/
+embeddings_cache/
+
+# ML model files
+*.pkl
+*.pickle
+*.h5
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# Data files (add exceptions below if needed)
+*.csv
+*.parquet
+*.sqlite
+*.db
+
+# Logs
+*.log
+logs/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node (if any frontend tooling)
+node_modules/
+npm-debug.log*
+
+# Temp / OS
+*.tmp
+*.swp
+*.bak
+Thumbs.db

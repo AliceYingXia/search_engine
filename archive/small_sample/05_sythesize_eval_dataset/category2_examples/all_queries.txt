@@ -1,0 +1,124 @@
+Category 2 Evaluation Queries  (100 total)
+======================================================================
+
+Author 206503
+----------------------------------------
+  206503_c2q1                Provision a user when an API request comes in with their email by validating them in the Corporate API directory, creating or reactivating the user in the Workato workspace via SCIM, and then calling a REST API to assign them to the correct Okta app.
+  206503_c2q2                Post and manage Slack thread updates (including file uploads and loading message) when a new process event starts in the process orchestration system, then acknowledge the event with the Slack channel/thread/user details.
+  206503_c2q3                Start a demo run when a recipe function is executed with a demo run ID by looking up the run in Workato Data Tables, provisioning demo app access, optionally calling the Start Demo API, updating the run status to started, and emailing the ops team if it fails.
+  206503_c2q4                Provision missing demo apps for a user email when a recipe function is called with a demo ID, then return a formatted message of the required app resources and URLs.
+  206503_c2q6                Which automation runs hourly to delete older stopped or failed run records from a Data Table while keeping only a limited number of recent runs per user?
+  206503_c2q7                Return a filtered list of Salesforce presales activities for a given opportunity and user email when a Genie workflow is run (optionally within a date range).
+  206503_c2q8                Delete OpenAI thread, files, and vector store when a process is deleted in the RecipeOps agent system and report an error if any cleanup step fails.
+  206503_c2q9                Which automation runs every few minutes to find overdue started demo runs in Workato Data Tables and asynchronously call a recipe function to deprovision them by run ID?
+Author 618946
+----------------------------------------
+  618946_c2q1                API endpoint that starts a package version install for a workspace user, validates entitlement and installability in Data Tables, creates/reuses an installer connection and deployment record, then kicks off the install asynchronously and returns 200 or 401/error
+  618946_c2q12               Delete a Slack bot command message after verifying the Gong connection by fetching users and acknowledging the connection-creation request completion to the ops system using the provided call ID.
+  618946_c2q13               When a Slack bot command requests a runtime connection, search a record in Pipedrive to verify it, acknowledge the connection request, and delete the Slack command message.
+  618946_c2q14               Automation that pauses for about two minutes using Ruby and Clock waits when a Genie workflow is started, then returns a completion result to the Genie caller
+  618946_c2q2                Generate an OpenAI chatbot answer when a recipe function is called with a user question and retrieved knowledge snippets, then save the Q&A to a lookup table with session history and source citations.
+  618946_c2q3                Send a Slack approval request to the Salesforce CPQ account owner when a quote approval request is triggered, including opportunity details and any quote lines with discounts above a threshold.
+  618946_c2q4                Approve or reject a Workday PTO request from a Slack bot command (with rejection comments), then update the Slack message and log the decision in a data table and process tracker by event ID.
+  618946_c2q6                Which automation runs nightly to check OpenAI vector store file status for in-progress items and update a Workato Data Table row (or error) using agent configuration?
+  618946_c2q9                Delete or upsert Pinecone vectors when a new message arrives on a Workato Event Streams topic, and send an async error notification if the sync fails.
+Author 973497
+----------------------------------------
+  973497_c2q1                When a feedback triage request is approved, can it post a canned decline comment via HTTP, update the linked Jira issue with a comment and move it to rejected, close the workflow request, and update the original Slack triage message?
+  973497_c2q10               Which automation logs a batch of usage overage alert email events into a Workato data table and Snowflake, then emails the team and flags a lookup table run control entry if any inserts fail?
+  973497_c2q11               Which automation runs weekly to find matching files in Workato FileStorage, create expiring shareable links, upsert them into a Google Sheets tracking log, and post the links to a Slack channel?
+  973497_c2q13               When a callable recipe function is invoked with user/job context and section info, assemble a blogpost by fetching previously generated sections from Workato Data Tables and returning the draft with a placeholder marker for the next section to write.
+  973497_c2q14               Return content recommendations by generating an OpenAI embedding from keywords and querying Snowflake for similar recent content, lowering the similarity threshold until the target count is met and excluding specified URLs.
+  973497_c2q15               Every 2 days, run a Snowflake SQL query for released features mapped to Jira issues, look up each Jira issue, and upsert the latest feature details into a reporting data table.
+  973497_c2q16               Function that checks Marketo lead subscription/unsubscribe preferences by email against expected values and returns an out-of-sync flag
+  973497_c2q17               Update or add a Workato Lookup Table entry when a Google Sheets row is updated to ready/approved, flagging the record if the current name differs from the final proposed name.
+  973497_c2q18               Which automation waits for a specified delay after being called by another recipe and then publishes an order payload to an Event Streams topic?
+  973497_c2q2                Refresh normal and special Iterable lists from Snowflake customer admin data by upserting/enriching users (with fallback admins if unsubscribed) and logging added/failed users to Google Sheets.
+  973497_c2q3                Create or update a Jira issue when a new Feedback case message arrives in Workato Event Streams, then post a Slack alert, email the requester via Gmail, and upsert the Feedback-to-Jira mapping to Snowflake.
+  973497_c2q4                Weekly automation that pulls urgent Jira triage issues and updates next week’s APJ/EU and US Google Calendar triage meetings with the right PM invitees (or cancels if none), alerting in Slack on failure
+  973497_c2q5                When subscription-change batches arrive in Workato Event Streams, dedupe and upsert the latest subscription flags to Snowflake and bulk unsubscribe/update users in Iterable (product-hour and product-hub).
+  973497_c2q6                Update a Slack message to “generating hero image” and use OpenAI DALL·E 3 to create, store, and return a shareable hero image link when a recipe function is executed.
+  973497_c2q7                Return cached or newly generated content recommendations from Workato Data Tables when an API request comes in with a user, data center, and interest area, and respond with the recommended items or an error if the interest area is invalid.
+  973497_c2q8                Which automation runs daily to batch-unsubscribe users from an Iterable suppression list, then asynchronously starts a Snowflake-to-Iterable duplicate suppression job and alerts in Slack on failure?
+  973497_c2q9                Which automation runs every few days at midnight to pull WordPress Product Hub blog posts via REST, convert HTML to plain text, upsert them into a data table, and then trigger the OpenAI tagging process?
+Author 1873345
+----------------------------------------
+  1873345_c2q1               Send reminder emails to Salesforce opportunity owners every hour when a meeting was yesterday and no follow-up email task is found in Salesforce or Gong (escalate second reminder to the AE’s manager).
+  1873345_c2q2               Enrich a batch of accounts in ZoomInfo and return enriched account results plus failures, sending a Slack alert when the ZoomInfo match can’t be tied back to the input account.
+  1873345_c2q3               Daily midnight job that reads a Google Sheet territory breakdown, looks up owner and team lead emails in Salesforce, and repopulates a territory-to-owner lookup table (alerting Slack if the sheet headers change).
+  1873345_c2q4               Send a Slack message to the Salesforce Partner Manager (or regional/default fallback) when a partner is removed from an opportunity in Salesforce via a platform event.
+  1873345_c2q6               Create or reuse a Google Doc in Google Drive by copying a template, merging placeholder text, and returning the document file ID via an API call.
+Author 2136196
+----------------------------------------
+  2136196_c2q1               Generate a Google Slides customer kickoff/onboarding deck when given a Salesforce project ID, enriching it with contract package slides, team photos, customer logo, and returning the deck link or an error if no service contract exists.
+  2136196_c2q10              Which automation runs daily to export open non-billable project time-entry tasks from Salesforce to a CSV in Workato FileStorage, deleting any existing file first?
+  2136196_c2q11              Slack dynamic multiselect menu that searches a nonbillable projects CSV from FileStorage and returns matching project name options with project ID values
+  2136196_c2q2               API endpoint that validates a Salesforce project by project number and then creates or reassigns a Workflow Apps go-live request (inviting the project owner if needed) and returns an HTML response
+  2136196_c2q3               Function that pulls Google Calendar events for a user and date range (using calendar IDs from a Google Sheet), filters to accepted meetings, and returns time entries enriched with Gemini project/task matching.
+  2136196_c2q4               Create or update a Slack onboarding Block Kit message (and pin it) in the project’s Slack channel when a project ID is passed in, pulling project details from Salesforce and saving the channel/message timestamp for future updates.
+  2136196_c2q5               Provision Certinia PSA services projects, billing events, resource requests, Google Drive folder, and Slack channel when a Salesforce Opportunity reaches negotiation/booking/won stage using the Opportunity ID.
+  2136196_c2q6               Create a TCE Direct technical support request from Slack by looking up the Salesforce account ID, logging it to the correct pod Google Sheet, posting to the customer and pod Slack channels, and adding a private note in Freshdesk.
+  2136196_c2q7               Create a timesheet from Slack via Workbot command by prompting for week date/deterministic mode, fetching Google Sheets/Drive/Calendar user connections, and publishing a timesheet generation request to the event stream with error notification in Slack
+  2136196_c2q8               Hourly, export unreleased Salesforce PSA billing events to CSV in Google Drive, zero out related PSA budget and milestone amounts, then delete the processed billing events in Salesforce.
+  2136196_c2q9               Which automation takes a “Submit to Certinia” webhook, finds the requester in Slack by email, selects their Google Sheets connection, and calls a function to submit the sheet’s timesheet entries to Certinia/Salesforce?
+Author 2973760
+----------------------------------------
+  2973760_c2q1               Slack bot approve command that updates the USB access request Jira ticket to Approved, grants USB access in SentinelOne, logs an audit record, and notifies SecOps and the requester via Slack DM and Gmail email
+  2973760_c2q10              Is there an automation that receives an API request with an email and new profile, logs it, adds it to a lookup table, returns a confirmation response, and posts a Slack Workbot message?
+  2973760_c2q11              When a Work Genie domain reputation check is run, search URLScan.io for an existing report and if none exists call VirusTotal via REST, then return the domain risk verdict.
+  2973760_c2q12              Send a Slack message on a schedule based on whether a Jamf policy run succeeded or failed for a device serial number.
+  2973760_c2q13              Get newest SentinelOne threats when Genie is asked for new alerts, enrich each with Jamf computer history to find the user email, and return a structured incident report to Genie.
+  2973760_c2q15              Send a Gmail email to the SecOps mailbox when the “Send Email to Notify SecOps” action is run in Work Genie, using OpenAI to draft the message.
+  2973760_c2q2               Is there an automation that, when a VirusTotal enrichment completes for a SentinelOne alert, fetches the VirusTotal behavior summary and file report by file hash (SHA-256/SHA-1), logs MITRE ATT&CK techniques and indicators, and returns a combined enrichment result with detection score?
+  2973760_c2q3               Switch a user from one Zscaler profile to another and keep polling Zscaler devices until the new policy is applied, then log success.
+  2973760_c2q5               Enrich a newly posted Astrix alert in Genie by looking up the linked vendor service and supplier details in GraphQL and checking the supplier homepage URL reputation in VirusTotal to return a risk summary.
+  2973760_c2q6               Create a Jira security project issue with an AI-generated title, description, and investigation/response comment when a security alert workflow is started in Workato Genie.
+  2973760_c2q7               Send a Slack alerts-channel message when the scheduled playbook alert search API finds a new RF alert not yet in the lookup table.
+  2973760_c2q8               Send a Slack DM and Gmail email to a user requesting business justification when a Workato Genie workflow starts with their email and a threat name.
+  2973760_c2q9               Send a Slack alert to IT when an Okta SSO login occurs and the user’s device trust certificate is past its expiry date (using lookup table mapping and Jamf computer history by serial number).
+Author 3000083
+----------------------------------------
+  3000083_c2q1               When a new request with an Opportunity ID and Excel questionnaire is submitted in Workflow App, enrich it from Salesforce, generate answers with OpenAI, write them to a Google Sheets template in Google Drive, and notify the requester and their manager in Slack and email.
+  3000083_c2q2               Send a Slack DM when a Salesforce Opportunity moves to S4/S5/Submitted for Booking and no First Value task exists, otherwise create an AC shadow engagement task if one isn’t already open.
+  3000083_c2q3               Send an email to the Salesforce task owner when an Opportunity stage change triggers First Value plan grading, and if the score is below 60 email the owner’s manager too.
+  3000083_c2q4               Is there a recipe function that uses OpenAI to summarize retrieved passage snippets and generate a final answer with source citations (and optional moderation) when called with a question?
+  3000083_c2q5               Create a published Confluence release notes page under the correct parent and apply generated plus optional extra labels when a workflow function is called, then return the page link.
+  3000083_c2q6               Convert a resume file from a URL to PDF using Google Drive (if not already PDF) and return the final filename and file contents to the calling recipe function.
+  3000083_c2q7               Append an application status log row to the correct Google Sheets worksheet when a callable function is invoked with status details and a job ID.
+  3000083_c2q8               Is there an automation that takes an employee email, looks up their active Namely profile and department groups, then updates a Workato Data Tables record using the matching department mapping (or a default)?
+Author 3165547
+----------------------------------------
+  3165547_c2q1               Update a GitHub pull request description with Workato recipe export changes (with recipe links), release notes/developer comments, and CI/CD test results when a deployment summary function is called.
+  3165547_c2q2               Export a recipe, project, or manifest from Workato DEV by building/downloading the package, unzipping it, and returning the asset files when the function is executed.
+  3165547_c2q3               Show the Slack CI/CD menu when a user runs the Workbot for Slack command workato cicd start, with options personalized by their permissions and environments (build/release pipelines, approvals, and admin actions).
+  3165547_c2q4               Post a Slack release announcement and trigger an email announcement when a pipeline run creates a new release for a project, but only if that release hasn’t been announced before (tracked in a lookup table).
+  3165547_c2q5               Run a scheduled job that pulls eligible new feedback rows from a Workato Data Table and triggers a Work Genie process action once per process ID, then updates the row status to requested or error.
+  3165547_c2q6               Send a release announcement email when a Workato recipe function is executed with project/version/release notes and BCC recipients from a lookup table, logging any failure back to the pipeline tracking row.
+  3165547_c2q8               API endpoint that searches a lookup table for active modules by id/name/type/label filters and returns the matching modules list in the response
+Author 3511776
+----------------------------------------
+  3511776_c2q1               Export Snowflake table rows in paginated batches to CSV and upload each page to Amazon S3 when the export orchestration function is executed.
+  3511776_c2q10              Create a Google Drive copy of a master Google Slides template in a specific folder when a recipe function is called, and Slack a channel if the copy fails while returning the new file ID.
+  3511776_c2q13              When a recipe function is called with a customer name and requester email, create and populate a Google Sheets report and a Google Slides deck from templates, share the deck in Google Drive, generate an OpenAI summary, and return the links.
+  3511776_c2q2               Show the X-Ray Slack bot App Home when a user opens it, using corporate directory + lookup table + Snowflake checks to display the right view (admin/viewer/CSM, Customer IQ subscribe/unsubscribe, or request access).
+  3511776_c2q3               Build a customer Google Sheets report by querying Snowflake for the latest recipe snapshot and top builders, and send a Slack message if the function run fails.
+  3511776_c2q4               Which automation pulls unclassified recipe records from Snowflake, uses OpenAI to predict a use case tag, writes the tag/explanation/confidence back to Snowflake, and posts to Slack if a record fails?
+  3511776_c2q5               Update Google Slides icon box colors and icon images based on product adoption/attempted flags pulled from Snowflake for a given account and date.
+  3511776_c2q6               Callable function that looks up a customer’s subprocesses in a data table and highlights the matching shapes in a Google Slides deck, returning success and the number processed
+  3511776_c2q7               Change fill color of specific shapes in a Google Slides presentation to light up or black out when called by another recipe, and post to Slack if the update fails.
+  3511776_c2q8               Daily job that truncates a lookup table and repopulates it with the latest paying customer account snapshot from Snowflake (or falls back to the most recent snapshot date if today’s is missing)
+  3511776_c2q9               Send Google Sheets and Google Slides X-Ray report links in Slack when a user runs the X-Ray Slack bot command with a customer name.
+Author 5770830
+----------------------------------------
+  5770830_c2q10              Create a ServiceNow incident from a Genie chat request, map the conversation to the incident in a database table, and reply with the incident number and URL.
+  5770830_c2q11              Create or update a Salesforce Service Cloud case when Workato Genie starts a workflow, then log the Genie conversation and case ID to a Data Table and return the case ID to Genie.
+  5770830_c2q12              Update a Freshservice ticket’s category/sub-category/item and description via a Genie skill when given a ticket ID, then return the updated ticket link.
+  5770830_c2q13              Get Lumos Appstore permissions for a given app ID (optionally filtered by search term) and return the list excluding hidden permissions.
+  5770830_c2q2               Update a Freshservice ticket from Genie by ticket ID, allowing requesters to change subject/description and assigned agents to change priority/status and returning the updated ticket details.
+  5770830_c2q3               Create a Google Slides presentation from user-provided title/subtitle, slide text, and optional images, move it to a Google Drive folder, share it with the user, and return the presentation link.
+  5770830_c2q4               Search ServiceNow incidents for a requester by email, filtering by incident number or description text and optional state, and return a list of matching incidents with links.
+  5770830_c2q5               Create a Zendesk support ticket from a Workato Genie request (title/description/priority), auto-assign to a default agent if enabled, and log the ticket ID to a database table.
+  5770830_c2q6               Process Microsoft Teams approval responses by updating the request status in Workato Data Tables and publishing an approved/rejected event to Pub/Sub (prompting for a rejection reason if missing).
+  5770830_c2q7               Create a Jira issue when a user requests it in Workato Genie, look up the reporter by email, store the conversation-to-ticket mapping in Workato Data Tables, and reply with the new ticket link.
+  5770830_c2q8               When a Genie workflow is started, fetch the configured Jira project keys from settings, look up each project in Jira, and return the projects’ id, key, name, and type.
+

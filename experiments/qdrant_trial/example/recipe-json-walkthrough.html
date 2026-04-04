@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe JSON Walkthrough</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232736;
+    --border: #2e3348;
+    --text: #e1e4ed;
+    --text-dim: #8b90a5;
+    --accent: #6c8cff;
+    --accent2: #a78bfa;
+    --green: #4ade80;
+    --orange: #fb923c;
+    --red: #f87171;
+    --cyan: #22d3ee;
+    --pink: #f472b6;
+    --yellow: #fbbf24;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(15, 17, 23, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    height: 56px;
+    gap: 2rem;
+  }
+  .nav-logo {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--text);
+    background: var(--surface2);
+  }
+
+  /* Main content */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 2rem 4rem;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 4rem 0 3rem;
+  }
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+  }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 72px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-num {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+  }
+
+  /* JSON Viewer */
+  .json-viewer {
+    background: #0d0f16;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .json-header {
+    background: var(--surface);
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .json-header .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .json-header .dot-r { background: #ff5f57; }
+  .json-header .dot-y { background: #ffbd2e; }
+  .json-header .dot-g { background: #28c840; }
+  .json-body {
+    padding: 1.25rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.82rem;
+    line-height: 1.75;
+  }
+
+  /* JSON syntax */
+  .j-key { color: #7dd3fc; }
+  .j-str { color: #86efac; }
+  .j-num { color: #fbbf24; }
+  .j-bool { color: #c084fc; }
+  .j-null { color: #6b7280; font-style: italic; }
+  .j-bracket { color: #6b7280; }
+  .j-pill { color: #f472b6; background: rgba(244,114,182,0.1); padding: 0.1em 0.3em; border-radius: 4px; }
+
+  /* Annotations */
+  .annotated-line {
+    position: relative;
+    padding: 2px 0;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .annotated-line:hover {
+    background: rgba(108, 140, 255, 0.08);
+  }
+  .annotated-line.active {
+    background: rgba(108, 140, 255, 0.12);
+  }
+  .annotation-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 0.1em 0.5em;
+    border-radius: 10px;
+    margin-left: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .annotated-line:hover .annotation-badge,
+  .annotated-line.active .annotation-badge {
+    opacity: 1;
+  }
+  .badge-db { background: rgba(74, 222, 128, 0.15); color: var(--green); }
+  .badge-gen { background: rgba(108, 140, 255, 0.15); color: var(--accent); }
+  .badge-user { background: rgba(251, 191, 36, 0.15); color: var(--yellow); }
+  .badge-derived { background: rgba(167, 139, 250, 0.15); color: var(--accent2); }
+  .badge-runtime { background: rgba(244, 114, 182, 0.15); color: var(--pink); }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    z-index: 200;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s, transform 0.15s;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .tooltip-title {
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+  }
+  .tooltip-source {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-family: monospace;
+  }
+  .tooltip-desc {
+    color: var(--text);
+  }
+
+  /* Flow Diagrams */
+  .flow-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 2rem 0;
+  }
+  .flow-node {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
+    text-align: center;
+    min-width: 260px;
+    max-width: 400px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .flow-node:hover {
+    border-color: var(--accent);
+    transform: scale(1.02);
+  }
+  .flow-node .fn-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+  .flow-node .fn-sub {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  .flow-node .fn-file {
+    font-size: 0.7rem;
+    color: var(--accent2);
+    font-family: monospace;
+    margin-top: 0.25rem;
+  }
+  .flow-arrow {
+    width: 2px;
+    height: 28px;
+    background: var(--border);
+    position: relative;
+  }
+  .flow-arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--border);
+  }
+  .flow-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin: 0.15rem 0;
+    font-style: italic;
+  }
+
+  /* Horizontal flow */
+  .flow-h {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding: 1rem 0;
+  }
+  .flow-h .flow-arrow {
+    width: 32px;
+    height: 2px;
+    flex-shrink: 0;
+  }
+  .flow-h .flow-arrow::after {
+    bottom: auto;
+    left: auto;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 6px solid var(--border);
+    border-right: none;
+  }
+
+  /* Color-coded node types */
+  .fn-trigger { border-color: var(--green); }
+  .fn-trigger .fn-title { color: var(--green); }
+  .fn-action { border-color: var(--accent); }
+  .fn-action .fn-title { color: var(--accent); }
+  .fn-condition { border-color: var(--yellow); }
+  .fn-condition .fn-title { color: var(--yellow); }
+  .fn-control { border-color: var(--orange); }
+  .fn-control .fn-title { color: var(--orange); }
+  .fn-v2 { border-color: var(--pink); }
+  .fn-v2 .fn-title { color: var(--pink); }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 1rem 0;
+  }
+  th {
+    text-align: left;
+    padding: 0.7rem 1rem;
+    background: var(--surface2);
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td {
+    background: rgba(108, 140, 255, 0.04);
+  }
+  code, .mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.82em;
+    background: rgba(108, 140, 255, 0.1);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    color: var(--cyan);
+  }
+  td code {
+    white-space: nowrap;
+  }
+
+  /* Keyword type colors in tables */
+  .kw-trigger { color: var(--green); }
+  .kw-action { color: var(--accent); }
+  .kw-if { color: var(--yellow); }
+  .kw-foreach { color: var(--orange); }
+  .kw-try { color: var(--red); }
+  .kw-catch { color: var(--red); }
+  .kw-stop { color: var(--pink); }
+
+  /* Schema field grid */
+  .schema-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .schema-card {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 1rem;
+    border-left: 3px solid var(--accent);
+  }
+  .schema-card .sc-name {
+    font-family: monospace;
+    font-weight: 700;
+    color: var(--cyan);
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  .schema-card .sc-type {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.4rem;
+  }
+  .schema-card .sc-desc {
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+  .schema-card .sc-source {
+    font-size: 0.72rem;
+    color: var(--accent2);
+    margin-top: 0.4rem;
+    font-family: monospace;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 0;
+    background: var(--surface);
+    border-radius: 10px 10px 0 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    overflow: hidden;
+  }
+  .tab-btn {
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    flex: 1;
+    text-align: center;
+  }
+  .tab-btn:hover { color: var(--text); background: rgba(108,140,255,0.05); }
+  .tab-btn.active {
+    color: var(--accent);
+    background: var(--surface2);
+    font-weight: 600;
+  }
+  .tab-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    border-radius: 0 0 10px 10px;
+    padding: 1.5rem;
+    display: none;
+  }
+  .tab-content.active { display: block; }
+
+  /* Pill comparison */
+  .pill-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .pill-box {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 1.25rem;
+    border-top: 3px solid var(--accent);
+  }
+  .pill-box.v2 { border-top-color: var(--pink); }
+  .pill-box h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+  .pill-box pre {
+    background: #0d0f16;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    overflow-x: auto;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Tree visualization */
+  .tree {
+    padding: 1rem 0;
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+  .tree-node {
+    padding: 0.3rem 0 0.3rem 1.5rem;
+    border-left: 2px solid var(--border);
+    margin-left: 0.5rem;
+    position: relative;
+  }
+  .tree-node::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 0.8rem;
+    width: 16px;
+    height: 2px;
+    background: var(--border);
+  }
+  .tree-node .tn-label {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .tree-node .tn-info {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+  }
+  .tn-trigger { background: rgba(74,222,128,0.15); color: var(--green); }
+  .tn-action { background: rgba(108,140,255,0.15); color: var(--accent); }
+  .tn-if { background: rgba(251,191,36,0.15); color: var(--yellow); }
+  .tn-foreach { background: rgba(251,146,60,0.15); color: var(--orange); }
+  .tn-try { background: rgba(248,113,113,0.15); color: var(--red); }
+  .tn-catch { background: rgba(248,113,113,0.15); color: var(--red); }
+  .tn-stop { background: rgba(244,114,182,0.15); color: var(--pink); }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+    font-size: 0.8rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* SVG diagram overrides */
+  .svg-diagram {
+    width: 100%;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .svg-diagram svg {
+    max-width: 100%;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.8rem; }
+    .pill-compare { grid-template-columns: 1fr; }
+    .schema-grid { grid-template-columns: 1fr; }
+    .container { padding: 70px 1rem 2rem; }
+    .nav { padding: 0 1rem; }
+  }
+
+  /* DSL compilation box */
+  .dsl-box {
+    background: #0d0f16;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    font-family: monospace;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  .dsl-keyword { color: var(--pink); font-weight: 600; }
+  .dsl-string { color: var(--green); }
+  .dsl-method { color: var(--yellow); }
+  .dsl-comment { color: #6b7280; font-style: italic; }
+  .dsl-var { color: var(--cyan); }
+
+  /* Comparison arrows */
+  .mapping-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    font-size: 0.82rem;
+  }
+  .mapping-left {
+    flex: 1;
+    text-align: right;
+    font-family: monospace;
+    color: var(--accent);
+  }
+  .mapping-arrow {
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .mapping-right {
+    flex: 1;
+    font-family: monospace;
+    color: var(--pink);
+  }
+
+  /* Iteration diagram */
+  .iter-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--surface2);
+    border-radius: 10px;
+  }
+  .iter-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+  }
+  .iter-idx {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(108,140,255,0.15);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+  .iter-val {
+    flex: 1;
+    font-family: monospace;
+    color: var(--text);
+    background: #0d0f16;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+  }
+  .iter-resolved {
+    color: var(--green);
+    font-family: monospace;
+    font-size: 0.78rem;
+  }
+
+  /* Highlight animation */
+  @keyframes pulse-border {
+    0%, 100% { border-color: var(--accent); }
+    50% { border-color: var(--accent2); }
+  }
+  .pulse { animation: pulse-border 2s ease-in-out infinite; }
+
+  /* Info callout */
+  .callout {
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .callout-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+  .callout-info {
+    background: rgba(108,140,255,0.08);
+    border: 1px solid rgba(108,140,255,0.2);
+  }
+  .callout-warn {
+    background: rgba(251,191,36,0.08);
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+  .callout-key {
+    background: rgba(74,222,128,0.08);
+    border: 1px solid rgba(74,222,128,0.2);
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-logo">Recipe JSON</div>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#sample">Sample JSON</a>
+    <a href="#top-level">Top Level</a>
+    <a href="#codeline">Codeline Fields</a>
+    <a href="#input">Input &amp; Pills</a>
+    <a href="#schema">Schema</a>
+    <a href="#config">Config</a>
+    <a href="#conditions">Conditions</a>
+    <a href="#compilation">DSL Compilation</a>
+    <a href="#pills-v1-v2">Pills V1 vs V2</a>
+    <a href="#execution">Execution</a>
+  </div>
+</nav>
+
+<!-- Tooltip -->
+<div id="tooltip" class="tooltip">
+  <div class="tooltip-title" id="tt-title"></div>
+  <div class="tooltip-source" id="tt-source"></div>
+  <div class="tooltip-desc" id="tt-desc"></div>
+</div>
+
+<div class="container">
+
+<!-- Hero -->
+<div class="hero" id="overview">
+  <h1>Recipe JSON Walkthrough</h1>
+  <p>How every key and value in a Workato recipe JSON export is generated, used, and purposed &mdash; traced through the source code.</p>
+</div>
+
+<!-- ================================================================== -->
+<!-- SECTION 1: Architecture Overview -->
+<!-- ================================================================== -->
+<section id="arch-overview">
+  <div class="section-header">
+    <div class="section-num">0</div>
+    <h2>Architecture Overview</h2>
+  </div>
+
+  <div class="card">
+    <h3>Recipe Lifecycle: From UI to Execution</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">A recipe flows through multiple systems. The JSON is the interchange format between all of them.</p>
+
+    <div class="flow-h" style="justify-content: center; flex-wrap: wrap;">
+      <div class="flow-node fn-trigger" style="min-width: 160px;">
+        <div class="fn-title">Recipe Editor</div>
+        <div class="fn-sub">Angular Frontend</div>
+        <div class="fn-file">recipe-helper.ts</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-action" style="min-width: 160px;">
+        <div class="fn-title">Recipe JSON</div>
+        <div class="fn-sub">code column in DB</div>
+        <div class="fn-file">Flow model</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-condition" style="min-width: 160px;">
+        <div class="fn-title">Flow DSL</div>
+        <div class="fn-sub">Ruby compilation</div>
+        <div class="fn-file">flow_dsl.rb</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-control" style="min-width: 160px;">
+        <div class="fn-title">Runtime V1</div>
+        <div class="fn-sub">Ruby execution</div>
+        <div class="fn-file">misc_dsl.rb</div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin: 1rem 0;">
+      <span style="color: var(--text-dim); font-size: 0.8rem;">OR (next-gen path)</span>
+    </div>
+
+    <div class="flow-h" style="justify-content: center; flex-wrap: wrap;">
+      <div class="flow-node fn-action" style="min-width: 160px;">
+        <div class="fn-title">Recipe JSON</div>
+        <div class="fn-sub">with _dp() pills</div>
+        <div class="fn-file">V2 format</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2" style="min-width: 160px;">
+        <div class="fn-title">Engine Runner</div>
+        <div class="fn-sub">Go execution</div>
+        <div class="fn-file">engine-runner/</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background: var(--green);"></div> Trigger</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--accent);"></div> Action / Data</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--yellow);"></div> Compilation</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--orange);"></div> Runtime V1 (Ruby)</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--pink);"></div> Runtime V2 (Go)</div>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 2: Sample JSON -->
+<!-- ================================================================== -->
+<section id="sample">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2>Sample Recipe JSON (Interactive)</h2>
+  </div>
+  <p style="color: var(--text-dim); margin-bottom: 1rem; font-size: 0.9rem;">Hover over any line to see how that key/value is generated. Click to pin the annotation.</p>
+
+  <div class="json-viewer">
+    <div class="json-header">
+      <span class="dot dot-r"></span>
+      <span class="dot dot-y"></span>
+      <span class="dot dot-g"></span>
+      <span>recipe.json</span>
+    </div>
+    <div class="json-body" id="annotated-json">
+<!-- Each annotated line has data attributes for tooltip -->
+<div class="annotated-line" data-title="flow" data-source="FlowExporter.export_hash() &mdash; flow_exporter.rb:13" data-desc="Top-level wrapper. Contains the full recipe: name, description, code (logic tree), and config (connections)."><span class="j-bracket">{</span></div>
+<div class="annotated-line" data-title="flow" data-source="FlowExporter.export_hash() &mdash; flow_exporter.rb:13" data-desc="Top-level wrapper. Contains the full recipe: name, description, code (logic tree), and config (connections).">  <span class="j-key">"flow"</span>: <span class="j-bracket">{</span></div>
+<div class="annotated-line" data-title="name" data-source="Flow model DB column" data-desc="Human-readable recipe name. Stored directly in the database." data-badge="db" data-badge-text="DB column">    <span class="j-key">"name"</span>: <span class="j-str">"2.2 Approved Sales Order updates SFDC"</span>,</div>
+<div class="annotated-line" data-title="description" data-source="Flow model DB column" data-desc="Optional recipe description. Often null when the user hasn't set one." data-badge="db" data-badge-text="DB column">    <span class="j-key">"description"</span>: <span class="j-null">null</span>,</div>
+<div class="annotated-line" data-title="code" data-source="Flow model DB column (JSON string)" data-desc="The entire recipe logic tree. Root is always a trigger, with nested block arrays containing all actions and control flow." data-badge="db" data-badge-text="DB column">    <span class="j-key">"code"</span>: <span class="j-bracket">{</span></div>
+
+<div class="annotated-line" data-title="number" data-source="LineHelper.refreshLineNumbers() &mdash; line-helper.ts:443" data-desc="Sequential line number. 0 = trigger. Auto-incremented via recursive tree traversal when lines are added/removed." data-badge="gen" data-badge-text="auto-gen">      <span class="j-key">"number"</span>: <span class="j-num">0</span>,</div>
+<div class="annotated-line" data-title="provider" data-source="User selection &mdash; adapter/connector name" data-desc="The adapter/connector name (e.g. 'salesforce', 'workato_pub_sub'). Used at runtime to route to the correct adapter." data-badge="user" data-badge-text="user-set">      <span class="j-key">"provider"</span>: <span class="j-str">"workato_pub_sub"</span>,</div>
+<div class="annotated-line" data-title="name (operation)" data-source="User selection &mdash; operation within adapter" data-desc="The specific operation within the adapter. Combined with provider in DSL: trigger 'workato_pub_sub', 'subscribe_to_topic'" data-badge="user" data-badge-text="user-set">      <span class="j-key">"name"</span>: <span class="j-str">"subscribe_to_topic"</span>,</div>
+<div class="annotated-line" data-title="as (alias)" data-source="LineHelper.generateLineAlias() &mdash; line-helper.ts:147" data-desc="Unique alias for the step's output. Used in data pill paths. For triggers: uses the name directly. For actions: name with __1, __2 on collision. Newer format uses hex IDs." data-badge="gen" data-badge-text="auto-gen">      <span class="j-key">"as"</span>: <span class="j-str">"619faf31"</span>,</div>
+<div class="annotated-line" data-title="title" data-source="User-editable field" data-desc="Custom display name. null when not customized. Overrides the auto-generated description in the UI." data-badge="user" data-badge-text="user-set">      <span class="j-key">"title"</span>: <span class="j-null">null</span>,</div>
+<div class="annotated-line" data-title="description (step)" data-source="Auto-generated by UI &mdash; HTML spans" data-desc="Auto-generated step description with HTML markup. Contains provider-styled spans. Excluded from code-equality checks (NON_CODE_LINE_FIELDS)." data-badge="gen" data-badge-text="auto-gen">      <span class="j-key">"description"</span>: <span class="j-str">"New &lt;span class='provider'&gt;message&lt;/span&gt;..."</span>,</div>
+<div class="annotated-line" data-title="keyword" data-source="Step type from palette" data-desc="Determines compilation path in flow_dsl.rb: 'trigger' &rarr; trigger DSL block, 'action' &rarr; action call, 'if' &rarr; conditional, 'foreach' &rarr; loop." data-badge="derived" data-badge-text="step type">      <span class="j-key">"keyword"</span>: <span class="j-str">"trigger"</span>,</div>
+<div class="annotated-line" data-title="uuid" data-source="uuid/v4 package &mdash; line-helper.ts:74" data-desc="Globally unique step ID. Used for tracking and analytics. Excluded from code-equality checks (NON_CODE_LINE_FIELDS)." data-badge="gen" data-badge-text="auto-gen">      <span class="j-key">"uuid"</span>: <span class="j-str">"a1b2c3d4-e5f6-..."</span>,</div>
+<div class="annotated-line" data-title="comment" data-source="User-entered" data-desc="Documentation comment on the step. Displayed in editor but NOT compiled into runtime DSL." data-badge="user" data-badge-text="user-set">      <span class="j-key">"comment"</span>: <span class="j-str">"Listen approved"</span>,</div>
+
+<div class="annotated-line" data-title="input" data-source="User field values &mdash; cleaned by cleanInput()" data-desc="User-configured field values. Static strings, data pills (#{_dp(...)} or #{_(...)}), or formulas (=prefix). Compiled at runtime by flow_dsl.rb:274." data-badge="user" data-badge-text="user-mapped">      <span class="j-key">"input"</span>: <span class="j-bracket">{</span></div>
+<div class="annotated-line" data-title="input.topic_id" data-source="User picks from picklist" data-desc="A picklist field value. The actual ID/value stored here; the human-readable label is in dynamicPickListSelection.">        <span class="j-key">"topic_id"</span>: <span class="j-str">"approved_sales_orders"</span></div>
+<div>      <span class="j-bracket">}</span>,</div>
+
+<div class="annotated-line" data-title="dynamicPickListSelection" data-source="UI picklist cache" data-desc="Stores human-readable labels of picklist selections. Used to reconstruct the UI without re-fetching. input has the value, this has the label." data-badge="derived" data-badge-text="UI cache">      <span class="j-key">"dynamicPickListSelection"</span>: <span class="j-bracket">{</span></div>
+<div>        <span class="j-key">"topic_id"</span>: <span class="j-str">"Approved Sales Orders"</span></div>
+<div>      <span class="j-bracket">}</span>,</div>
+
+<div class="annotated-line" data-title="extended_output_schema" data-source="Backend API &mdash; /connections/{id}/extended_schema" data-desc="Dynamically fetched output schema. Describes fields produced by this step. Stored so downstream pills can reference them without re-fetching." data-badge="derived" data-badge-text="API-fetched">      <span class="j-key">"extended_output_schema"</span>: <span class="j-bracket">[</span> ... <span class="j-bracket">]</span>,</div>
+
+<div class="annotated-line" data-title="block" data-source="Recursive codeline tree" data-desc="Child steps: actions, conditions, loops. Each item is a full Codeline with its own block. The trigger's block contains ALL recipe steps." data-badge="gen" data-badge-text="recursive">      <span class="j-key">"block"</span>: <span class="j-bracket">[</span></div>
+<div>        <span class="j-bracket">{</span></div>
+<div class="annotated-line" data-title="action step (number 1)" data-source="Nested action codeline" data-desc="An action step inside the trigger's block. Has its own number, provider, name, input, etc.">          <span class="j-key">"number"</span>: <span class="j-num">1</span>,</div>
+<div>          <span class="j-key">"provider"</span>: <span class="j-str">"salesforce"</span>,</div>
+<div>          <span class="j-key">"name"</span>: <span class="j-str">"create_custom_object"</span>,</div>
+<div>          <span class="j-key">"keyword"</span>: <span class="j-str">"action"</span>,</div>
+<div class="annotated-line" data-title="as (alias)" data-source="LineHelper.generateLineAlias()" data-desc="Hex-style alias for the action step. Referenced in data pills from later steps as 'line': '261ab71f'." data-badge="gen" data-badge-text="auto-gen">          <span class="j-key">"as"</span>: <span class="j-str">"261ab71f"</span>,</div>
+
+<div class="annotated-line" data-title="input (action)" data-source="User field mappings" data-desc="Field values for the Salesforce action. Mix of static values ('Opportunity') and data pills referencing earlier step output.">          <span class="j-key">"input"</span>: <span class="j-bracket">{</span></div>
+<div class="annotated-line" data-title="sobject_name" data-source="Picklist selection" data-desc="Salesforce object type. Selected from a dynamic picklist of available SObjects.">            <span class="j-key">"sobject_name"</span>: <span class="j-str">"Opportunity"</span>,</div>
+<div class="annotated-line" data-title="data pill (_dp)" data-source="User drags pill from trigger output" data-desc="A V2 data pill: structured JSON referencing the trigger step (line: 619faf31), navigating path: message &rarr; order_number. At runtime, resolves against the datatree.">            <span class="j-key">"CloseDate"</span>: <span class="j-pill">"#{_dp('{&quot;pill_type&quot;:&quot;output&quot;,...}')}"</span></div>
+<div>          <span class="j-bracket">}</span>,</div>
+
+<div class="annotated-line" data-title="toggleCfg" data-source="UI toggle state" data-desc="Tracks which fields were toggled from picklist to free-text mode. StageName: true means user switched from 'Select from list' to 'Enter custom value'." data-badge="user" data-badge-text="UI state">          <span class="j-key">"toggleCfg"</span>: <span class="j-bracket">{</span> <span class="j-key">"StageName"</span>: <span class="j-bool">true</span> <span class="j-bracket">}</span>,</div>
+
+<div class="annotated-line" data-title="visible_config_fields" data-source="CodelineFields directive &mdash; codeline-fields.ts:51" data-desc="Tracks which optional fields the user explicitly added. A field shows if: required, OR listed here, OR has a value in input." data-badge="user" data-badge-text="UI state">          <span class="j-key">"visible_config_fields"</span>: <span class="j-bracket">[</span><span class="j-str">"AccountId"</span>, <span class="j-str">"Amount"</span><span class="j-bracket">]</span>,</div>
+
+<div class="annotated-line" data-title="extended_input_schema" data-source="Backend: /connections/{id}/extended_schema" data-desc="Dynamically fetched field definitions. Stored so the recipe editor can render field controls without re-fetching from the API." data-badge="derived" data-badge-text="API-fetched">          <span class="j-key">"extended_input_schema"</span>: <span class="j-bracket">[</span> ... <span class="j-bracket">]</span></div>
+<div>        <span class="j-bracket">}</span></div>
+<div>      <span class="j-bracket">]</span></div>
+<div>    <span class="j-bracket">}</span>,</div>
+
+<div class="annotated-line" data-title="config" data-source="recipe.adapter_configs minus account_id &mdash; flow_exporter.rb:18" data-desc="Array of connector/application connections used. account_id stripped for portability on export. keyword is always 'application'." data-badge="derived" data-badge-text="derived">    <span class="j-key">"config"</span>: <span class="j-str">"[{&quot;keyword&quot;:&quot;application&quot;,...}]"</span></div>
+
+<div>  <span class="j-bracket">}</span></div>
+<div><span class="j-bracket">}</span></div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background: var(--green);"></div> DB column</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--accent);"></div> Auto-generated</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--yellow);"></div> User-set</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--accent2);"></div> Derived / Cached</div>
+    <div class="legend-item"><div class="legend-dot" style="background: var(--pink);"></div> Runtime</div>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 3: Top-Level Structure -->
+<!-- ================================================================== -->
+<section id="top-level">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2>Top-Level Structure</h2>
+  </div>
+
+  <div class="card">
+    <h3>How the export is generated</h3>
+    <div class="dsl-box">
+<span class="dsl-comment"># lib/workato/flow_exporter.rb:13-35</span>
+<span class="dsl-keyword">def</span> <span class="dsl-method">self.export_hash</span>(recipe, include_shared_accounts: <span class="dsl-bool">false</span>)
+  { <span class="dsl-var">flow:</span> recipe.attributes.slice(*%w(<span class="dsl-string">name description code</span>)) }.tap <span class="dsl-keyword">do</span> |hash|
+    hash[<span class="dsl-var">:flow</span>][<span class="dsl-string">'config'</span>] = recipe.adapter_configs.map { |c| c.except(<span class="dsl-string">'account_id'</span>) }.to_json
+  <span class="dsl-keyword">end</span>
+<span class="dsl-keyword">end</span>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Key</th><th>Source</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>flow.name</code></td>
+        <td>Flow model attribute (DB column)</td>
+        <td>Human-readable recipe name</td>
+      </tr>
+      <tr>
+        <td><code>flow.description</code></td>
+        <td>Flow model attribute (DB column)</td>
+        <td>Optional recipe description (often <code>null</code>)</td>
+      </tr>
+      <tr>
+        <td><code>flow.code</code></td>
+        <td>Flow model attribute (DB column, stored as JSON string)</td>
+        <td>The entire recipe logic tree &mdash; trigger + actions + control flow</td>
+      </tr>
+      <tr>
+        <td><code>flow.config</code></td>
+        <td>Derived from <code>recipe.adapter_configs</code> with <code>account_id</code> stripped</td>
+        <td>Array of connector/application connections used in the recipe</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">i</div>
+    <div><strong>Also served via API</strong> in <code>app/controllers/flows_controller.rb:348-412</code> (<code>build_flow_data</code>).</div>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 4: Codeline Fields -->
+<!-- ================================================================== -->
+<section id="codeline">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2>Codeline Fields &mdash; Every Key Explained</h2>
+  </div>
+
+  <p style="color: var(--text-dim); margin-bottom: 1.5rem;">The <code>code</code> object is a recursive tree of <strong>Codelines</strong>. Type definition: <code>types.ts:149-193</code>. Allowed fields whitelist: <code>recipe-helper.ts:16-46</code>.</p>
+
+  <div class="card">
+    <h3>Recipe Tree Structure</h3>
+    <div class="tree">
+      <div style="padding: 0.3rem 0;">
+        <span class="tn-label tn-trigger">trigger</span>
+        <span class="tn-info">number: 0, provider: "workato_pub_sub", as: "619faf31"</span>
+        <div class="tree-node">
+          <span class="tn-label tn-if">if</span>
+          <span class="tn-info">number: 1, condition check</span>
+          <div class="tree-node">
+            <span class="tn-label tn-action">action</span>
+            <span class="tn-info">number: 2, provider: "salesforce", as: "261ab71f"</span>
+          </div>
+          <div class="tree-node">
+            <span class="tn-label tn-action">action</span>
+            <span class="tn-info">number: 3, provider: "workato_rag"</span>
+          </div>
+        </div>
+        <div class="tree-node">
+          <span class="tn-label tn-foreach">foreach</span>
+          <span class="tn-info">number: 4, iterates over list</span>
+          <div class="tree-node">
+            <span class="tn-label tn-action">action</span>
+            <span class="tn-info">number: 5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="schema-grid">
+    <div class="schema-card" style="border-left-color: var(--yellow);">
+      <div class="sc-name">number</div>
+      <div class="sc-type">integer &middot; auto-generated</div>
+      <div class="sc-desc">Sequential line number. <code>0</code> = trigger, increments in tree order. Auto-refreshed when lines are added/removed.</div>
+      <div class="sc-source">LineHelper.refreshLineNumbers() &rarr; line-helper.ts:443</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--green);">
+      <div class="sc-name">provider</div>
+      <div class="sc-type">string &middot; user-selected</div>
+      <div class="sc-desc">Adapter/connector name (e.g. <code>"salesforce"</code>). Routes to the correct adapter at runtime.</div>
+      <div class="sc-source">Compiled: action 'salesforce', ... &mdash; flow_dsl.rb:245</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--green);">
+      <div class="sc-name">name</div>
+      <div class="sc-type">string &middot; user-selected</div>
+      <div class="sc-desc">Operation name within the adapter (e.g. <code>"create_custom_object"</code>). Second arg in DSL compilation.</div>
+      <div class="sc-source">flow_dsl.rb:255 &mdash; action 'provider', 'name'</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--accent);">
+      <div class="sc-name">as</div>
+      <div class="sc-type">string &middot; auto-generated</div>
+      <div class="sc-desc">Unique alias for step output. Used in data pill paths. Triggers use the name; actions use name with collision suffix (<code>__1</code>, <code>__2</code>).</div>
+      <div class="sc-source">LineHelper.generateLineAlias() &mdash; line-helper.ts:147</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--pink);">
+      <div class="sc-name">keyword</div>
+      <div class="sc-type">string &middot; step type</div>
+      <div class="sc-desc">Determines DSL compilation path. Values: <code>trigger</code>, <code>action</code>, <code>if</code>, <code>foreach</code>, <code>try</code>, <code>catch</code>, <code>stop</code>, <code>filter</code>, <code>skip_loop</code>.</div>
+      <div class="sc-source">flow_dsl.rb:215-259 &mdash; line_dsl_detail()</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--cyan);">
+      <div class="sc-name">uuid</div>
+      <div class="sc-type">string &middot; auto-generated</div>
+      <div class="sc-desc">Globally unique ID from <code>uuid/v4</code>. Used for tracking and analytics. Excluded from code-equality checks.</div>
+      <div class="sc-source">uuid() &mdash; line-helper.ts:74-76</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--text-dim);">
+      <div class="sc-name">title</div>
+      <div class="sc-type">string | null &middot; user-editable</div>
+      <div class="sc-desc">Custom step display name. <code>null</code> when not customized. Overrides the auto-generated description.</div>
+      <div class="sc-source">User input in recipe editor</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--text-dim);">
+      <div class="sc-name">description</div>
+      <div class="sc-type">string &middot; auto-generated HTML</div>
+      <div class="sc-desc">Auto-generated with HTML spans for styling. Excluded from code-equality checks (<code>NON_CODE_LINE_FIELDS</code>).</div>
+      <div class="sc-source">UI generation from provider + name</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--text-dim);">
+      <div class="sc-name">comment</div>
+      <div class="sc-type">string &middot; user-entered</div>
+      <div class="sc-desc">Documentation comment. Displayed in editor but NOT compiled into runtime DSL.</div>
+      <div class="sc-source">User input</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--orange);">
+      <div class="sc-name">block</div>
+      <div class="sc-type">array &middot; recursive</div>
+      <div class="sc-desc">Child steps for control flow. Each item is a full Codeline. Used by: trigger, if, foreach, try/catch.</div>
+      <div class="sc-source">Recursive compilation &mdash; flow_dsl.rb:167-200</div>
+    </div>
+    <div class="schema-card" style="border-left-color: var(--orange);">
+      <div class="sc-name">mask_data</div>
+      <div class="sc-type">boolean</div>
+      <div class="sc-desc">Whether to mask data in job logs. Passed to DSL compilation as <code>mask_data: true/false</code>.</div>
+      <div class="sc-source">flow_dsl.rb:258</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Keyword Compilation Map</h3>
+    <table>
+      <thead><tr><th>Keyword</th><th>Compiled DSL</th><th>Runtime Function</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="kw-trigger">trigger</span></td>
+          <td><code>trigger 'provider', 'name', ... do |data|</code></td>
+          <td>Entry point, creates data binding</td>
+        </tr>
+        <tr>
+          <td><span class="kw-action">action</span></td>
+          <td><code>action 'provider', 'name', with: {...}</code></td>
+          <td><code>_ele()</code> wraps execution</td>
+        </tr>
+        <tr>
+          <td><span class="kw-if">if</span></td>
+          <td><code>if _condition(n, "if", bool_expr)</code></td>
+          <td><code>_condition()</code> + <code>compound_boolean_expression</code></td>
+        </tr>
+        <tr>
+          <td><span class="kw-foreach">foreach</span></td>
+          <td><code>_each(n, source, 'name') do</code></td>
+          <td><code>_each()</code> with resumability</td>
+        </tr>
+        <tr>
+          <td><span class="kw-try">try</span></td>
+          <td><code>begin; _try(n) do</code></td>
+          <td><code>_try()</code> state tracking</td>
+        </tr>
+        <tr>
+          <td><span class="kw-catch">catch</span></td>
+          <td><code>rescue Exception => ex; _rescue(n, ex, ...)</code></td>
+          <td><code>_rescue()</code> retry logic</td>
+        </tr>
+        <tr>
+          <td><span class="kw-stop">stop</span></td>
+          <td><code>_stop(n, input, mask_data: ...)</code></td>
+          <td>Raises <code>StopProcessing</code> or <code>FinishJobException</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 5: Input & Data Pills -->
+<!-- ================================================================== -->
+<section id="input">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2>Input &amp; Data Pills</h2>
+  </div>
+
+  <div class="card">
+    <h3>Input Value Types</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">The <code>input</code> object maps field names to values. Values come in three flavors:</p>
+
+    <table>
+      <thead><tr><th>Type</th><th>Example</th><th>How It's Compiled</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Static string</strong></td>
+          <td><code>"Opportunity"</code></td>
+          <td>Escaped literal: <code>"Opportunity"</code></td>
+        </tr>
+        <tr>
+          <td><strong>Data pill (V1)</strong></td>
+          <td><code>#{_('data.sfdc.create.name')}</code></td>
+          <td>Variable reference: <code>_('data.sfdc.create.name')</code></td>
+        </tr>
+        <tr>
+          <td><strong>Data pill (V2)</strong></td>
+          <td><code>#{_dp('{...}')}</code></td>
+          <td>Parsed by engine-runner tokenizer</td>
+        </tr>
+        <tr>
+          <td><strong>Formula</strong></td>
+          <td><code>=now + 30.days</code></td>
+          <td>Ruby expression: <code>(now + 30.days)</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Cleaning Pipeline (before save)</h3>
+    <div class="flow-diagram">
+      <div class="flow-node fn-action">
+        <div class="fn-title">User edits input</div>
+        <div class="fn-sub">Recipe editor UI</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="fn-title">RecipeHelper.cleanCode()</div>
+        <div class="fn-sub">Picks only ALLOWED_LINE_FIELDS</div>
+        <div class="fn-file">recipe-helper.ts:160-203</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="fn-title">cleanInput()</div>
+        <div class="fn-sub">Recursively removes empty values</div>
+        <div class="fn-file">recipe-helper.ts:224-238</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="fn-title">cleanToggleCfg()</div>
+        <div class="fn-sub">Removes entries for empty input fields</div>
+        <div class="fn-file">recipe-helper.ts:205-215</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="fn-title">getPurifiedSchema()</div>
+        <div class="fn-sub">Filters to ALLOWED_SCHEMA_FIELDS, removes synthetic</div>
+        <div class="fn-file">recipe-helper.ts:217-222</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-trigger">
+        <div class="fn-title">Saved to DB</div>
+        <div class="fn-sub">JSON string in code column</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>UI State Fields</h3>
+    <table>
+      <thead><tr><th>Field</th><th>Purpose</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>dynamicPickListSelection</code></td>
+          <td>Stores <strong>display labels</strong> for picklist fields. <code>input</code> has the value (often an ID), this has the label.</td>
+          <td><code>{"sobject_name": "Opportunity"}</code></td>
+        </tr>
+        <tr>
+          <td><code>toggleCfg</code></td>
+          <td>Tracks which fields were toggled from picklist &rarr; free-text mode.</td>
+          <td><code>{"StageName": true}</code></td>
+        </tr>
+        <tr>
+          <td><code>visible_config_fields</code></td>
+          <td>Tracks which optional fields the user explicitly added/shown.</td>
+          <td><code>["AccountId", "Amount"]</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 6: Extended Schema -->
+<!-- ================================================================== -->
+<section id="schema">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2>Extended Schema Pipeline</h2>
+  </div>
+
+  <div class="card">
+    <h3>How extended schemas are fetched &amp; stored</h3>
+    <div class="flow-diagram">
+      <div class="flow-node fn-trigger">
+        <div class="fn-title">User selects template field</div>
+        <div class="fn-sub">e.g. sobject_name = "Opportunity"</div>
+        <div class="fn-file">Field has extends_schema: true</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-action">
+        <div class="fn-title">Frontend: getExtendedSchema()</div>
+        <div class="fn-sub">schema-helper.ts:67-100</div>
+        <div class="fn-file">POST /connections/{id}/extended_schema</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-condition">
+        <div class="fn-title">Backend: SharedAccount#extended_schema</div>
+        <div class="fn-sub">shared_accounts_controller.rb:38-62</div>
+        <div class="fn-file">Calls adapter's extended_input_schema block</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-control">
+        <div class="fn-title">Adapter generates fields</div>
+        <div class="fn-sub">e.g. Salesforce describe API &rarr; schema</div>
+        <div class="fn-file">salesforce/adapter.rb:3166</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="fn-title">Frontend: merge &amp; purify</div>
+        <div class="fn-sub">line-helper.ts:300 + recipe-helper.ts:217</div>
+        <div class="fn-file">Store in extended_input_schema / extended_output_schema</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Schema Field Properties</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">Each field in <code>extended_input_schema</code> is an object with these properties:</p>
+
+    <div class="json-viewer">
+      <div class="json-header">
+        <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <span>sample field definition</span>
+      </div>
+      <div class="json-body">
+<span class="j-bracket">{</span>
+  <span class="j-key">"control_type"</span>: <span class="j-str">"date"</span>,          <span style="color: #6b7280;">// UI widget: schema.rb:278</span>
+  <span class="j-key">"type"</span>: <span class="j-str">"date_time"</span>,              <span style="color: #6b7280;">// Data type for validation</span>
+  <span class="j-key">"name"</span>: <span class="j-str">"CloseDate"</span>,              <span style="color: #6b7280;">// Field API name from connector</span>
+  <span class="j-key">"label"</span>: <span class="j-str">"Close Date"</span>,            <span style="color: #6b7280;">// Human-readable display label</span>
+  <span class="j-key">"optional"</span>: <span class="j-bool">false</span>,               <span style="color: #6b7280;">// SFDC: nillable || defaultedOnCreate</span>
+  <span class="j-key">"custom"</span>: <span class="j-bool">false</span>,                 <span style="color: #6b7280;">// Standard vs custom field</span>
+  <span class="j-key">"parse_output"</span>: <span class="j-str">"parse_iso8601_date"</span>,  <span style="color: #6b7280;">// Transforms API response</span>
+  <span class="j-key">"render_input"</span>: <span class="j-str">"render_iso8601_date"</span>, <span style="color: #6b7280;">// Transforms user input</span>
+  <span class="j-key">"sfdc_createable"</span>: <span class="j-bool">true</span>,        <span style="color: #6b7280;">// Salesforce-specific metadata</span>
+  <span class="j-key">"sfdc_updateable"</span>: <span class="j-bool">true</span>         <span style="color: #6b7280;">// Salesforce-specific metadata</span>
+<span class="j-bracket">}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Control Type Auto-Assignment</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">From <code>Workato::Schema.control_for_scalar()</code> in <code>schema.rb:278-291</code>:</p>
+    <table>
+      <thead><tr><th>Field Type</th><th>Default control_type</th><th>parse_output</th><th>render_input</th></tr></thead>
+      <tbody>
+        <tr><td><code>string</code></td><td><code>"text"</code></td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td><code>integer</code></td><td><code>"number"</code></td><td><code>:integer_conversion</code></td><td>&mdash;</td></tr>
+        <tr><td><code>number</code></td><td><code>"number"</code></td><td><code>:float_conversion</code></td><td>&mdash;</td></tr>
+        <tr><td><code>boolean</code></td><td><code>"checkbox"</code></td><td><code>lambda { v.is_true? }</code></td><td><code>lambda { v.is_true? }</code></td></tr>
+        <tr><td><code>date_time</code></td><td><code>"date_time"</code></td><td><code>:date_time_conversion</code></td><td><code>:date_time_conversion</code></td></tr>
+        <tr><td><code>date</code></td><td><code>"date"</code></td><td><code>:date_conversion</code></td><td><code>:date_conversion</code></td></tr>
+      </tbody>
+    </table>
+    <p style="color: var(--text-dim); margin-top: 0.75rem; font-size: 0.82rem;">Can be overridden in adapter code: <code>control_type: "select"</code>, <code>"text-area"</code>, <code>"phone"</code>, <code>"url"</code>, etc.</p>
+  </div>
+
+  <div class="card">
+    <h3>Salesforce Type Mapping</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">From <code>sobject_schema()</code> in <code>salesforce/adapter.rb:3166-3245</code>:</p>
+    <table>
+      <thead><tr><th>Salesforce Type</th><th>Schema Method</th><th>control_type</th></tr></thead>
+      <tbody>
+        <tr><td><code>int</code></td><td><code>schema.integer</code></td><td><code>"number"</code></td></tr>
+        <tr><td><code>double</code>, <code>currency</code></td><td><code>schema.number</code></td><td><code>"number"</code></td></tr>
+        <tr><td><code>boolean</code></td><td><code>schema.boolean</code></td><td><code>"checkbox"</code></td></tr>
+        <tr><td><code>picklist</code></td><td><code>schema.string</code></td><td><code>"select"</code> + toggle</td></tr>
+        <tr><td><code>datetime</code></td><td><code>schema.date_time</code></td><td><code>"date_time"</code></td></tr>
+        <tr><td><code>date</code></td><td><code>schema.date_time</code></td><td><code>"date"</code></td></tr>
+        <tr><td><code>textarea</code></td><td><code>schema.string</code></td><td><code>"text-area"</code></td></tr>
+        <tr><td><code>address</code></td><td><code>schema.object</code></td><td>nested fields</td></tr>
+        <tr><td>(default)</td><td><code>schema.string</code></td><td><code>"text"</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 7: Config -->
+<!-- ================================================================== -->
+<section id="config">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2>flow.config &mdash; Application Connections</h2>
+  </div>
+
+  <div class="card">
+    <div class="json-viewer" style="margin-bottom: 1rem;">
+      <div class="json-header">
+        <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <span>config sample</span>
+      </div>
+      <div class="json-body">
+<span class="j-bracket">[</span>
+  <span class="j-bracket">{</span>
+    <span class="j-key">"keyword"</span>: <span class="j-str">"application"</span>,      <span style="color: #6b7280;">// always "application"</span>
+    <span class="j-key">"provider"</span>: <span class="j-str">"workato_pub_sub"</span>,  <span style="color: #6b7280;">// must match provider in codelines</span>
+    <span class="j-key">"skip_validation"</span>: <span class="j-bool">false</span>,      <span style="color: #6b7280;">// skip connection check on recipe start?</span>
+    <span class="j-key">"name"</span>: <span class="j-str">"workato_pub_sub"</span>       <span style="color: #6b7280;">// connection name (can differ from provider)</span>
+  <span class="j-bracket">}</span>,
+  <span class="j-bracket">{</span>
+    <span class="j-key">"keyword"</span>: <span class="j-str">"application"</span>,
+    <span class="j-key">"provider"</span>: <span class="j-str">"salesforce"</span>,
+    <span class="j-key">"skip_validation"</span>: <span class="j-bool">false</span>,
+    <span class="j-key">"name"</span>: <span class="j-str">"salesforce"</span>
+  <span class="j-bracket">}</span>
+<span class="j-bracket">]</span>
+      </div>
+    </div>
+
+    <div class="callout callout-key">
+      <div class="callout-icon">!</div>
+      <div><strong>account_id stripped on export.</strong> In the database, each config also stores <code>account_id</code> (the connection/shared account ID). It's removed by <code>FlowExporter</code> for portability.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 8: Conditions -->
+<!-- ================================================================== -->
+<section id="conditions">
+  <div class="section-header">
+    <div class="section-num">7</div>
+    <h2>Condition (if) Structure</h2>
+  </div>
+
+  <div class="card">
+    <div class="json-viewer" style="margin-bottom: 1rem;">
+      <div class="json-header">
+        <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <span>if block input</span>
+      </div>
+      <div class="json-body">
+<span class="j-bracket">{</span>
+  <span class="j-key">"number"</span>: <span class="j-num">1</span>,
+  <span class="j-key">"keyword"</span>: <span class="j-str">"if"</span>,
+  <span class="j-key">"input"</span>: <span class="j-bracket">{</span>
+    <span class="j-key">"type"</span>: <span class="j-str">"compound"</span>,             <span style="color: #6b7280;">// compound boolean expression</span>
+    <span class="j-key">"operand"</span>: <span class="j-str">"and"</span>,               <span style="color: #6b7280;">// "and" or "or"</span>
+    <span class="j-key">"conditions"</span>: <span class="j-bracket">[</span>
+      <span class="j-bracket">{</span>
+        <span class="j-key">"operand"</span>: <span class="j-str">"blank"</span>,          <span style="color: #6b7280;">// comparison operator</span>
+        <span class="j-key">"lhs"</span>: <span class="j-pill">"#{_dp('{...}')}"</span>,   <span style="color: #6b7280;">// left-hand side (data pill)</span>
+        <span class="j-key">"rhs"</span>: <span class="j-str">""</span>,                   <span style="color: #6b7280;">// right-hand side</span>
+        <span class="j-key">"uuid"</span>: <span class="j-str">"80594e80-..."</span>        <span style="color: #6b7280;">// UI tracking ID</span>
+      <span class="j-bracket">}</span>
+    <span class="j-bracket">]</span>
+  <span class="j-bracket">}</span>
+<span class="j-bracket">}</span>
+      </div>
+    </div>
+
+    <h3>Operand Mapping (JSON &rarr; Ruby)</h3>
+    <table>
+      <thead><tr><th>JSON operand</th><th>Ruby expression</th><th>Category</th></tr></thead>
+      <tbody>
+        <tr><td><code>equals_to</code></td><td><code>==</code></td><td>Numeric (wrapped in <code>_te()</code>)</td></tr>
+        <tr><td><code>not_equals_to</code></td><td><code>!=</code></td><td>Numeric</td></tr>
+        <tr><td><code>greater_than</code></td><td><code>&gt;</code></td><td>Numeric</td></tr>
+        <tr><td><code>less_than</code></td><td><code>&lt;</code></td><td>Numeric</td></tr>
+        <tr><td><code>blank</code></td><td><code>.blank?</code></td><td>Boolean (direct on lhs)</td></tr>
+        <tr><td><code>present</code></td><td><code>.present?</code></td><td>Boolean</td></tr>
+        <tr><td><code>contains</code></td><td><code>.include?()</code></td><td>String (nil-safe)</td></tr>
+        <tr><td><code>starts_with</code></td><td><code>.starts_with?()</code></td><td>String (nil-safe)</td></tr>
+        <tr><td><code>is_true</code></td><td><code>.is_true?</code></td><td>Boolean</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 9: DSL Compilation -->
+<!-- ================================================================== -->
+<section id="compilation">
+  <div class="section-header">
+    <div class="section-num">8</div>
+    <h2>Flow DSL Compilation (JSON &rarr; Ruby)</h2>
+  </div>
+
+  <div class="card">
+    <h3>Compilation Chain</h3>
+    <div class="flow-h" style="justify-content: center; flex-wrap: wrap;">
+      <div class="flow-node fn-action" style="min-width: 140px;">
+        <div class="fn-title">Flow#code</div>
+        <div class="fn-sub">JSON string in DB</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node" style="min-width: 140px;">
+        <div class="fn-title">trigger_config</div>
+        <div class="fn-sub">Parsed hash</div>
+        <div class="fn-file">flow.rb:475</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-condition" style="min-width: 140px;">
+        <div class="fn-title">compile_flow_dsl</div>
+        <div class="fn-sub">Recursive line_dsl()</div>
+        <div class="fn-file">flow_dsl.rb</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-control" style="min-width: 140px;">
+        <div class="fn-title">Ruby DSL string</div>
+        <div class="fn-sub">Cached in Rails.cache</div>
+        <div class="fn-file">flow_version.rb:18</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2" style="min-width: 140px;">
+        <div class="fn-title">safe_eval &rarr; lambda</div>
+        <div class="fn-sub">Executable code</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Example: JSON to Compiled DSL</h3>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(event, 'tab-json')">Recipe JSON</button>
+      <button class="tab-btn" onclick="switchTab(event, 'tab-dsl')">Compiled Ruby DSL</button>
+      <button class="tab-btn" onclick="switchTab(event, 'tab-runtime')">Runtime Execution</button>
+    </div>
+
+    <div class="tab-content active" id="tab-json">
+      <div class="json-body" style="background: #0d0f16; border-radius: 8px; padding: 1rem;">
+<span class="j-bracket">{</span>
+  <span class="j-key">"number"</span>: <span class="j-num">2</span>,
+  <span class="j-key">"provider"</span>: <span class="j-str">"salesforce"</span>,
+  <span class="j-key">"name"</span>: <span class="j-str">"create_custom_object"</span>,
+  <span class="j-key">"as"</span>: <span class="j-str">"261ab71f"</span>,
+  <span class="j-key">"keyword"</span>: <span class="j-str">"action"</span>,
+  <span class="j-key">"input"</span>: <span class="j-bracket">{</span>
+    <span class="j-key">"sobject_name"</span>: <span class="j-str">"Opportunity"</span>,
+    <span class="j-key">"CloseDate"</span>: <span class="j-pill">"#{_dp('{\"pill_type\":\"output\",...}')}"</span>
+  <span class="j-bracket">}</span>
+<span class="j-bracket">}</span>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-dsl">
+      <div class="dsl-box">
+<span class="dsl-keyword">action</span> <span class="dsl-string">'salesforce'</span>, <span class="dsl-string">'create_custom_object'</span>,
+  <span class="dsl-var">number:</span> <span class="j-num">2</span>, <span class="dsl-var">as:</span> <span class="dsl-string">'261ab71f'</span>,
+  <span class="dsl-var">extended_input_schema:</span> [...], <span class="dsl-var">extended_output_schema:</span> [...],
+  <span class="dsl-var">with:</span> (<span class="dsl-method">_ele</span>(<span class="j-num">2</span>, <span class="dsl-string">'salesforce'</span>, <span class="dsl-string">'create_custom_object'</span>, <span class="dsl-string">'map_input'</span>) {
+    ({
+      <span class="dsl-string">'sobject_name'</span>: (<span class="dsl-method">_se</span>(<span class="dsl-string">'sobject_name'</span>) { <span class="dsl-string">"Opportunity"</span> }),
+      <span class="dsl-string">'CloseDate'</span>: (<span class="dsl-method">_se</span>(<span class="dsl-string">'CloseDate'</span>) { <span class="dsl-method">_</span>(<span class="dsl-string">'data.workato_pub_sub.619faf31.message.order_number'</span>) }),
+    })
+  }),
+  <span class="dsl-var">mask_data:</span> <span class="j-bool">false</span>
+      </div>
+      <div style="margin-top: 1rem; font-size: 0.82rem; color: var(--text-dim);">
+        <strong>Key functions:</strong>
+        <code>_ele()</code> wraps line execution with timing/error handling.
+        <code>_se()</code> wraps each field with safe expression error handling.
+        <code>_()</code> resolves V1 data pill paths against the data tree.
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-runtime">
+      <p style="margin-bottom: 1rem; color: var(--text-dim);">At runtime, each wrapper function plays a role:</p>
+      <table>
+        <thead><tr><th>Function</th><th>File</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>_ele(n, provider, name)</code></td>
+            <td><code>misc_dsl.rb:31</code></td>
+            <td>Line-level timing metrics + error handling</td>
+          </tr>
+          <tr>
+            <td><code>_se(field_name)</code></td>
+            <td><code>misc_dsl.rb:17</code></td>
+            <td>Field-level safe expression: catches errors &rarr; user-friendly messages</td>
+          </tr>
+          <tr>
+            <td><code>_(path)</code></td>
+            <td><code>misc_dsl.rb:61</code></td>
+            <td>V1 pill resolution: walks dot-separated path through data tree</td>
+          </tr>
+          <tr>
+            <td><code>_te(lhs, op, rhs)</code></td>
+            <td><code>misc_dsl.rb:115</code></td>
+            <td>Type-coerces operands for comparison (string &harr; number)</td>
+          </tr>
+          <tr>
+            <td><code>_condition(n, kw, cond)</code></td>
+            <td><code>misc_dsl.rb:350</code></td>
+            <td>Stores condition result for debugging/job reporting</td>
+          </tr>
+          <tr>
+            <td><code>_each(n, list, name)</code></td>
+            <td><code>misc_dsl.rb:313</code></td>
+            <td>Iteration with resumability + index/size tracking</td>
+          </tr>
+          <tr>
+            <td><code>_try(n)</code></td>
+            <td><code>misc_dsl.rb:236</code></td>
+            <td>State tracking: in_progress/completed/exception</td>
+          </tr>
+          <tr>
+            <td><code>_rescue(n, ex, name)</code></td>
+            <td><code>misc_dsl.rb:266</code></td>
+            <td>Error capture + retry logic (count, interval, condition)</td>
+          </tr>
+          <tr>
+            <td><code>_stop(n, input)</code></td>
+            <td><code>misc_dsl.rb:364</code></td>
+            <td>Raises StopProcessing (error) or FinishJobException (success)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 10: Pills V1 vs V2 -->
+<!-- ================================================================== -->
+<section id="pills-v1-v2">
+  <div class="section-header">
+    <div class="section-num">9</div>
+    <h2>Data Pills: V1 <code>_()</code> vs V2 <code>_dp()</code></h2>
+  </div>
+
+  <div class="pill-compare">
+    <div class="pill-box">
+      <h4 style="color: var(--accent);">V1: <code>_()</code> &mdash; Ruby (workato-base)</h4>
+      <pre><span class="j-pill">#{_('data.workato_pub_sub.subscribe_to_topic.message.order_number')}</span></pre>
+      <table style="font-size: 0.8rem;">
+        <tr><td><strong>Implementation</strong></td><td><code>pill-helper.factory.js:116</code></td></tr>
+        <tr><td><strong>Runtime</strong></td><td><code>misc_dsl.rb:61</code> &mdash; <code>_(*args)</code></td></tr>
+        <tr><td><strong>Pattern</strong></td><td><code>#{_('path')}</code></td></tr>
+        <tr><td><strong>Path</strong></td><td>Dot-separated string</td></tr>
+      </table>
+    </div>
+    <div class="pill-box v2">
+      <h4 style="color: var(--pink);">V2: <code>_dp()</code> &mdash; Go (engine-runner)</h4>
+      <pre><span class="j-pill">#{_dp('{"pill_type":"output","provider":"workato_pub_sub","line":"619faf31","path":["message","order_number"]}')}</span></pre>
+      <table style="font-size: 0.8rem;">
+        <tr><td><strong>Implementation</strong></td><td><code>engine-runner/internal/recipe/expression/</code></td></tr>
+        <tr><td><strong>Runtime</strong></td><td><code>text_mode_renderer.go</code></td></tr>
+        <tr><td><strong>Pattern</strong></td><td><code>#{_dp('JSON')}</code></td></tr>
+        <tr><td><strong>Path</strong></td><td>JSON array with typed elements</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Semantic Mapping Between Formats</h3>
+    <div style="padding: 0.5rem 0;">
+      <div class="mapping-row">
+        <div class="mapping-left"><code>pill_type: "output"</code></div>
+        <div class="mapping-arrow">&harr;</div>
+        <div class="mapping-right"><code>data.</code> prefix</div>
+      </div>
+      <div class="mapping-row">
+        <div class="mapping-left"><code>provider: "workato_pub_sub"</code></div>
+        <div class="mapping-arrow">&harr;</div>
+        <div class="mapping-right"><code>data.<strong>workato_pub_sub</strong>.</code></div>
+      </div>
+      <div class="mapping-row">
+        <div class="mapping-left"><code>line: "619faf31"</code></div>
+        <div class="mapping-arrow">&harr;</div>
+        <div class="mapping-right"><code>data.workato_pub_sub.<strong>619faf31</strong>.</code></div>
+      </div>
+      <div class="mapping-row">
+        <div class="mapping-left"><code>path: ["message", "order_number"]</code></div>
+        <div class="mapping-arrow">&harr;</div>
+        <div class="mapping-right"><code>...619faf31.<strong>message.order_number</strong></code></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>V2 <code>_dp()</code> Processing Pipeline (engine-runner, Go)</h3>
+    <div class="flow-diagram">
+      <div class="flow-node fn-v2">
+        <div class="fn-title">1. Tokenize</div>
+        <div class="fn-sub">State machine detects <code>#{_dp('</code> ... <code>')}</code></div>
+        <div class="fn-file">text_mode_tokenizer.go:10-15</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2">
+        <div class="fn-title">2. Parse</div>
+        <div class="fn-sub">JSON &rarr; <code>datapill</code> struct (pill_type, provider, line, path)</div>
+        <div class="fn-file">text_mode_parser.go:33-56 &rarr; data_pill.go:38</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2">
+        <div class="fn-title">3. Validate</div>
+        <div class="fn-sub">pill_type must be "output". provider &amp; line required.</div>
+        <div class="fn-file">data_pill.go:74-88</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2">
+        <div class="fn-title">4. Resolve</div>
+        <div class="fn-sub">Look up <code>dp.Line</code> in datatree &rarr; walk <code>dp.Path</code></div>
+        <div class="fn-file">text_mode_renderer.go:170-217</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-trigger">
+        <div class="fn-title">5. Return Value</div>
+        <div class="fn-sub">Single pill &rarr; typed value. Mixed &rarr; string concat.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">i</div>
+      <div><strong>Single pill optimization:</strong> If the expression is a single pill with no surrounding text, the raw typed value (int, float, bool, array, object) is preserved. If mixed with text, everything is coerced to strings and concatenated.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Special Path Elements (V2)</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">V2 paths can contain typed objects for array iteration:</p>
+
+    <table>
+      <thead><tr><th>Path Element</th><th>Type</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>"message"</code></td>
+          <td>String</td>
+          <td>Regular field traversal</td>
+        </tr>
+        <tr>
+          <td><code>{"path_element_type": "current_item"}</code></td>
+          <td>Object</td>
+          <td>References current array element during iteration</td>
+        </tr>
+        <tr>
+          <td><code>{"path_element_type": "current_index"}</code></td>
+          <td>Object</td>
+          <td>References current iteration index</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 1.5rem;"><code>____source</code> Iteration Pattern</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">When an input object has a <code>____source</code> key, engine-runner iterates the source array:</p>
+
+    <div class="iter-diagram">
+      <div style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 0.5rem;">
+        <code>____source</code> resolves to: <code>[{booking_id: 101}, {booking_id: 102}, {booking_id: 103}]</code>
+      </div>
+      <div class="iter-row">
+        <div class="iter-idx">0</div>
+        <div class="iter-val">current_item = {booking_id: 101}</div>
+        <div class="iter-resolved">booking_id &rarr; 101</div>
+      </div>
+      <div class="iter-row">
+        <div class="iter-idx">1</div>
+        <div class="iter-val">current_item = {booking_id: 102}</div>
+        <div class="iter-resolved">booking_id &rarr; 102</div>
+      </div>
+      <div class="iter-row">
+        <div class="iter-idx">2</div>
+        <div class="iter-val">current_item = {booking_id: 103}</div>
+        <div class="iter-resolved">booking_id &rarr; 103</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 11: Full Execution Flow -->
+<!-- ================================================================== -->
+<section id="execution">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <h2>Full Execution Flow</h2>
+  </div>
+
+  <div class="card">
+    <h3>V1 (Ruby) &mdash; workato-base</h3>
+    <div class="flow-h" style="justify-content: center; flex-wrap: wrap;">
+      <div class="flow-node fn-action" style="min-width: 130px;">
+        <div class="fn-title">DB: code</div>
+        <div class="fn-sub">JSON string</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node" style="min-width: 130px;">
+        <div class="fn-title">JSON.parse</div>
+        <div class="fn-sub">trigger_config</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-condition" style="min-width: 130px;">
+        <div class="fn-title">flow_dsl.rb</div>
+        <div class="fn-sub">Compile to Ruby</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-control" style="min-width: 130px;">
+        <div class="fn-title">safe_eval</div>
+        <div class="fn-sub">Lambda</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-trigger" style="min-width: 130px;">
+        <div class="fn-title">JobExecutor</div>
+        <div class="fn-sub">Execute</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>V2 (Go) &mdash; engine-runner</h3>
+    <div class="flow-h" style="justify-content: center; flex-wrap: wrap;">
+      <div class="flow-node fn-action" style="min-width: 130px;">
+        <div class="fn-title">Recipe JSON</div>
+        <div class="fn-sub">with _dp() pills</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2" style="min-width: 130px;">
+        <div class="fn-title">Loader</div>
+        <div class="fn-sub">recipeload/loader.go</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2" style="min-width: 130px;">
+        <div class="fn-title">Step execution</div>
+        <div class="fn-sub">runner.go:256</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2" style="min-width: 130px;">
+        <div class="fn-title">Render pills</div>
+        <div class="fn-sub">Tokenize &rarr; Resolve</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node fn-v2" style="min-width: 130px;">
+        <div class="fn-title">Datatree.Set()</div>
+        <div class="fn-sub">Store output</div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn" style="margin-top: 1rem;">
+      <div class="callout-icon">!</div>
+      <div><strong>No migration code exists</strong> between V1 <code>_()</code> and V2 <code>_dp()</code> formats in workato-base. The Go engine-runner only handles V2 format.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Datatree (engine-runner)</h3>
+    <p style="color: var(--text-dim); margin-bottom: 1rem;">Each step's output is stored in a map keyed by the step's <code>as</code> (alias) field:</p>
+
+    <div class="dsl-box">
+<span class="dsl-comment">// datatree.go</span>
+<span class="dsl-keyword">type</span> Datatree <span class="dsl-keyword">struct</span> {
+    data <span class="dsl-keyword">map</span>[<span class="dsl-var">string</span>]*model2.Object  <span class="dsl-comment">// keyed by step Line (= "as" field)</span>
+}
+
+<span class="dsl-comment">// After trigger executes:</span>
+dt.Set(<span class="dsl-string">"619faf31"</span>, triggerOutput)  <span class="dsl-comment">// as: "619faf31"</span>
+
+<span class="dsl-comment">// When action resolves a pill referencing line "619faf31":</span>
+obj := dt.Get(<span class="dsl-string">"619faf31"</span>)          <span class="dsl-comment">// looks up trigger output</span>
+value := walkPath(obj, [<span class="dsl-string">"message"</span>, <span class="dsl-string">"order_number"</span>])
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================== -->
+<!-- SECTION 12: Key Files Reference -->
+<!-- ================================================================== -->
+<section id="files">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <h2>Key Files Reference</h2>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead><tr><th>File</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>lib/workato/flow_exporter.rb</code></td><td>Exports recipe to JSON/YAML (top-level structure)</td></tr>
+        <tr><td><code>app/controllers/flows_controller.rb:348</code></td><td>API endpoint serving recipe JSON</td></tr>
+        <tr><td><code>app/assets/.../types.ts:149</code></td><td>TypeScript <code>Codeline</code> interface</td></tr>
+        <tr><td><code>app/assets/.../recipe-helper.ts:16</code></td><td>Allowed fields whitelist + cleaning logic</td></tr>
+        <tr><td><code>app/assets/.../line-helper.ts:102</code></td><td>Line creation, alias generation, numbering</td></tr>
+        <tr><td><code>app/assets/.../pill-helper.factory.js:116</code></td><td>Data pill wrapping/formatting (V1)</td></tr>
+        <tr><td><code>app/assets/.../app-settings.ts</code></td><td>Pill pattern regex</td></tr>
+        <tr><td><code>app/models/concerns/flow_dsl.rb:215</code></td><td>DSL compilation (JSON &rarr; executable Ruby)</td></tr>
+        <tr><td><code>lib/workato/adapters/misc_dsl.rb:61</code></td><td>Runtime <code>_()</code> function for V1 pill resolution</td></tr>
+        <tr><td><code>lib/workato/schema.rb:229</code></td><td>Schema field property generation</td></tr>
+        <tr><td><code>adapters/.../salesforce/adapter.rb:3150</code></td><td>Salesforce-specific schema generation</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 1.5rem; color: var(--pink);">Engine Runner (Go) &mdash; V2</h3>
+    <table>
+      <thead><tr><th>File</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><code>internal/recipe/expression/data_pill.go</code></td><td><code>datapill</code> struct + parse + validate</td></tr>
+        <tr><td><code>internal/recipe/expression/text_mode_tokenizer.go</code></td><td>State machine tokenizer for <code>#{_dp('...')}</code></td></tr>
+        <tr><td><code>internal/recipe/expression/text_mode_parser.go</code></td><td>Parser: tokens &rarr; <code>[]textModeElement</code></td></tr>
+        <tr><td><code>internal/recipe/expression/text_mode_renderer.go</code></td><td>Resolver: pills &rarr; values from datatree</td></tr>
+        <tr><td><code>internal/recipe/recipeload/loader.go</code></td><td>Recipe JSON &rarr; Step structs</td></tr>
+        <tr><td><code>internal/recipe/runner/runner.go</code></td><td>Step execution loop</td></tr>
+        <tr><td><code>internal/recipe/datatree/datatree.go</code></td><td>Step output storage (map by alias)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- end container -->
+
+<script>
+// Tooltip logic for annotated JSON
+const tooltip = document.getElementById('tooltip');
+const ttTitle = document.getElementById('tt-title');
+const ttSource = document.getElementById('tt-source');
+const ttDesc = document.getElementById('tt-desc');
+let pinnedLine = null;
+
+document.querySelectorAll('.annotated-line').forEach(line => {
+  if (!line.dataset.title) return;
+
+  // Add badge if specified
+  const badgeType = line.dataset.badge;
+  const badgeText = line.dataset.badgeText;
+  if (badgeType && badgeText) {
+    const badge = document.createElement('span');
+    badge.className = `annotation-badge badge-${badgeType}`;
+    badge.textContent = badgeText;
+    line.appendChild(badge);
+  }
+
+  line.addEventListener('mouseenter', (e) => {
+    if (pinnedLine && pinnedLine !== line) return;
+    showTooltip(line, e);
+  });
+
+  line.addEventListener('mousemove', (e) => {
+    if (pinnedLine && pinnedLine !== line) return;
+    positionTooltip(e);
+  });
+
+  line.addEventListener('mouseleave', () => {
+    if (pinnedLine === line) return;
+    hideTooltip();
+  });
+
+  line.addEventListener('click', (e) => {
+    if (pinnedLine === line) {
+      pinnedLine.classList.remove('active');
+      pinnedLine = null;
+      hideTooltip();
+    } else {
+      if (pinnedLine) pinnedLine.classList.remove('active');
+      pinnedLine = line;
+      line.classList.add('active');
+      showTooltip(line, e);
+    }
+  });
+});
+
+function showTooltip(line, e) {
+  ttTitle.innerHTML = line.dataset.title;
+  ttSource.innerHTML = line.dataset.source;
+  ttDesc.innerHTML = line.dataset.desc;
+  tooltip.classList.add('visible');
+  positionTooltip(e);
+}
+
+function positionTooltip(e) {
+  const x = e.clientX + 16;
+  const y = e.clientY + 16;
+  const rect = tooltip.getBoundingClientRect();
+  const maxX = window.innerWidth - rect.width - 20;
+  const maxY = window.innerHeight - rect.height - 20;
+  tooltip.style.left = Math.min(x, maxX) + 'px';
+  tooltip.style.top = Math.min(y, maxY) + 'px';
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+}
+
+// Close pinned tooltip on outside click
+document.addEventListener('click', (e) => {
+  if (pinnedLine && !e.target.closest('.annotated-line')) {
+    pinnedLine.classList.remove('active');
+    pinnedLine = null;
+    hideTooltip();
+  }
+});
+
+// Tab switching
+function switchTab(e, tabId) {
+  const container = e.target.closest('.card') || e.target.parentElement.parentElement;
+  container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  container.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// Nav active state
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    if (window.scrollY >= top) {
+      current = section.id;
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+</script>
+
+</body>
+</html>

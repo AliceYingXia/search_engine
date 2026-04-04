@@ -1,0 +1,136 @@
+Category 1 Evaluation Queries  (112 total)
+======================================================================
+
+Author 206503
+----------------------------------------
+  206503_q1                  Which recipes automate creating or updating user accounts based on an email request?
+  206503_q2                  Which recipes manage posting and updating process status messages in team chat threads?
+  206503_q3                  Which automations start a demo run and provision user access to demo applications?
+  206503_q4                  Which automations provision the required applications and resources for a user’s demo?
+  206503_q5                  How do I automate deactivating a user when they leave the company?
+  206503_q6                  Which recipes automatically clean up old records from our internal database on a schedule?
+  206503_q7                  Which automations look up an active user by email and return related sales records?
+  206503_q8                  Which recipes clean up AI conversation threads, files, and knowledge stores after a process completes?
+  206503_q9                  Which automations run on a schedule to process records in batches?
+Author 618946
+----------------------------------------
+  618946_q1                  Which automations set up and authorize new application connections when requested?
+  618946_q10                 Which recipes search for employee records in our HR system and compile the results into a list?
+  618946_q11                 Which automations create new IT service tickets based on existing records?
+  618946_q12                 How can I look up a recorded call when someone requests it in chat?
+  618946_q14                 Which recipes run a workflow, wait for a set time, and then return a result?
+  618946_q2                  How can we automatically summarize text content using AI and reuse past summaries?
+  618946_q3                  Which automations help route and approve sales quotes?
+  618946_q4                  How can I manage and complete HR inbox tasks from chat?
+  618946_q5                  Which recipes manage starting an internal request process and notifying the right person in chat?
+  618946_q6                  Which automations periodically update our internal database with the latest agent configuration details?
+  618946_q7                  Which recipes search for and compile lists of service tickets based on criteria?
+  618946_q8                  Which recipes generate employee data reports and save them as files?
+  618946_q9                  Which automations update our vector search index when new data events occur?
+Author 973497
+----------------------------------------
+  973497_q1                  Which recipes automate triaging support tickets and updating their status and comments?
+  973497_q10                 Which automations log processing results and email an error summary when failures occur?
+  973497_q11                 Which automations send scheduled file updates to a spreadsheet and notify the team?
+  973497_q12                 Which automations export user data from our data warehouse to our marketing platform on a schedule?
+  973497_q13                 How can I generate a blog post section from stored content records?
+  973497_q14                 How can I find similar records in our data warehouse using AI-based similarity search?
+  973497_q15                 Which automations update our data warehouse on a schedule and keep issue records in sync?
+  973497_q16                 Which automations check whether a marketing contact’s subscription preferences are out of sync?
+  973497_q17                 Which recipes track and update review status changes from a spreadsheet?
+  973497_q18                 Which automations send a scheduled message after a set waiting period?
+  973497_q2                  Which automations add customers to our marketing email lists and log the results?
+  973497_q3                  Which automations create or update product feedback tickets and notify the team when new feedback is received?
+  973497_q4                  Which automations schedule review meetings for urgent requests that are close to or past their deadline?
+  973497_q5                  Which recipes manage customer email subscription updates and unsubscribes in our marketing communications process?
+  973497_q6                  How can we automatically generate and share files from a chat request and log the results?
+  973497_q7                  How can we generate and return personalized recommendations for a user based on their persona?
+  973497_q9                  Which automations regularly import and store blog posts from our website?
+Author 1873345
+----------------------------------------
+  1873345_q1                 Which automations send reminder emails to sales reps when a meeting follow-up email is missing?
+  1873345_q2                 Which automations enrich company and account records with additional firmographic data?
+  1873345_q3                 Which recipes update our reference data table from a spreadsheet on a schedule?
+  1873345_q4                 What automations notify the partner manager when a new partner event happens?
+  1873345_q5                 How can I manage and update a shared reference list used by our business processes?
+  1873345_q6                 How do I automatically fill a document template with data and save the updated file?
+Author 2136196
+----------------------------------------
+  2136196_q1                 How do we automatically generate and fill in a customer onboarding presentation with account and contract details?
+  2136196_q10                Which recipes export scheduled customer records to a file for reporting?
+  2136196_q11                How can I create and search a list from a CSV file through a chat menu?
+  2136196_q2                 How do we automate inviting users and routing approval requests for a project?
+  2136196_q3                 Which automations categorize calendar events into project tasks for a given time period?
+  2136196_q4                 Which recipes let our team search customer records and share the results in chat?
+  2136196_q5                 Which automations create and set up delivery projects when a new sales opportunity is won?
+  2136196_q6                 Which automations route customer support requests to the right team and notify the right people based on the customer account?
+  2136196_q7                 How can I trigger a workflow from a chat command to start a process and notify a team channel?
+  2136196_q8                 Which recipes update project and billing milestone amounts on a schedule and generate a report file?
+  2136196_q9                 Which recipes route incoming requests to the right user and run the correct follow-up workflow?
+Author 2973760
+----------------------------------------
+  2973760_q1                 How do we approve or reject security incident requests from chat and update the related ticket?
+  2973760_q10                How do I log and track incoming API requests and notify the team when they happen?
+  2973760_q11                Which automations scan and retrieve website security reports for a given URL?
+  2973760_q12                Which automations send scheduled device history updates to a team channel?
+  2973760_q13                Which automations retrieve a device’s security status and management history?
+  2973760_q14                What automations look up a device management user and return the result to a business process request?
+  2973760_q15                How can I automate drafting and sending emails based on a business request?
+  2973760_q2                 Which recipes scan files or links for malware and return the results?
+  2973760_q3                 How do we automate moving a user’s security access profile across their devices?
+  2973760_q4                 Which automations notify our team and start an investigation process when new security alerts are detected?
+  2973760_q5                 Which automations check the reputation of suspicious files or links before allowing access?
+  2973760_q6                 How can I automatically create and assign a support ticket from a written request and add an initial comment?
+  2973760_q7                 Which automations run on a schedule to update our records and notify our team in chat?
+  2973760_q8                 How can I automate drafting and sending emails and notifying my team in chat?
+  2973760_q9                 Which automations alert our team when a device has unusual activity after an employee access change?
+Author 3000083
+----------------------------------------
+  3000083_q1                 Which recipes automate processing uploaded RFP questionnaires and generating a completed response document?
+  3000083_q2                 What automations run when a sales opportunity moves to the submitted for booking stage?
+  3000083_q3                 What automations notify stakeholders when a sales opportunity stage changes?
+  3000083_q4                 How can I automatically generate answers to user questions from source content summaries?
+  3000083_q5                 How do I automatically create a new knowledge base page and apply labels?
+  3000083_q6                 How can I automatically convert files from a link into PDF format?
+  3000083_q7                 How can I automatically add processed job data into a spreadsheet?
+  3000083_q8                 Which automations update our internal employee records when a user’s status changes?
+Author 3165547
+----------------------------------------
+  3165547_q1                 Which recipes support our automation deployment and release process?
+  3165547_q2                 How do I download and export the code for an automation recipe or project?
+  3165547_q3                 How do I start our CI/CD pipeline process from Slack?
+  3165547_q4                 Which recipes announce new software releases to our team the first time they happen?
+  3165547_q5                 Which automations process and update queued records on a schedule?
+  3165547_q6                 How do I automatically generate and email documents from a template?
+  3165547_q8                 Which recipes support searching and returning lookup table data through an internal request endpoint?
+Author 3511776
+----------------------------------------
+  3511776_q1                 How do I export automation recipe data to a file for reporting?
+  3511776_q10                How do I automatically create a new presentation from a master template and save it to a shared folder?
+  3511776_q11                Which automations export records from our internal database into a spreadsheet?
+  3511776_q12                Which recipes automate extracting structured data from text and routing it through internal workflows?
+  3511776_q13                Which recipes generate customer reports and presentation decks from account data?
+  3511776_q2                 Which automations show different in-app home screens based on a user’s access level?
+  3511776_q3                 Which recipes generate and share top builder performance reports?
+  3511776_q4                 Which automations analyze database records with AI and update the results back into our data warehouse?
+  3511776_q5                 Which recipes generate presentation slides for different automation product categories based on reporting data?
+  3511776_q6                 Which automations highlight specific subprocess steps in a presentation based on database records?
+  3511776_q7                 Which automations update presentation slides to highlight or hide subprocesses?
+  3511776_q8                 Which automations refresh our daily accounts snapshot data for reporting?
+  3511776_q9                 How can I generate a customer spreadsheet and slide deck from a chat command?
+Author 5770830
+----------------------------------------
+  5770830_q1                 Which automations export data from our messaging platform into CSV files for reporting?
+  5770830_q10                How do I create a new IT support incident and get back the incident number and link?
+  5770830_q11                How can I automatically create or update customer support cases from an email address and log them in a database?
+  5770830_q12                Which automations help process IT service desk requests?
+  5770830_q13                How can I look up app store permissions for an application?
+  5770830_q2                 How can users update an IT support ticket based on whether they are the requester or the assigned agent?
+  5770830_q3                 How do I automatically create a new presentation with slides and images and share it with someone?
+  5770830_q4                 How can I search for IT incidents using an employee’s email, incident number, or description?
+  5770830_q5                 How do I automate creating and logging new customer support tickets?
+  5770830_q6                 How do I approve or reject requests from a chat message and update the request status?
+  5770830_q7                 How do I create a new support ticket from a user request?
+  5770830_q8                 How do I look up project details from our issue tracking system?
+  5770830_q9                 Which recipes update our knowledge base and store related records in a database?
+
