@@ -1,0 +1,93 @@
+category3 Evaluation Queries  (49 total)
+======================================================================
+
+Author 8621
+----------------------------------------
+  8621_c3q20                 If the workato_db_table get_records action changes (table_id/order_by_field_id/filters/continuation_token), which recipes will be affected?
+  8621_c3q5                  Which recipes reference the workato_internal_api_connector_2436037_1708847652 action update_campaign_activity_unqualified_reason?
+Author 15806
+----------------------------------------
+  15806_c3q1                 Which recipes reference the workato_finance_workspace_connector_800229_1672734979 action list_past_due_invoices_on_churn_oppty?
+Author 50737
+----------------------------------------
+  50737_c3q12                Which recipes depend on the corporate_api_connector_748504_1686073406 get_object action (fields: object, salesforce_user_id)?
+Author 69943
+----------------------------------------
+  69943_c3q10                Which recipes depend on the Jira __adhoc_http_action action (used to get issue links and check assignee/reporter Jira user accounts)?
+  69943_c3q7                 Which recipes depend on the slack_bot __adhoc_http_action (Slack Web API) step paths used to retrieve the DM channel ID and send the follow-up message?
+Author 84762
+----------------------------------------
+  84762_c3q1                 Which recipes reference the Marketo upsert_lead action (lookup_field=email, region field) and would be affected if it changes?
+  84762_c3q10                Which recipes depend on the pendo_connector_3436237_1709089108 __adhoc_http_action used to check whether a visitor exists in Pendo?
+Author 136763
+----------------------------------------
+  136763_c3q13               Which recipes reference the atlassian_scim__connector_800229_1672734892 Search records action (object + email) to retrieve a user AccountId?
+  136763_c3q23               Which recipes depend on the zone_advanced_billing_connector_2443559_1691049799 update_record action that updates custrecord_wk_si_provisiondate, custrecordzab_si_end_date, or custrecord_wk_si_opportunityclosedate?
+  136763_c3q37               If the Creditsafe connector search_records action changes, which recipes depend on creditsafe_connector_748504_1683092653/search_records?
+  136763_c3q48               Which recipes depend on the lookup_table delete_entries action (lookup_table_id + parameters) for deleting entries by Opportunity ID?
+  136763_c3q52               Which recipes depend on the Google Sheets action get_spreadsheet_rows_v4 (Retrieve all rows found in the corresponding {business unit} sheet)?
+  136763_c3q64               Which recipes reference the Google Analytics create_account_user_link action in google_analytics_connector_800229_1672734916?
+  136763_c3q66               If the workato_ahq_hr_people_ops_connector_800229_1690274418 search_namely_profiles action (email field) changes, which recipes will be affected?
+  136763_c3q68               If the sentinel_one_connector_800229_1672734960 create_user action changes (scopeRoleId/roleId fields), which recipes will be affected?
+  136763_c3q74               Which recipes reference the skilljar_connector_800219_1672733117 search_records action (object, email) to retrieve the Skilljar user ID?
+  136763_c3q79               If the grammarly_scim__connector_800229_1672734920 search_records action changes (fields: object, startIndex, userName, count), which recipes will be affected?
+  136763_c3q81               If the google_vault_for_service_accounts_connector_748504_1732522911 List holds action (matterId) changes, which recipes will be affected?
+Author 137989
+----------------------------------------
+  137989_c3q20               If the pendo_connector_3436237_1709089108 __adhoc_http_action (Update metadata in bulk) is changed, which recipes depend on it?
+  137989_c3q7                If the Marketo Bulk Export Activities endpoint GET /bulk/v1/activities/export/{exportId}/file.json changes, which recipes depend on the marketo __adhoc_http_action that calls it?
+Author 384059
+----------------------------------------
+  384059_c3q15               Which recipes reference the Namely action update_employee_profile (namely_connector_1672048_1686316621) to update an employee profile mailing address?
+  384059_c3q22               Which recipes depend on the Workday get_report action using the RaaS report URL RaaS - Retrieve Worker Details -- All Active and Terminated Workers (wk)?
+Author 800219
+----------------------------------------
+  800219_c3q20               If the Atlassian SCIM activate_deactivate_user action changes, which recipes depend on atlassian_scim__connector_800229_1672734892 / activate_deactivate_user?
+  800219_c3q34               If the consensus_connector_800229_1690274397 update_user action changes (uuid, email, firstName, lastName, status), which recipes will be affected?
+  800219_c3q6                If the OpsGenie update_object action is changed, which recipes depend on ops_genie_connector_800229_1674240130 / update_object?
+Author 800229
+----------------------------------------
+  800229_c3q34               Which recipes depend on the sigma_connector_800229_1672734961 __adhoc_http_action action (used to list/delete files via the path field)?
+  800229_c3q39               Which recipes depend on the Google Calendar for Service Accounts connector action list_events (including the pageToken field)?
+  800229_c3q45               If the jira_assets_connector_800229_1757043870 fetch_objects_by_aql action changes its qlQuery input, which recipes will be affected?
+  800229_c3q49               If the aws_secrets_manager_connector_748504_1749536989 get_secret_value action changes its SecretId field, which recipes will be affected?
+  800229_c3q52               Which recipes depend on the leapsome_scim__connector_800229_1672734932 update_records action (fields members and replaceMembers)?
+Author 804586
+----------------------------------------
+  804586_c3q10               Which recipes depend on the workato_go_connector_3535597_1749827549 send_message action (fields: event_type, message_body, user_email, agentic_user_jwt, traceparent, tracestate)?
+  804586_c3q11               If the byin_workato_recipe_ops_connector_3165546_1699532902 create_user_scoped_connection action changes, which recipes depend on it?
+Author 973497
+----------------------------------------
+  973497_c3q5                Which recipes reference the Iterable custom_action API path https://api.iterable.com/api/docs#subscriptions_Bulk_subscription_action?
+Author 1672048
+----------------------------------------
+  1672048_c3q13              Which recipes depend on the Greenhouse connector action new_job_post trigger (greenhouse_connector_1672048_1686319136 / new_job_post)?
+  1672048_c3q17              Which recipes depend on the corporate_api_connector_748504_1686073406 search_object action (used to retrieve active/terminated employee lists)?
+  1672048_c3q6               Which recipes depend on the namely_connector_1672048_1686316621 update_employee_profile action to update the Referred by (email) field?
+Author 1873346
+----------------------------------------
+  1873346_c3q14              If the Salesforce update_sobject action updating the Account fields At_Risk_Reason__c, At_Risk_Status__c, Last_QBR_Done_On__c, Last_Onsite_Visit__c, Customer_Live__c, and Embedded_Type__c changes, which recipes will be affected?
+Author 2436037
+----------------------------------------
+  2436037_c3q3               Which recipes reference the SurveyMonkey __adhoc_http_action (GET detailed response by responseId) used after the new_survey_response trigger?
+Author 2973760
+----------------------------------------
+  2973760_c3q12              If the urlscan_io_connector_3535597_1724052326 search_report action changes its q input field, which recipes will be affected?
+  2973760_c3q6               If the Jira create_issue action changes (project_issuetype, summary, description, assignee_id), which recipes will be affected?
+Author 3000083
+----------------------------------------
+  3000083_c3q1               Which recipes depend on the google_drive __adhoc_http_action (HTTP action) steps used to convert and retrieve the CSV content?
+Author 3165546
+----------------------------------------
+  3165546_c3q10              Which recipes reference the Freshservice __adhoc_http_action action (fields: mnemonic, verb, response_type, path, output, response_headers)?
+Author 3165548
+----------------------------------------
+  3165548_c3q11              Which recipes reference the steelbrick create_object action creating Quote Line fields SBQQ__StartDate__c and SBQQ__SubscriptionTerm__c?
+  3165548_c3q13              If the Salesforce Search objects (SOQL) v2 action (salesforce/search_sobjects_soql_v2) changes, which recipes will be affected?
+  3165548_c3q17              Which recipes depend on the Microsoft Entra ID Azure Active Directory __adhoc_http_action (Get App Roles) path used to retrieve the service principal by application (client) ID?
+  3165548_c3q4               Which recipes depend on the google_slides_connector_3165548_1734945219 __adhoc_http_action (Duplicate slide / Move slide / Replace Text) calls?
+Author 3535598
+----------------------------------------
+  3535598_c3q13              Which recipes reference the glean_connector_3535598_1717658768 search action fields act_as, query, app, last_updated_at, and from?
+  3535598_c3q7               Which recipes reference the work_genie_connector_3535598_1717645848 action update_process_metadata (fields module_id, external_id, process_id)?
+

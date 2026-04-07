@@ -1,0 +1,96 @@
+category2 Evaluation Queries  (50 total)
+======================================================================
+
+Author 8621
+----------------------------------------
+  8621_c2q6                  Which automation runs a recipe function to pull current and next quarter targets from a database table, query Salesforce pipeline and S0 opportunity reports, and return quarterly forecast and pipeline coverage metrics?
+Author 15806
+----------------------------------------
+  15806_c2q4                 Find the recipe function that pulls a SurveyMonkey response by responseId, maps question scores via a lookup table, calculates maturity scores in JavaScript, queries comparative scores from Snowflake, and returns the results.
+Author 50737
+----------------------------------------
+  50737_c2q2                 Which automation runs on a schedule to create Google Sheets pipeline reports by copying Google Drive spreadsheet templates, populating rows from a Google Sheet, and posting the report links to Slack?
+  50737_c2q6                 Find the recipe function that searches Marketo leads, retrieves person details from Marketo and Salesforce, looks up the Salesforce account owner via a corporate API, and returns the updated Marketo campaign ID.
+  50737_c2q7                 Find the workflow task automation that triggers on new requests in real time, queries Workato DB table records for giving or volunteer data with optional email/region/department/fiscal period filters, generates a CSV, updates the DB record, and sends a human review task then changes the workflow stage.
+Author 69943
+----------------------------------------
+  69943_c2q5                 Update the Outreach prospect owner and relate the Salesforce campaign activity when a Chilipiper event is created in Salesforce for a Sales Development assignee and the prospect is in a demo sequence.
+Author 136763
+----------------------------------------
+  136763_c2q1                Post an internal Jira Service Desk comment with an Anthropic-generated RAG answer after embedding the ticket text and attachments with OpenAI and retrieving relevant agreements/Confluence pages/related tickets from Pinecone, reranked via AWS Lambda.
+  136763_c2q2                Send a cancellation notice email and update the Google Sheets churn tracker when a churn request batch is executed, pulling account and contract details from Snowflake and Salesforce and unsubscribing associated Intercom workspaces.
+  136763_c2q23               API endpoint that updates Zone Advanced Billing subscription item provision date (and calculated end date from NetSuite) and opportunity close date for all subscription items under a subscription.
+  136763_c2q3                Create a Jira Service Management LEGAL document review request when a Salesforce QuoteDocument is generated, link it to existing quote-related tickets, and notify the quote owner via Slack and Gmail on errors.
+  136763_c2q76               Is there an automation that searches for an Outreach user by email and creates or updates the user details, then checks a DB table for specified access levels and stops if admin rights are requested?
+Author 137989
+----------------------------------------
+  137989_c2q3                Find the automation that calls the OpenAI API, runs GraphQL queries, exports results to CSV (Snowflake or file storage), and logs the run status to a database table when a recipe function is executed.
+Author 207034
+----------------------------------------
+  207034_c2q1                Which automation runs on a schedule to pull records from a database table, process them with OpenAI and JavaScript, call a recipe function, then publish messages to a pub/sub topic and update the table records?
+  207034_c2q2                Find the automation that subscribes to a Workato Pub/Sub topic, pulls a Salesforce custom object, enriches the company in ZoomInfo, runs AWS Lambda analysis steps to compose a report, and posts errors to Slack.
+Author 384059
+----------------------------------------
+  384059_c2q16               Which automation runs on a schedule to read Google Sheets rows with Updated = N, look up the employee and expense report in NetSuite, fetch currency details from Snowflake, and then update the Google Sheet row?
+  384059_c2q18               Create a Coupa requisition with a requisition line if one doesn’t already exist, then update the requisition line account string and upsert the requisition IDs to project properties via the Workato API.
+  384059_c2q26               Is there an automation that provisions a workspace via Workspace Management when a recipe function execute request is received, setting trial settings or environment provisioning based on workspace type?
+Author 618946
+----------------------------------------
+  618946_c2q8                Find the automation that runs a custom process action trigger, looks up employee data in Workday via WQL and business object searches, stores a CSV file, and then completes the process action with a success or error result.
+Author 800219
+----------------------------------------
+  800219_c2q10               Which automation receives an HTTP request to look up a Salesforce lead by ID, validate it has an email and owner, reassign it if owned by a queue or inactive user, and convert the lead to an account/contact then return a response?
+  800219_c2q18               Create a GitHub commit on a branch to delete files when a message is received on a pub/sub topic and the latest default-branch commit differs from the stored expected head OID in a database table.
+  800219_c2q3                Slack bot command that looks up tagged workspaces and Salesforce account/opportunity details, logs the request to Snowflake, and notifies the accounts team to downgrade/deactivate/delete the workspaces based on scheduled dates.
+Author 800229
+----------------------------------------
+  800229_c2q12               Show a Slack Block Kit modal summarizing requested plan type and feature changes when a recipe function is executed, using lookup tables to format labels and calling other recipe functions as needed.
+  800229_c2q14               Create a Jira Service Desk customer request for provisioning, deprovisioning, staff movement, or Google account cleanup when a recipe function is executed and app details are retrieved from Snowflake.
+  800229_c2q2                Which automation runs on a schedule to unsuspend and unarchive Google Workspace users terminated over 180 days ago (not in Google Vault), transfer their Drive files and Calendar events to an admin, and create Jira Service Desk tickets if transfers fail?
+  800229_c2q3                Update Snowflake employee app and access level records when a Slack bot command is used for manual provisioning or deprovisioning, then notify the requester in Slack or email and assign/unassign the app in Okta.
+  800229_c2q4                Create a Jira Service Management Operations incident and an OpsGenie alert when a failed job event is published to the centralized pub/sub topic, with optional auto-retry recovery and on-call assignment.
+  800229_c2q6                When an employee is terminated in Snowflake, send offboarding notifications via email and Slack, create or comment on a Jira Service Desk ticket for impacted cost centers, expire pending requests in Snowflake, and update Namely manager profiles.
+Author 804586
+----------------------------------------
+  804586_c2q1                Which automation packages a recipe or custom connector asset by fetching it from Workspace Deployments, storing the file, and upserting the asset record into a DB table when a recipe function is executed?
+  804586_c2q3                Find the automation that runs on recipe function execute to build a package version by updating dependency records in DB tables, exporting the package via API, storing the manifest file, and completing the package build in App Installer.
+  804586_c2q6                Which automation runs on a schedule to fetch all recipes from app_installer_connector_3165548_1712117286 and sync them to a Workato DB table by deleting missing records and upserting current ones?
+  804586_c2q9                API endpoint that updates a record in a database table and, if package installation/upgrade is detected, updates or adds the installed package version and asynchronously calls recipe functions before returning an HTTP response
+Author 973497
+----------------------------------------
+  973497_c2q2                Run a recipe function that pulls the final customer admin list from Snowflake, upserts users in Iterable, adds them to Normal or Special lists based on subscription status, and logs results to Google Sheets
+  973497_c2q3                Create or update a Jira issue when Pendo feedback is received, map the feedback ID to the Jira key in a lookup table and Snowflake, then post an alert to Slack and send an acknowledgement email via Gmail.
+  973497_c2q5                When a batch message is received on a pub/sub topic, does an automation upsert the changes into Snowflake and update Iterable users including unsubscribing them from Product Hour and Product Hub subscription groups?
+  973497_c2q6                Find the automation that runs when a Slack bot command is issued, uses OpenAI to process data, stores a file and shareable link in Workato Files, logs a record in a Workato DB table, and updates the Slack message.
+Author 1672047
+----------------------------------------
+  1672047_c2q5               Which automation runs on a schedule to read the New Jobs Google Sheet, fetch job details from Greenhouse, and update the corresponding spreadsheet row with offices, hiring manager, recruiter, coordinator, and opening ID?
+Author 1672048
+----------------------------------------
+  1672048_c2q1               Slack bot command to process buddy program onboarding, update the new hire’s team in Namely, log requested app access in the corporate API/Snowflake, and create a Sycomp MacBook case with email/Slack notifications.
+  1672048_c2q17              Which automation runs on a schedule to pull active and terminated employees from BT Snowflake via the corporate API and update the Workato DB training enrollment table by adding missing required courses and deleting no-longer-required or terminated employee enrollments?
+  1672048_c2q21              Which recipe function returns the required employee compliance training list based on employment type, region (NORAM vs international), role (IC vs manager), cost center/team, and phishing training completion status?
+Author 1873345
+----------------------------------------
+  1873345_c2q1               Send an email reminder to the Salesforce account executive (and escalate to their manager on the second reminder) when a meeting was attended but no follow-up email task is found in Salesforce or Gong within 2 days.
+  1873345_c2q3               Which automation runs on a schedule to pull data from Google Sheets, parse it as CSV, search Salesforce records by Name, and refresh a lookup table, posting a Slack message if the sheet is empty?
+Author 1873346
+----------------------------------------
+  1873346_c2q1               Process a Slack go-live message by fetching the Smartsheet row, looking up the CS task and related opportunity in Salesforce, updating the Account contract notes, and returning an approval/prescreening message to the partner manager channel
+Author 3165546
+----------------------------------------
+  3165546_c2q3               Find the automation that triggers on a Jira issue update and starts or updates a Work Genie process for the assignee, sending a notification and looking up requester/assignee details in Slack by email.
+Author 3165548
+----------------------------------------
+  3165548_c2q12              Run an on-prem command line script via recipe function by creating a folder, uploading a file, executing the script, downloading the output file, then deleting the folder and returning the result.
+  3165548_c2q4               Create a Google Slides presentation by copying a Google Drive template, replacing slide text and images, then sharing the new file and returning the presentation link when a user requests it in Genie.
+  3165548_c2q8               Find the automation that runs on recipe function execute to loop through Jira Service Desk issues, fetch issue details and comments via HTTP, and call other recipe functions asynchronously to mark the dataload in progress and complete.
+Author 3382944
+----------------------------------------
+  3382944_c2q1               Start or resume a process in byin_workato_recipe_ops_connector using a conversation or channel thread external ID, upload any attached files to workato_files, and update the process metadata before calling a downstream recipe.
+  3382944_c2q5               Find the automation that, when an approver event occurs, parses the JSON payload, looks up the user’s manager in Okta, calls another flow, and updates process metadata in the BYIN Recipe Ops system.
+Author 3535598
+----------------------------------------
+  3535598_c2q1               Find the automation that runs a Work Genie claim process, downloads the claim attachment, uses OpenAI to extract receipt details and validate claim category/subcategory against Snowflake, then looks up active Coupa project codes and completes the process.
+  3535598_c2q6               Send a Slack bot confirmation and then look up a Salesforce custom object and post the appropriate Slack message based on opportunity/account ownership or account changes when the execute function is triggered.
+

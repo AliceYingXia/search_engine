@@ -1,0 +1,30 @@
+flowchart TD
+    subgraph INGEST["DATA INGESTION"]
+        BT([BT Workspace]) -->|manual export| RJSON[raw recipe JSON]
+    end
+
+    RJSON --> PROC[Data Processing]
+
+    PROC -->|encode with Qwen3-8B| EIDX[(pgvector index)]
+    PROC -->|extract connectors / actions / fields| KVOC[(keyword vocabulary\n~2,000 terms)]
+
+    UQUERY([User query]) --> SIG[Signal Detection]
+    KVOC -.->|vocab lookup| SIG
+
+    SIG -->|underscore tokens\nw_kw=2.0  w_emb=1.0| UNDER[ ]
+    SIG -->|app names only\nw_kw=1.0  w_emb=2.0| APPS[ ]
+    SIG -->|no vocab\nw_kw=0.0  w_emb=1.0| NOVOC[ ]
+
+    UNDER -->|ILIKE AND → OR| KWS[Keyword Search]
+    APPS  -->|ILIKE AND → OR| KWS
+
+    UNDER -->|cosine similarity| EMBS[Dense Search]
+    APPS  -->|cosine similarity| EMBS
+    NOVOC -->|cosine similarity| EMBS
+
+    EIDX -.-> EMBS
+
+    KWS  -->|top k×3| RRF[Weighted RRF Fusion]
+    EMBS -->|top k×3| RRF
+
+    RRF --> TOPK([top-k results])

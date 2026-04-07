@@ -5,7 +5,7 @@ Reference for the author-scoped sample drawn from `bt_prod.parquet` for developm
 Script: `01_sampling/sample_recipes.py`
 Input:  `data/bt_prod.parquet` (10,754 rows)
         `data/gpt-5.2-2025-12-11_bt_prod_descriptions_recipe.parquet` (9,764 rows)
-Output: `data/bt_prod_sample.parquet` (801 rows)
+Output: `data/bt_prod_sample.parquet` (TBD rows — update after running)
 
 ---
 
@@ -26,17 +26,13 @@ Rows without a GPT-generated description are dropped via an inner join with the 
 
 Recipes without descriptions are excluded because the description (`short_user_intent`, `verbose_user_intent`) is needed for evaluation and retrieval quality assessment.
 
-### Step 2 — Select 10 authors with 50 < recipes < 100
+### Step 2 — Select top 30 authors by recipe count
 
-After the description filter, authors are ranked by recipe count. Authors with more than 50 and fewer than 100 recipes are eligible. The **top 10 by recipe count** are selected.
-
-This range is chosen deliberately:
-- **> 50**: enough recipes per author to represent their automation style and domain
-- **< 100**: avoids the dataset being dominated by the largest power users (top 4 authors have 500–750 recipes each)
+After the description filter, authors are ranked by recipe count and the **top 30** are selected with no range restriction. This spans the highest-volume power users down through large contributors.
 
 ### Step 3 — Include all recipes from the selected authors
 
-All recipes belonging to the 10 selected authors (after description filter) are included — no further subsampling within authors.
+All recipes belonging to the 30 selected authors (after description filter) are included — no further subsampling within authors.
 
 ---
 
@@ -44,16 +40,7 @@ All recipes belonging to the 10 selected authors (after description filter) are 
 
 | author_id | recipes | Sample description |
 |---|---|---|
-| 618946 | 96 | When a deployment build is requested, automatically build the Gong connection package |
-| 2973760 | 95 | When Work Genie requests the VirusTotal module definition, automatically return the full definition |
-| 973497 | 90 | Every day, clean up an Iterable suppression list in batches and then kick off our duplicate check |
-| 1873345 | 80 | Notify our Slack channel whenever a renewal-related Opportunity with contract limit changes |
-| 3000083 | 79 | Make sure submitted request details aren't blank and the exception description isn't too long |
-| 206503 | 74 | Let approvers update an approval request's parameters in Slack and then approve it |
-| 3165547 | 73 | Each month, summarize our recent process activity and ticketing efficiency into a single report |
-| 5770830 | 73 | Help me find Gong calls from a given time period and return a list with the call details |
-| 3511776 | 71 | Create a new Google Slides deck from our standard template in Google Drive |
-| 2136196 | 70 | Given a project ID, find the Slack message we started for that onboarding |
+| (update after running) | — | — |
 
 ---
 
@@ -61,13 +48,11 @@ All recipes belonging to the 10 selected authors (after description filter) are 
 
 | Metric | Value |
 |---|---|
-| Total rows | 801 |
-| Unique authors | 10 |
-| Unique recipes (`flow_id`) | 801 |
+| Total rows | TBD — update after running |
+| Unique authors | 30 |
+| Unique recipes (`flow_id`) | TBD |
 | All rows have description | ✅ 100% |
-| `has_comment = True` | 22 (2.7%) |
-
-Note: `has_comment` rate is 2.7% in this sample vs 10% in the full dataset — these 10 authors comment rarely.
+| `has_comment = True` | TBD |
 
 ---
 
@@ -102,7 +87,7 @@ For context, the full `bt_prod.parquet` (after description filter) has 219 autho
 
 | Group | Authors | Notes |
 |---|---|---|
-| > 500 recipes | 4 | Top power users — dominate 25% of dataset |
-| 100–500 recipes | 25 | Large contributors |
-| **50–99 recipes** | **20** | **Eligible pool — 10 selected** |
-| < 50 recipes | 170 | Long tail |
+| > 500 recipes | 4 | Top power users — **all 4 selected** |
+| 100–500 recipes | 25 | Large contributors — **all 25 selected** |
+| 50–99 recipes | 20 | Mid-tier — **top 1 selected** |
+| < 50 recipes | 170 | Long tail — not selected |

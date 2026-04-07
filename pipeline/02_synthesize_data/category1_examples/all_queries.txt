@@ -1,0 +1,90 @@
+category1 Evaluation Queries  (50 total)
+======================================================================
+
+Author 8621
+----------------------------------------
+  8621_q10                   How can we automatically create a support ticket and notify the team when a customer issue is submitted?
+Author 15806
+----------------------------------------
+  15806_q1                   Which automations send downgrade or deletion warning emails for customers with pending account suspension?
+Author 50737
+----------------------------------------
+  50737_q4                   Which recipes manage the submission and approval workflow for employee volunteering or donation requests?
+  50737_q7                   Which recipes generate filtered giving or volunteering reports for review based on employee and fiscal period criteria?
+Author 69943
+----------------------------------------
+  69943_q8                   Which automations control user access and show the right configuration home page in our lead generation app?
+Author 136763
+----------------------------------------
+  136763_q1                  Which automations generate AI-based responses to legal support tickets using our agreements and knowledge base?
+  136763_q25                 How do we automate creating and configuring a new single sign-on application with the right access groups and roles?
+  136763_q30                 Which automations send daily employee milestone notifications like anniversaries and probation completions?
+  136763_q49                 How do we provision and activate user access while ensuring we have enough software licenses available?
+  136763_q9                  Which automations keep our knowledge base page list in sync with our data warehouse and notify Legal when pages are deleted?
+Author 137989
+----------------------------------------
+  137989_q8                  Which automations identify and mark customer contacts that have been deleted from our support system in our data warehouse?
+  137989_q9                  Which automations start the customer usage alert data pipeline after the daily production run completes?
+Author 207034
+----------------------------------------
+  207034_q5                  How do I automatically create a copy of a spreadsheet template and return its data when someone submits a request?
+Author 384059
+----------------------------------------
+  384059_q1                  How do we automatically extract receipt details from expense claim attachments and categorize the claim?
+  384059_q10                 Which recipes help process quote signing requests by collecting order form attachments in a service ticket?
+  384059_q17                 Which automations keep our product and sale item records in sync between our sales system and finance system?
+  384059_q7                  Which automations help employees review and update their default application access through a chat request?
+Author 618946
+----------------------------------------
+  618946_q14                 Which recipes run a workflow, perform custom processing, wait for a set time, and then return a result?
+Author 800219
+----------------------------------------
+  800219_q1                  How do we update and track company phone number assignments and notify people when requests are completed?
+  800219_q20                 How do I automatically remove a user’s access to specific Atlassian products and deactivate them if they no longer need any access?
+  800219_q26                 Which automations handle deactivating and removing users while transferring their owned sheets to a manager?
+  800219_q29                 What recipes automate creating or reactivating employee time tracking accounts and sending invitations?
+  800219_q3                  Which automations handle customer account churn requests including workspace downgrade or deactivation?
+  800219_q31                 How do I automatically remove a user from all security access groups when they no longer need AWS access?
+  800219_q6                  Which automations keep our incident response services and status page components in sync for each project?
+  800219_q7                  How do I automatically create a new shared team drive with the right access permissions and copy over template files?
+  800219_q8                  Which automations complete and clean up deactivation requests and tag affected customer records as deleted?
+Author 800229
+----------------------------------------
+  800229_q13                 How do we load and refresh customer data in our data warehouse based on the latest CRM field definitions?
+  800229_q2                  Which automations manage reactivating former employee accounts and transferring their files and calendar events after a retention period?
+  800229_q23                 Which automations generate and post responses to change management requests in our issue tracking process?
+  800229_q31                 Which automations create or update user accounts and group access when someone is added to our file-sharing system?
+  800229_q33                 How do we automatically provision and update user accounts and access levels when someone needs access?
+  800229_q47                 How do I transfer a departing employee’s files to an administrator and organize them into a single folder?
+  800229_q5                  Which recipes support the sales quote approval process by identifying approvers and preparing quote line summaries for review?
+Author 973497
+----------------------------------------
+  973497_q16                 How do we update a marketing contact’s communication preferences across all records with the same email?
+  973497_q4                  Which automations schedule review meetings for urgent requests that are nearing or past their deadline?
+Author 1672048
+----------------------------------------
+  1672048_q12                Which automations validate and standardize employee profile data when an employee record is created or updated?
+  1672048_q17                Which automations keep employee training enrollment records up to date based on active and terminated employees?
+  1672048_q21                What automations determine which compliance and security trainings an employee must complete based on their role and location?
+  1672048_q4                 What automations run when a job opening is approved and needs hiring team notifications and asset inventory checks?
+Author 1873346
+----------------------------------------
+  1873346_q5                 Which automations calculate and share sales deal unit economics when a new opportunity record is created?
+Author 2366099
+----------------------------------------
+  2366099_q10                How do we automatically install the right apps on an employee’s Mac based on what they’ve been provisioned?
+  2366099_q17                Which automations retrieve records from a business database and process them if they meet certain conditions?
+  2366099_q2                 Which recipes automatically download and extract files on a schedule and upload them to our internal file server?
+Author 2436037
+----------------------------------------
+  2436037_q6                 How do I add a lead to a sales outreach sequence and update their marketing program status from a chat command?
+Author 2973760
+----------------------------------------
+  2973760_q13                Find automations that investigate a computer’s security status and device history using its unique device ID.
+  2973760_q15                What automations help look up a device management user and return the result to a service request process?
+  2973760_q7                 Which recipes automatically add new records to a tracking table on a schedule and notify a team channel?
+  2973760_q9                 Which automations alert our team in chat when device history indicates a potential issue after an identity event?
+Author 5081019
+----------------------------------------
+  5081019_q4                 Which recipes retrieve records from our internal database and return the results through an automated workflow?
+
