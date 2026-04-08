@@ -103,6 +103,8 @@ class EmbeddingPipeline:
 
             vectors = self.model.embed_texts(texts)
 
+            pg_type = self.model.pg_type
+            vec_strs = ["[" + ",".join(map(str, v)) + "]" for v in vectors]
             psycopg2.extras.execute_values(
                 self.cur,
                 f"""
@@ -110,7 +112,8 @@ class EmbeddingPipeline:
                 VALUES %s
                 ON CONFLICT (recipe_uid) DO UPDATE SET embedding = EXCLUDED.embedding
                 """,
-                [(uid, vec) for uid, vec in zip(uids, vectors)],
+                list(zip(uids, vec_strs)),
+                template=f"(%s, %s::{pg_type})",
             )
             self.conn.commit()
             inserted += len(batch)
@@ -119,9 +122,10 @@ class EmbeddingPipeline:
             if cfg.backend == "openai":
                 time.sleep(0.1)   # light rate-limit buffer
 
+        ops = "halfvec_cosine_ops" if self.model.pg_type == "halfvec" else "vector_cosine_ops"
         print(f"Finished — {inserted} vectors written to `{self.model.table}`")
         print(f"Create the HNSW index when ready:")
-        print(f"  CREATE INDEX ON {self.model.table} USING hnsw (embedding vector_cosine_ops);")
+        print(f"  CREATE INDEX ON {self.model.table} USING hnsw (embedding {ops});")
         return inserted
 
 

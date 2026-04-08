@@ -57,8 +57,13 @@ CREATE TABLE IF NOT EXISTS embeddings_text_embedding_3_large (
 CREATE TABLE IF NOT EXISTS embeddings_qwen3_embedding_8b (
     recipe_uid  TEXT PRIMARY KEY REFERENCES recipes(recipe_uid) ON DELETE CASCADE,
     model       TEXT NOT NULL DEFAULT 'Qwen/Qwen3-Embedding-8B',
-    embedding   vector(4096)
-)
+    embedding   halfvec(4000)
+);
+
+-- Migration: convert existing vector(4096) column to halfvec(4000)
+ALTER TABLE embeddings_qwen3_embedding_8b
+    ALTER COLUMN embedding TYPE halfvec(4000)
+    USING (embedding::text::halfvec(4000))
 """
 
 

@@ -18,27 +18,69 @@ At startup, a technical vocabulary is built from the recipe corpus:
 Any query token that matches the vocabulary becomes an ILIKE condition.
 This is automatic keyword extraction — no hand-crafted rules or stopword lists.
 
-Search strategy (first non-empty result wins)
----------------------------------------------
-    1. ILIKE AND — all underscore tokens from the query that exist in the vocab
-                   must appear in the recipe text, ranked by number of matches.
-                   Underscore tokens only (e.g. workato_db_table, get_records)
-                   because single-word tokens are too broad for AND filtering.
-    2. ILIKE OR  — any vocab token (underscore or single-word app names like
-                   salesforce, snowflake) must appear, ranked by match count.
+Vocab tokens are split into two tiers by type:
+    - underscore tokens : compound technical identifiers containing '_'
+                          (e.g. workato_db_table, get_records). Precise and
+                          unambiguous — safe to weight more heavily.
+    - word tokens       : single-word app names (e.g. salesforce, snowflake).
+                          Broader — used for scoring only, not strict filtering.
+
+Search strategies (select with --strategy)
+------------------------------------------
+    and_or  (default)
+        Two-pass fallback. First tries ILIKE AND across underscore tokens only
+        (all must appear). If that returns nothing, falls back to ILIKE OR
+        across all tokens (any must appear), ranked by match count.
+        Queries with no vocab tokens return empty (no_vocab).
+
+    weighted
+        Single-pass unified scoring. WHERE clause is OR across all tokens so
+        every partially-matching recipe is considered. Ranking uses a combined
+        weighted score: each underscore token match = 3 points, each word token
+        match = 1 point. Higher total score ranks first.
+
+        Example (3 underscore + 2 word tokens in query):
+            Recipe A matches 3 underscore              → score 9  → rank 1
+            Recipe B matches 1 underscore + 2 word     → score 5  → rank 2
+            Recipe C matches 2 word only               → score 2  → rank 3
+
+        Caveat: enough word matches can outscore a single underscore match
+        (e.g. 4 word tokens = 4 pts > 1 underscore = 3 pts).
+
+    lexicographic
+        Single-pass strict hierarchy. WHERE clause is OR across all tokens.
+        Ranking uses two independent ORDER BY keys:
+            1. underscore match count DESC  (primary)
+            2. word match count DESC        (tiebreaker)
+        Any recipe with ≥1 underscore match always outranks any recipe with
+        zero underscore matches, regardless of word match counts.
+
+        Example (same query as above):
+            Recipe A: (underscore=3, word=0) → rank 1
+            Recipe B: (underscore=1, word=2) → rank 2
+            Recipe C: (underscore=0, word=2) → rank 3
 
 If no vocab tokens are found in the query (e.g. pure business-language Cat 1
-queries), both passes return empty — the query is left for the embedding model
-in a hybrid setup.
+queries), all strategies return empty — the query is left for the embedding
+model in a hybrid setup.
 
 Usage
 -----
-    # All three categories, k=5 (default)
+    # All three categories, k=5, default strategy (and_or)
     python pipeline/03_evaluate_embeddings/evaluate_fulltext.py
 
-    # Specific categories or k
-    python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --category 1 2
-    python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --category 3 --k 10
+    # Weighted strategy
+    python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --strategy weighted
+
+    # Lexicographic strategy
+    python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --strategy lexicographic
+
+    # Combine with category / k flags
+    python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --strategy weighted --category 2 3 --k 10
+
+Output files are strategy-stamped (e.g. fts_category1_k5_weighted.csv) so
+results from all three strategies can coexist and be compared in the shared
+eval_summary_k{k}.csv.
 
 Environment variables
 ---------------------
@@ -65,6 +107,12 @@ CAT_PATHS = {
 }
 
 _TOKEN_RE = re.compile(r'\b\w+(?:_\w+)*\b')
+
+
+def _trigrams(s: str) -> set[str]:
+    """Return the set of character trigrams for string s (padded with spaces)."""
+    s = f" {s} "
+    return {s[i:i+3] for i in range(len(s) - 2)}
 
 
 # ---------------------------------------------------------------------------
@@ -169,15 +217,79 @@ class FullTextEvaluator:
     conn : open psycopg2 connection
     """
 
-    def __init__(self, k: int, conn):
-        self.k   = k
-        self.conn = conn
-        self.cur  = conn.cursor()
+    #: maps CLI strategy name → bound search method
+    STRATEGIES = {
+        "and_or":              "_search",
+        "weighted":            "_search_weighted",
+        "lexicographic":       "_search_lexicographic",
+        "weighted_pgfts":      "_search_weighted_pgfts",
+    }
+
+    # Minimum ts_rank score for pgfts fallback results to be accepted.
+    # Scores below this threshold are treated as noise (generic stem overlap)
+    # and discarded. Calibrated from eval data:
+    #   Cat 1 top-1 range: 0.012–0.055 (mostly noise)
+    #   Cat 2 top-1 range: 0.024–0.068
+    #   Cat 3 top-1 range: 0.035–0.086
+    PGFTS_MIN_RANK = 0.03
+
+    # Minimum query token length to attempt fuzzy correction.
+    # Short tokens (< 5 chars) risk matching unrelated vocab terms at any threshold.
+    FUZZY_MIN_LEN  = 5
+    # Trigram similarity threshold for fuzzy vocab correction (0–1).
+    # Empirical scores for typical typos (1–2 char errors):
+    #   "saleforce"  vs "salesforce"  → 0.58
+    #   "snowflaek"  vs "snowflake"   → 0.50
+    #   "gogle"      vs "google"      → 0.57
+    # Dangerous near-misses are blocked by FUZZY_MIN_LEN, not this threshold:
+    #   "get"  (3 chars) → skipped by length guard
+    #   "sale" (4 chars) → skipped by length guard
+    # 0.7 is conservative — only catches very close matches (near-identical strings).
+    FUZZY_THRESHOLD = 0.7
+
+    def __init__(self, k: int, conn, strategy: str = "and_or", debug: bool = False):
+        if strategy not in self.STRATEGIES:
+            raise ValueError(f"Unknown strategy {strategy!r}. Choose from: {list(self.STRATEGIES)}")
+        self.k        = k
+        self.conn     = conn
+        self.cur      = conn.cursor()
+        self.strategy = strategy
+        self.debug    = debug
+        self._search_fn = getattr(self, self.STRATEGIES[strategy])
         print("Building technical vocabulary from corpus ...", end=" ", flush=True)
         self._vocab = _build_tech_vocab(self.cur)
+        self._vocab_trigrams = {term: _trigrams(term) for term in self._vocab}
         print(f"{len(self._vocab)} terms loaded.")
 
     # ── Vocabulary matching ───────────────────────────────────────────────────
+
+    def _fuzzy_correct(self, token: str) -> str | None:
+        """
+        Attempt to fuzzy-correct a token that did not exactly match the vocab.
+
+        Returns the closest vocab term if its trigram similarity exceeds
+        FUZZY_THRESHOLD and the token meets FUZZY_MIN_LEN, otherwise None.
+
+        Trigram similarity = |A ∩ B| / |A ∪ B| (Jaccard on trigram sets).
+        Typical scores: ~0.58 for a 1-char typo, ~0.50 for a 2-char typo.
+        See FUZZY_THRESHOLD for calibration details.
+        """
+        if len(token) < self.FUZZY_MIN_LEN:
+            return None
+        tok_tri  = _trigrams(token)
+        best_sim = 0.0
+        best_term = None
+        for term, term_tri in self._vocab_trigrams.items():
+            intersection = len(tok_tri & term_tri)
+            if intersection == 0:
+                continue
+            sim = intersection / len(tok_tri | term_tri)
+            if sim > best_sim:
+                best_sim  = sim
+                best_term = term
+        if best_sim >= self.FUZZY_THRESHOLD:
+            return best_term
+        return None
 
     def _extract_vocab_tokens(self, query: str) -> tuple[list[str], list[str]]:
         """
@@ -192,12 +304,25 @@ class FullTextEvaluator:
           to AND-filter without excluding the right recipe.
 
         Both lists are order-preserving and deduplicated.
+
+        Tokens that do not exactly match the vocab are passed to _fuzzy_correct,
+        which substitutes the closest vocab term if similarity >= FUZZY_THRESHOLD
+        and the token is >= FUZZY_MIN_LEN chars. This makes the search robust to
+        minor typos (e.g. "saleforce" → "salesforce", "snowflaek" → "snowflake").
         """
         seen         = set()
         underscore_t = []
         word_t       = []
-        for t in _TOKEN_RE.findall(query.lower()):
-            if t in self._vocab and t not in seen:
+        for raw in _TOKEN_RE.findall(query.lower()):
+            t = raw
+            if t not in self._vocab:
+                corrected = self._fuzzy_correct(t)
+                if corrected and self.debug:
+                    print(f"    [fuzzy] {raw!r} → {corrected!r}")
+                t = corrected or ""
+            elif self.debug:
+                print(f"    [exact] {raw!r}")
+            if t and t not in seen:
                 seen.add(t)
                 (underscore_t if '_' in t else word_t).append(t)
         return underscore_t, word_t
@@ -232,6 +357,74 @@ class FullTextEvaluator:
         )
         return [r[0] for r in self.cur.fetchall()]
 
+    def _ilike_weighted(
+        self,
+        underscore_tokens: list[str],
+        word_tokens: list[str],
+        mode: str,
+    ) -> list[str]:
+        """
+        Single-pass ILIKE search with multi-layer ranking.
+
+        mode='weighted'      — Option A: underscore hits count as 3, word hits as 1.
+                               ORDER BY combined weighted score DESC.
+        mode='lexicographic' — Option B: ORDER BY (underscore_score DESC, word_score DESC).
+                               Any underscore match strictly outranks any all-word match.
+
+        WHERE clause is OR across all tokens so every partially-matching recipe
+        is considered.
+        """
+        col        = SEARCH_COLUMN
+        all_tokens = underscore_tokens + word_tokens
+        all_ilike  = [f"%{t}%" for t in all_tokens]
+
+        where = " OR ".join(f"{col} ILIKE %s" for _ in all_tokens)
+
+        if mode == "weighted":
+            UNDERSCORE_WEIGHT = 3
+            WORD_WEIGHT       = 1
+            u_expr = " + ".join(
+                f"(CASE WHEN {col} ILIKE %s THEN {UNDERSCORE_WEIGHT} ELSE 0 END)"
+                for _ in underscore_tokens
+            )
+            w_expr = " + ".join(
+                f"(CASE WHEN {col} ILIKE %s THEN {WORD_WEIGHT} ELSE 0 END)"
+                for _ in word_tokens
+            )
+            parts  = [e for e in (u_expr, w_expr) if e]
+            score  = " + ".join(parts)
+            order  = f"({score}) DESC"
+            params = all_ilike + [f"%{t}%" for t in underscore_tokens] + [f"%{t}%" for t in word_tokens] + [self.k]
+        else:  # lexicographic
+            u_expr = (
+                " + ".join(
+                    f"(CASE WHEN {col} ILIKE %s THEN 1 ELSE 0 END)"
+                    for _ in underscore_tokens
+                )
+                if underscore_tokens else "0::int"
+            )
+            w_expr = (
+                " + ".join(
+                    f"(CASE WHEN {col} ILIKE %s THEN 1 ELSE 0 END)"
+                    for _ in word_tokens
+                )
+                if word_tokens else "0::int"
+            )
+            order  = f"({u_expr}) DESC, ({w_expr}) DESC"
+            params = all_ilike + [f"%{t}%" for t in underscore_tokens] + [f"%{t}%" for t in word_tokens] + [self.k]
+
+        self.cur.execute(
+            f"""
+            SELECT recipe_uid
+            FROM   recipes
+            WHERE  {where}
+            ORDER  BY {order}, recipe_uid
+            LIMIT  %s
+            """,
+            params,
+        )
+        return [r[0] for r in self.cur.fetchall()]
+
     def _search(self, query: str) -> tuple[list[str], str]:
         """
         Returns (recipe_uids, strategy_used).
@@ -255,6 +448,79 @@ class FullTextEvaluator:
 
         results = self._ilike_scored(all_tokens, require_all=False)
         return results, "OR"
+
+    def _search_weighted(self, query: str) -> tuple[list[str], str]:
+        """
+        Option A — single-pass weighted scoring (underscore=3, word=1).
+        Returns (recipe_uids, strategy_used).
+        """
+        underscore_tokens, word_tokens = self._extract_vocab_tokens(query)
+        if not underscore_tokens and not word_tokens:
+            return [], "no_vocab"
+        results = self._ilike_weighted(underscore_tokens, word_tokens, mode="weighted")
+        return results, "weighted"
+
+    def _pgfts_fill(self, query: str, n: int, exclude: set[str]) -> list[str]:
+        """
+        Fetch up to n pgfts/english results not already in exclude, filtered
+        by PGFTS_MIN_RANK. Returns an empty list if the tsquery is empty or
+        no results clear the threshold.
+        """
+        self.cur.execute(
+            "SELECT plainto_tsquery('english', %s)::text", (query,)
+        )
+        tsq_text = self.cur.fetchone()[0]
+        if not tsq_text:
+            return []
+        tsq_or = tsq_text.replace(" & ", " | ")
+        self.cur.execute(
+            f"""
+            SELECT recipe_uid
+            FROM   recipes
+            WHERE  text_search_vector @@ to_tsquery('english', %s)
+              AND  ts_rank(text_search_vector, to_tsquery('english', %s)) >= %s
+              AND  recipe_uid != ALL(%s)
+            ORDER  BY ts_rank(text_search_vector, to_tsquery('english', %s)) DESC,
+                      recipe_uid
+            LIMIT  %s
+            """,
+            (tsq_or, tsq_or, self.PGFTS_MIN_RANK, list(exclude), tsq_or, n),
+        )
+        return [r[0] for r in self.cur.fetchall()]
+
+    def _search_weighted_pgfts(self, query: str) -> tuple[list[str], str]:
+        """
+        Weighted ILIKE search (underscore=3, word=1) with pgfts/english fallback.
+
+        Runs _search_weighted first. If fewer than k results are returned,
+        fills remaining slots with pgfts/english results that clear
+        PGFTS_MIN_RANK, deduped against already-retrieved UIDs.
+        ILIKE results always occupy the top ranks.
+        """
+        underscore_tokens, word_tokens = self._extract_vocab_tokens(query)
+        if not underscore_tokens and not word_tokens:
+            # No vocab tokens — go straight to pgfts
+            filled = self._pgfts_fill(query, self.k, exclude=set())
+            return filled, "no_vocab+pgfts"
+
+        results = self._ilike_weighted(underscore_tokens, word_tokens, mode="weighted")
+        if len(results) < self.k:
+            filled = self._pgfts_fill(query, self.k - len(results), exclude=set(results))
+            results = results + filled
+            return results, "weighted+pgfts"
+        return results, "weighted"
+
+    def _search_lexicographic(self, query: str) -> tuple[list[str], str]:
+        """
+        Option B — single-pass lexicographic ranking (underscore score first,
+        word score as tiebreaker).
+        Returns (recipe_uids, strategy_used).
+        """
+        underscore_tokens, word_tokens = self._extract_vocab_tokens(query)
+        if not underscore_tokens and not word_tokens:
+            return [], "no_vocab"
+        results = self._ilike_weighted(underscore_tokens, word_tokens, mode="lexicographic")
+        return results, "lexicographic"
 
     # ── Metrics ───────────────────────────────────────────────────────────────
 
@@ -291,7 +557,9 @@ class FullTextEvaluator:
                 skipped += 1
                 continue
 
-            retrieved, strategy = self._search(row["query"])
+            if self.debug:
+                print(f"  query: {row['query']}")
+            retrieved, strategy = self._search_fn(row["query"])
             strategy_counts[strategy] = strategy_counts.get(strategy, 0) + 1
 
             records.append({
@@ -325,8 +593,7 @@ class FullTextEvaluator:
     ) -> tuple[list[pd.DataFrame], list[CategoryMetrics]]:
         k = self.k
         print(f"{'=' * 60}")
-        print(f"Keyword search  |  column={SEARCH_COLUMN}  |  vocab={len(self._vocab)} terms  |  k={k}")
-        print(f"Strategy: ILIKE AND → ILIKE OR")
+        print(f"Keyword search  |  column={SEARCH_COLUMN}  |  vocab={len(self._vocab)} terms  |  k={k}  |  strategy={self.strategy}")
 
         detail_frames: list[pd.DataFrame] = []
         metrics:       list[CategoryMetrics] = []
@@ -378,6 +645,14 @@ def main():
         "--k", type=int, default=5,
         help="Number of results to retrieve (default: 5)",
     )
+    parser.add_argument(
+        "--strategy", choices=list(FullTextEvaluator.STRATEGIES), default="and_or",
+        help="Search strategy: and_or (default), weighted (underscore=3/word=1), lexicographic",
+    )
+    parser.add_argument(
+        "--debug", action="store_true",
+        help="Print exact and fuzzy vocab matches for every query token",
+    )
     args = parser.parse_args()
 
     k = args.k
@@ -388,13 +663,13 @@ def main():
     print("  |  ".join(f"{name}: {len(df)} queries" for name, df in selected_cats))
 
     conn      = get_connection()
-    evaluator = FullTextEvaluator(k, conn)
+    evaluator = FullTextEvaluator(k, conn, strategy=args.strategy, debug=args.debug)
     detail_frames, metrics = evaluator.run(selected_cats)
 
     # Per-category detail CSVs
     for frame, (cat_name, _) in zip(detail_frames, selected_cats):
         cat_slug = cat_name.lower().replace(" ", "")
-        out_path = BASE_DIR / f"fts_{cat_slug}_k{k}.csv"
+        out_path = BASE_DIR / f"fts_{cat_slug}_k{k}_{args.strategy}.csv"
         frame.to_csv(out_path, index=False)
         print(f"Detailed results → {out_path.name}")
 
@@ -402,7 +677,7 @@ def main():
     print(f"\n{'=' * 60}")
     print("SUMMARY")
     print(f"{'=' * 60}")
-    model_key   = "keyword/ilike"
+    model_key   = f"keyword/ilike/{args.strategy}"
     summary_rows = [
         {
             "model":               model_key,

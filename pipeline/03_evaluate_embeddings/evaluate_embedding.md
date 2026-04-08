@@ -153,30 +153,99 @@ names, field names ≥ 8 chars, alphabetic sub-words of compound connector names
 Any query token matching the vocabulary becomes an ILIKE condition — no
 hand-crafted rules or stopword lists.
 
-Search strategy (ILIKE AND → ILIKE OR):
+Vocab tokens are split into two tiers:
 
-- AND: all underscore vocab tokens must appear, ranked by match score
-- OR fallback: any vocab token appears, ranked by match score
-- no_vocab: query has no technical tokens → returns empty (for Cat 1 business queries)
+- **underscore tokens** — compound identifiers containing `_` (e.g. `workato_db_table`, `get_records`). Precise and unambiguous.
+- **word tokens** — single-word app names (e.g. `salesforce`, `snowflake`). Broader.
 
-Results written to `eval_summary_k<k>.csv` under model name `keyword/ilike`.
+Four search strategies are available via `--strategy`:
+
+| Strategy         | Model key                      | Description                                                                                                                                                                                                                                                                                               |
+| ---------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `and_or`         | `keyword/ilike/and_or`         | Default. Two-pass fallback: ILIKE AND on underscore tokens first; falls back to ILIKE OR on all tokens.                                                                                                                                                                                                   |
+| `weighted`       | `keyword/ilike/weighted`       | Single-pass. OR across all tokens; underscore matches score 3 pts, word matches score 1 pt. Higher = better.                                                                                                                                                                                              |
+| `lexicographic`  | `keyword/ilike/lexicographic`  | Single-pass. OR across all tokens; ORDER BY underscore score DESC, then word score DESC. Strict hierarchy.                                                                                                                                                                                                |
+| `weighted_pgfts` | `keyword/ilike/weighted_pgfts` | Weighted ILIKE (same as `weighted`) with a `pgfts/english` fallback: if ILIKE returns < k results, the gap is filled by PostgreSQL FTS results (Porter stemmer + stopword removal, ts_rank ≥ 0.03). Designed for robustness when query terms are not yet in the vocabulary (e.g. newly added connectors). |
+
+Queries with no vocabulary overlap (pure business-language Category 1 queries) return empty (`no_vocab`) in `and_or`, `weighted`, and `lexicographic`. In `weighted_pgfts`, these queries fall through to the pgfts leg, but business-language words do not appear in recipe text and score below the ts_rank threshold, so results remain empty in practice.
+
+Each result row in `weighted_pgfts` output is labelled by retrieval path:
+
+| Label            | Meaning                                                  |
+| ---------------- | -------------------------------------------------------- |
+| `weighted`       | Returned by ILIKE — vocab match found                    |
+| `weighted+pgfts` | ILIKE returned < k results; gap filled by pgfts fallback |
+| `no_vocab+pgfts` | No vocab tokens in query; all results from pgfts         |
 
 ```bash
-# All 3 categories, k=5
+# Default strategy (and_or), all 3 categories, k=5
 python pipeline/03_evaluate_embeddings/evaluate_fulltext.py
 
-# Specific categories or k
-python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --category 1
-python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --category 2 3
-python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --k 10
+# Weighted strategy (underscore=3, word=1)
+python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --strategy weighted
+
+# Lexicographic strategy (strict underscore-first ranking)
+python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --strategy lexicographic
+
+# Weighted + pgfts fallback (robustness to out-of-vocab query terms)
+python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --strategy weighted_pgfts
+
+# Combine with category / k flags
+python pipeline/03_evaluate_embeddings/evaluate_fulltext.py --strategy weighted --category 2 3 --k 10
 ```
 
-Outputs per category:
+Outputs per run (strategy name is included in filenames so runs do not overwrite each other):
 
-- `fts_category<N>_k<k>.csv` — per-query detail
-- `eval_summary_k<k>.csv` — appended alongside embedding results
+- `fts_category<N>_k<k>_<strategy>.csv` — per-query detail
+- `eval_summary_k<k>.csv` — appended under `keyword/ilike/<strategy>`
 
----
+### 4d. Evaluate — hybrid search
+
+Combines Qwen3-Embedding-8B+instruct (dense) with a keyword/FTS leg, fused with
+weighted Reciprocal Rank Fusion (RRF). The fusion weight between the two legs is
+determined per-query by a vocab signal:
+
+| Signal in query                        | w\_kw | w\_dense | Rationale                                              |
+| -------------------------------------- | ----- | -------- | ------------------------------------------------------ |
+| Underscore tokens (e.g. `get_records`) | 2.0   | 1.0      | Exact technical identifiers — keyword leg more precise |
+| Word-only tokens (e.g. `salesforce`)   | 1.0   | 2.0      | Broad terms — dense handles ambiguity better           |
+| No vocab tokens (business language)    | 0.0   | 1.0      | Keyword returns nothing → pure dense                   |
+
+Each leg fetches k×3 candidates before fusion; the fused list is truncated to top-k.
+
+Three fuse modes are available via `--mode`:
+
+| Mode                    | Keyword leg                                                         | Model key                                         |
+| ----------------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
+| `fuse` (default)        | Vocabulary-driven ILIKE (AND → OR fallback)                         | `hybrid/qwen3-8b+instruct/fuse`                   |
+| `fts-fuse`              | PostgreSQL FTS, `english` config (Porter stemmer + stopwords)       | `hybrid/qwen3-8b+instruct/fts-fuse`               |
+| `weighted-pgfts-fuse`   | Weighted ILIKE (underscore=3, word=1) + pgfts/english gap-fill      | `hybrid/qwen3-8b+instruct/weighted-pgfts-fuse`    |
+
+A `route` mode is also available: hard routing that sends queries with underscore tokens to keyword-only and all others to dense-only.
+
+```bash
+# fuse mode (default), all categories, k=5
+python pipeline/03_evaluate_embeddings/evaluate_hybrid.py
+
+# FTS leg instead of ILIKE keyword leg
+python pipeline/03_evaluate_embeddings/evaluate_hybrid.py --mode fts-fuse
+
+# Weighted ILIKE + pgfts fallback leg (best on Category 3)
+python pipeline/03_evaluate_embeddings/evaluate_hybrid.py --mode weighted-pgfts-fuse
+
+# Hard routing (keyword for underscore queries, dense otherwise)
+python pipeline/03_evaluate_embeddings/evaluate_hybrid.py --mode route
+
+# Specific categories or k
+python pipeline/03_evaluate_embeddings/evaluate_hybrid.py --mode fts-fuse --category 2 3 --k 10
+```
+
+Requires `BASETEN_API_KEY` to be set (Qwen3-Embedding-8B+instruct runs on Baseten).
+
+Outputs:
+
+- `hybrid_<mode>_k<k>.csv` — per-query detail with signal label, weights, n_kw, n_emb per row
+- `eval_summary_k<k>.csv` — appended under `hybrid/qwen3-8b+instruct/<mode>`
 
 ## Database tables
 
@@ -236,3 +305,4 @@ Computed against `strong_list` from the eval datasets (recipe UIDs rated "Strong
 | `evaluate_pgvector.py` | Dense embedding evaluation — Precision@k / Recall@k / MRR across Category 1, 2 & 3                                      |
 | `evaluate_pgfts.py`    | PostgreSQL FTS baseline — standard `english` config (Porter stemmer + stopwords), OR-combined terms ranked by `ts_rank` |
 | `evaluate_fulltext.py` | Vocabulary-driven ILIKE keyword search baseline — corpus-derived technical vocab, ILIKE AND → OR strategy               |
+| `evaluate_hybrid.py`   | Hybrid search — weighted RRF fusion of Qwen3-8B+instruct dense search with a keyword/FTS leg; three fuse modes          |

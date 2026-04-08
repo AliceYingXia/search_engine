@@ -34,6 +34,24 @@ Modes
         The FTS query uses plainto_tsquery('english') → OR semantics so that
         any surviving stem matches a document (same as evaluate_pgfts.py).
 
+    weighted-pgfts-fuse
+        Same vocab-based weight signal as fuse, but the keyword leg is replaced
+        by weighted_pgfts (weighted ILIKE with a pgfts/english gap-fill fallback).
+        The keyword leg runs weighted ILIKE first (underscore=3, word=1 scoring);
+        if it returns fewer than k*3 candidates the remaining slots are filled by
+        pgfts/english results that clear the ts_rank ≥ 0.03 threshold. This adds
+        robustness to newly added connectors not yet in the vocabulary while still
+        prioritising precise ILIKE matches.
+
+            underscore tokens found → w_kw=2.0, w_emb=1.0
+            word tokens only        → w_kw=1.0, w_emb=2.0
+            no vocab tokens         → w_kw=0.0, w_emb=1.0  (pure Qwen)
+
+        The kw_strategy field in the detail CSV records which path fired per query:
+            "weighted"       — ILIKE saturated k*3 slots, no fallback needed
+            "weighted+pgfts" — ILIKE returned < k*3; pgfts filled the gap
+            "no_vocab+pgfts" — no vocab tokens; all keyword candidates from pgfts
+
     route
         Hard routing — only one system handles the query:
             underscore tokens found → keyword search only
@@ -46,6 +64,9 @@ Usage
 
     # fts-fuse mode
     python pipeline/03_evaluate_embeddings/evaluate_hybrid.py --mode fts-fuse
+
+    # weighted-pgfts-fuse mode (weighted ILIKE + pgfts fallback + dense)
+    python pipeline/03_evaluate_embeddings/evaluate_hybrid.py --mode weighted-pgfts-fuse
 
     # route mode
     python pipeline/03_evaluate_embeddings/evaluate_hybrid.py --mode route
@@ -257,6 +278,28 @@ class HybridEvaluator:
             }
             return fused, detail
 
+        # weighted-pgfts-fuse mode — weighted ILIKE + pgfts fallback leg
+        if self.mode == "weighted-pgfts-fuse":
+            kw_results, kw_strat = self.kw._search_weighted_pgfts(query)
+            kw_results  = kw_results[:k_wide]
+            emb_results = self._embed_search(embedding, k_wide)
+
+            fused = self._rrf([
+                (kw_results,  w_kw),
+                (emb_results, w_emb),
+            ])[:self.k]
+
+            detail = {
+                "signal":      signal,
+                "mode_used":   f"weighted-pgfts-fuse(w_kw={w_kw},w_emb={w_emb})",
+                "kw_strategy": kw_strat,
+                "n_kw":        len(kw_results),
+                "n_emb":       len(emb_results),
+                "w_kw":        w_kw,
+                "w_emb":       w_emb,
+            }
+            return fused, detail
+
         # fuse mode — ILIKE keyword leg
         kw_results, kw_strat = self.kw._search(query)
         kw_results  = kw_results[:k_wide]
@@ -399,10 +442,11 @@ class HybridEvaluator:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--mode", choices=["fuse", "fts-fuse", "route"], default="fuse",
+        "--mode", choices=["fuse", "fts-fuse", "weighted-pgfts-fuse", "route"], default="fuse",
         help=(
             "fuse: weighted RRF of keyword + dense (default). "
             "fts-fuse: weighted RRF of FTS/english + dense. "
+            "weighted-pgfts-fuse: weighted RRF of weighted_pgfts (ILIKE + pgfts fallback) + dense. "
             "route: hard routing."
         ),
     )

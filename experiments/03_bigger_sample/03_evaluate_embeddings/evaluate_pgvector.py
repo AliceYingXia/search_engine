@@ -102,12 +102,13 @@ class PgVectorEvaluator:
 
     def _search(self, embedding: list[float]) -> list[str]:
         vec_str = "[" + ",".join(map(str, embedding)) + "]"
+        pg_type = self.model.pg_type
         self.cur.execute(
             f"""
             SELECT r.recipe_uid
             FROM   {self.model.table} e
             JOIN   recipes r USING (recipe_uid)
-            ORDER  BY e.embedding <=> %s::vector
+            ORDER  BY e.embedding <=> %s::{pg_type}
             LIMIT  %s
             """,
             (vec_str, self.k),

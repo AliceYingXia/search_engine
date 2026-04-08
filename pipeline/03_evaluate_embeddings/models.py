@@ -26,6 +26,7 @@ Usage
 
 from __future__ import annotations
 
+import math
 import os
 import time
 from abc import ABC, abstractmethod
@@ -57,6 +58,8 @@ class ModelConfig:
     hf_model: Optional[str] = None          # HuggingFace model ID override
     source_column: str = "text_no_comments"  # recipes column to read for ingestion
     instruction: Optional[str] = None       # query-side instruction prefix (eval only)
+    store_dim: Optional[int] = None         # truncate output to this many dims before storage/query
+    pg_type: str = "vector"                 # PostgreSQL column type: "vector" or "halfvec"
 
 
 # Single source of truth — replaces the two separate MODEL_CONFIG dicts.
@@ -125,6 +128,8 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         dimension=4096,
         backend="baseten_predict_batch",
         predict_url="https://model-wom8ozkq.api.baseten.co/environments/production/predict",
+        store_dim=4000,
+        pg_type="halfvec",
     ),
     "Qwen/Qwen3-Embedding-8B+instruct": ModelConfig(
         table="embeddings_qwen3_embedding_8b",      # same doc vectors as base
@@ -134,6 +139,8 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
             "Instruct: Retrieve the most relevant automation workflow recipe "
             "for this search query.\nQuery: "
         ),
+        store_dim=4000,
+        pg_type="halfvec",
     ),
 }
 
@@ -226,6 +233,13 @@ class BasetenPredictBatchBackend(EmbeddingBackend):
 # EmbeddingModel — config + backend in one object
 # ---------------------------------------------------------------------------
 
+def _truncate_normalize(vec: list[float], dim: int) -> list[float]:
+    """Truncate a vector to `dim` dimensions and L2-renormalize."""
+    v = vec[:dim]
+    norm = math.sqrt(sum(x * x for x in v))
+    return [x / norm for x in v] if norm > 0 else v
+
+
 def _make_backend(name: str, cfg: ModelConfig) -> EmbeddingBackend:
     if cfg.backend == "openai":
         return OpenAIBackend(cfg.model_name or name)
@@ -267,10 +281,21 @@ class EmbeddingModel:
     def source_column(self) -> str:
         return self.config.source_column
 
+    @property
+    def pg_type(self) -> str:
+        return self.config.pg_type
+
+    def _prepare(self, vecs: list[list[float]]) -> list[list[float]]:
+        dim = self.config.store_dim
+        if dim is None:
+            return vecs
+        return [_truncate_normalize(v, dim) for v in vecs]
+
     def embed_texts(self, texts: list[str]) -> list[list[float]]:
         """Embed texts for document ingestion (no instruction prefix)."""
-        return self._backend.embed_texts(texts)
+        return self._prepare(self._backend.embed_texts(texts))
 
     def embed_query(self, text: str) -> list[float]:
         """Embed a query, applying the model's instruction prefix if configured."""
-        return self._backend.embed_query(text, self.config.instruction)
+        raw = self._backend.embed_query(text, self.config.instruction)
+        return self._prepare([raw])[0]
