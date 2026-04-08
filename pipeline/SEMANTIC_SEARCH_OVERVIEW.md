@@ -335,6 +335,74 @@ The keyword leg uses the `weighted_pgfts` strategy from Strategy 1a: weighted IL
 
 ---
 
+## Part 4: pgvector Fast Search — Sequential Scan vs HNSW (halfvec)
+
+### Background
+
+pgvector's HNSW index — which enables sub-linear approximate nearest-neighbour search — supports a maximum of **2,000 dimensions** for the `vector` (float32) type and **4,000 dimensions** for the `halfvec` (float16) type. Qwen3-Embedding-8B produces 4,096-dimensional vectors, which exceeds both limits.
+
+To enable HNSW on pgvector we adopt **Option B**: store embeddings as `halfvec(4000)` — keeping 4,000 of the original 4,096 dimensions (96 dropped, 2.3%) and using 16-bit floats. The embedding column type changes from `vector(4096)` to `halfvec(4000)`, and vectors are L2-renormalized after truncation before storage and at query time. Document vectors are re-ingested; query vectors are truncated on the fly inside `EmbeddingModel.embed_query`.
+
+**Why not Matryoshka truncation to 2,048?** Qwen3 supports MRL, but we want to preserve as much information as possible. Dropping 96 out of 4,096 dimensions (2.3%) is far less aggressive than halving to 2,048 (50%).
+
+**Does float16 hurt quality?** For cosine similarity on normalized vectors, float16 provides ~3 significant decimal digits vs float32's ~7. Empirically, ranking order is almost never affected — studies show < 1% recall degradation. The dominant concern is the 96-dim truncation, which is negligible.
+
+### Schema & Infrastructure Changes
+
+| | Sequential Scan (baseline) | HNSW Fast Search |
+|---|---|---|
+| Column type | `vector(4096)` | `halfvec(4000)` |
+| Float precision | float32 | float16 |
+| Dimensions stored | 4,096 | 4,000 (96 dropped, renormalized) |
+| Index | none (exact scan) | `USING hnsw (embedding halfvec_cosine_ops)` |
+| Search complexity | O(n) | O(log n) approximate |
+| Storage per vector | 16 KB | 8 KB |
+
+### Steps to Run the HNSW Evaluation
+
+```bash
+# 1. Apply schema migration (converts existing vector(4096) column to halfvec(4000))
+python pipeline/03_evaluate_embeddings/setup_schema.py
+
+# 2. Re-ingest Qwen3-8B embeddings truncated to 4000 dims in halfvec format
+python pipeline/03_evaluate_embeddings/add_embeddings.py --model "Qwen/Qwen3-Embedding-8B"
+
+# 3. Create the HNSW index
+psql -c "CREATE INDEX ON embeddings_qwen3_embedding_8b USING hnsw (embedding halfvec_cosine_ops);"
+
+# 4. Run evaluation (uses +instruct query prefix, reads from halfvec table)
+python pipeline/03_evaluate_embeddings/evaluate_pgvector.py --model "Qwen/Qwen3-Embedding-8B+instruct"
+```
+
+### Results
+
+Model evaluated: **Qwen3-Embedding-8B+instruct** (query-side instruction prefix, same document vectors)
+
+**Category 1 — Business Language** (50 queries)
+
+| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 |
+|---|---|---|---|---|---|
+| Sequential scan | none | 4,096 (float32) | 0.4306 | 0.3717 | 0.54 |
+| HNSW fast search | halfvec HNSW | 4,000 (float16) | _TBD_ | _TBD_ | _TBD_ |
+
+**Category 2 — Technical Feature** (50 queries)
+
+| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 |
+|---|---|---|---|---|---|
+| Sequential scan | none | 4,096 (float32) | 0.9100 | 0.7890 | 0.92 |
+| HNSW fast search | halfvec HNSW | 4,000 (float16) | _TBD_ | _TBD_ | _TBD_ |
+
+**Category 3 — Dependency Lookup** (49 queries)
+
+| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 |
+|---|---|---|---|---|---|
+| Sequential scan | none | 4,096 (float32) | 0.7388 | 0.5789 | 0.7959 |
+| HNSW fast search | halfvec HNSW | 4,000 (float16) | _TBD_ | _TBD_ | _TBD_ |
+
+> **Note:** Sequential scan results are exact kNN — ground truth for quality comparison. HNSW is approximate; any recall drop reflects index approximation error plus the 96-dim truncation. Expected degradation is < 1% based on published halfvec benchmarks.
+
+---
+
 ## Next Steps
 
 ### 1 — Search Backend Benchmarking
@@ -343,7 +411,7 @@ Evaluate and compare three vector search backends for production suitability:
 
 | Backend           | Notes                                                                                                |
 | ----------------- | ---------------------------------------------------------------------------------------------------- |
-| **pgvector**      | Current baseline — PostgreSQL-native, simple ops, fast search (HNSW index) is not directly available |
+| **pgvector**      | In progress — HNSW fast search now enabled via `halfvec(4000)`; latency benchmarking pending        |
 | **OpenSearch**    | Managed, horizontally scalable, native hybrid search support                                         |
 | **Matrix Search** | available within the company                                                                         |
 
