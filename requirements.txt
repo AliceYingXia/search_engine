@@ -11,6 +11,7 @@ sentence-transformers
 matplotlib
 
 psycopg2-binary01_sampling 
+opensearch-py
 
 # LLM API (GPT-4o for query generation, relevance assessment, consistency checks)
 openai==2.29.0

@@ -335,7 +335,7 @@ The keyword leg uses the `weighted_pgfts` strategy from Strategy 1a: weighted IL
 
 ---
 
-## Part 4: pgvector Fast Search — Sequential Scan vs HNSW (halfvec)
+## Part 4: pgvector Fast Search — 4096 Exact vs 4000 Exact vs HNSW
 
 ### Background
 
@@ -343,63 +343,110 @@ pgvector's HNSW index — which enables sub-linear approximate nearest-neighbour
 
 To enable HNSW on pgvector we adopt **Option B**: store embeddings as `halfvec(4000)` — keeping 4,000 of the original 4,096 dimensions (96 dropped, 2.3%) and using 16-bit floats. The embedding column type changes from `vector(4096)` to `halfvec(4000)`, and vectors are L2-renormalized after truncation before storage and at query time. Document vectors are re-ingested; query vectors are truncated on the fly inside `EmbeddingModel.embed_query`.
 
+To preserve a clean naive baseline, we also keep a separate full-precision
+table with raw `vector(4096)` embeddings. That gives us three comparable runs:
+
+- `4096 exact`: naive exact search on raw `vector(4096)`
+- `4000 exact`: naive exact search on truncated `halfvec(4000)`
+- `4000 hnsw`: ANN search on the same truncated `halfvec(4000)`
+
 **Why not Matryoshka truncation to 2,048?** Qwen3 supports MRL, but we want to preserve as much information as possible. Dropping 96 out of 4,096 dimensions (2.3%) is far less aggressive than halving to 2,048 (50%).
 
 **Does float16 hurt quality?** For cosine similarity on normalized vectors, float16 provides ~3 significant decimal digits vs float32's ~7. Empirically, ranking order is almost never affected — studies show < 1% recall degradation. The dominant concern is the 96-dim truncation, which is negligible.
 
 ### Schema & Infrastructure Changes
 
-| | Sequential Scan (baseline) | HNSW Fast Search |
-|---|---|---|
-| Column type | `vector(4096)` | `halfvec(4000)` |
-| Float precision | float32 | float16 |
-| Dimensions stored | 4,096 | 4,000 (96 dropped, renormalized) |
-| Index | none (exact scan) | `USING hnsw (embedding halfvec_cosine_ops)` |
-| Search complexity | O(n) | O(log n) approximate |
-| Storage per vector | 16 KB | 8 KB |
+| | 4096 Exact | 4000 Exact | 4000 HNSW |
+|---|---|---|---|
+| Table | `embeddings_qwen3_embedding_8b_full` | `embeddings_qwen3_embedding_8b` | `embeddings_qwen3_embedding_8b` |
+| Column type | `vector(4096)` | `halfvec(4000)` | `halfvec(4000)` |
+| Float precision | float32 | float16 | float16 |
+| Dimensions stored | 4,096 | 4,000 (96 dropped, renormalized) | 4,000 (96 dropped, renormalized) |
+| Index usage | forced sequential scan | forced sequential scan | `USING hnsw (embedding halfvec_cosine_ops)` |
+| Search complexity | O(n) | O(n) | O(log n) approximate |
+| Storage per vector | 16 KB | 8 KB | 8 KB |
+
+Interpretation:
+
+- `4096 exact` vs `4000 exact` measures representation loss from truncation + `halfvec`
+- `4000 exact` vs `4000 hnsw` measures index approximation error
+- all runs use the same query-side instruction prefix (`Qwen3-Embedding-8B+instruct`)
 
 ### Steps to Run the HNSW Evaluation
 
 ```bash
-# 1. Apply schema migration (converts existing vector(4096) column to halfvec(4000))
-python pipeline/03_evaluate_embeddings/setup_schema.py
+# 1. Apply schema migration (creates both Qwen tables)
+python pipeline/03_evaluate_postgre/setup_schema.py
 
-# 2. Re-ingest Qwen3-8B embeddings truncated to 4000 dims in halfvec format
-python pipeline/03_evaluate_embeddings/add_embeddings.py --model "Qwen/Qwen3-Embedding-8B"
+# 2. Ingest the raw 4096-d baseline table
+python pipeline/03_evaluate_postgre/add_embeddings.py --model "Qwen/Qwen3-Embedding-8B-full"
 
-# 3. Create the HNSW index
+# 3. Ingest the truncated 4000-d halfvec table
+python pipeline/03_evaluate_postgre/add_embeddings.py --model "Qwen/Qwen3-Embedding-8B"
+
+# 4. Create the HNSW index on the truncated table
 psql -c "CREATE INDEX ON embeddings_qwen3_embedding_8b USING hnsw (embedding halfvec_cosine_ops);"
 
-# 4. Run evaluation (uses +instruct query prefix, reads from halfvec table)
-python pipeline/03_evaluate_embeddings/evaluate_pgvector.py --model "Qwen/Qwen3-Embedding-8B+instruct"
+# 5. Run naive exact search on raw vector(4096)
+python pipeline/03_evaluate_postgre/evaluate_pgvector.py \
+  --model "Qwen/Qwen3-Embedding-8B-full+instruct" \
+  --search-mode exact \
+  --k 5
+
+# 6. Run exact scan over the truncated halfvec(4000) table
+python pipeline/03_evaluate_postgre/evaluate_pgvector.py \
+  --model "Qwen/Qwen3-Embedding-8B+instruct" \
+  --search-mode exact \
+  --k 5
+
+# 7. Run HNSW over the same truncated halfvec(4000) table
+python pipeline/03_evaluate_postgre/evaluate_pgvector.py \
+  --model "Qwen/Qwen3-Embedding-8B+instruct" \
+  --search-mode hnsw \
+  --hnsw-ef-search 80 \
+  --k 5
 ```
+
+Optional: if you want to study the effect of HNSW recall/latency tuning, repeat
+step 5 with `--hnsw-ef-search 40 80 120 200` in separate runs.
 
 ### Results
 
-Model evaluated: **Qwen3-Embedding-8B+instruct** (query-side instruction prefix, same document vectors)
+Model family evaluated: **Qwen3-Embedding-8B+instruct** query format
+
+Exact-4096 uses the dedicated raw `vector(4096)` table.
+Exact-4000 and HNSW-4000 use the truncated `halfvec(4000)` table.
 
 **Category 1 — Business Language** (50 queries)
 
-| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 |
-|---|---|---|---|---|---|
-| Sequential scan | none | 4,096 (float32) | 0.4306 | 0.3717 | 0.54 |
-| HNSW fast search | halfvec HNSW | 4,000 (float16) | _TBD_ | _TBD_ | _TBD_ |
+| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 | Avg Latency / Query |
+|---|---|---|---|---|---|---|
+| Exact scan | forced seq scan | 4,096 (vector) | **0.4306** | **0.3717** | **0.54** | 11.81 ms |
+| Exact scan | forced seq scan | 4,000 (halfvec) | 0.4289 | 0.3650 | 0.52 | 11.31 ms |
+| HNSW fast search | halfvec HNSW | 4,000 (float16) | 0.4289 | 0.3650 | 0.52 | 11.42 ms |
 
 **Category 2 — Technical Feature** (50 queries)
 
-| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 |
-|---|---|---|---|---|---|
-| Sequential scan | none | 4,096 (float32) | 0.9100 | 0.7890 | 0.92 |
-| HNSW fast search | halfvec HNSW | 4,000 (float16) | _TBD_ | _TBD_ | _TBD_ |
+| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 | Avg Latency / Query |
+|---|---|---|---|---|---|---|
+| Exact scan | forced seq scan | 4,096 (vector) | 0.9100 | 0.7890 | 0.92 | 12.34 ms |
+| Exact scan | forced seq scan | 4,000 (halfvec) | **0.9100** | **0.7900** | **0.92** | 11.89 ms |
+| HNSW fast search | halfvec HNSW | 4,000 (float16) | **0.9100** | **0.7900** | **0.92** | 11.58 ms |
 
 **Category 3 — Dependency Lookup** (49 queries)
 
-| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 |
-|---|---|---|---|---|---|
-| Sequential scan | none | 4,096 (float32) | 0.7388 | 0.5789 | 0.7959 |
-| HNSW fast search | halfvec HNSW | 4,000 (float16) | _TBD_ | _TBD_ | _TBD_ |
+| Search mode | Index | Dims | Recall@5 | MRR | Avg Strong Hits@5 | Avg Latency / Query |
+|---|---|---|---|---|---|---|
+| Exact scan | forced seq scan | 4,096 (vector) | 0.7388 | 0.5891 | 0.7959 | 13.85 ms |
+| Exact scan | forced seq scan | 4,000 (halfvec) | **0.7388** | **0.5908** | **0.7959** | 12.22 ms |
+| HNSW fast search | halfvec HNSW | 4,000 (float16) | **0.7388** | **0.5908** | **0.7959** | 12.55 ms |
 
-> **Note:** Sequential scan results are exact kNN — ground truth for quality comparison. HNSW is approximate; any recall drop reflects index approximation error plus the 96-dim truncation. Expected degradation is < 1% based on published halfvec benchmarks.
+**Key observations:**
+
+- **Truncating from 4,096 to 4,000 dimensions causes essentially no measurable quality loss.** Category 2 and Category 3 are unchanged or microscopically better after truncation; Category 1 drops only slightly (Recall@5 0.4306 → 0.4289, MRR 0.3717 → 0.3650).
+- **HNSW matches exact search exactly on this eval set** when both use the same `halfvec(4000)` representation. Across all three categories, Recall@5, MRR, and Avg Strong Hits@5 are identical between `4000 exact` and `4000 hnsw`.
+- **Latency is also nearly identical in this benchmark** (~11–14 ms/query). That is expected given the small corpus size in evaluation (639 recipes): at this scale, pgvector exact scan is already cheap, so HNSW does not yet show its typical latency advantage.
+- **The main practical takeaway is that `halfvec(4000)` is safe for this workload.** It preserves quality while enabling HNSW indexing, and on a larger production corpus it should unlock the speed gains that are invisible on this small eval dataset.
 
 ---
 

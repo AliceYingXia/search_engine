@@ -1,0 +1,6 @@
+pandas
+pyarrow
+python-dotenv
+requests
+urllib3
+opensearch-py

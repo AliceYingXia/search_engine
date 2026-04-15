@@ -54,7 +54,7 @@ class SynthesizePipeline:
         """Phase 0 — select seed recipes and write recipes_for_pgvector.csv.
 
         Style-independent: the same CSV is shared by all categories and by
-        03_evaluate_embeddings. Safe to re-run; output is deterministic.
+        03_evaluate_postgre. Safe to re-run; output is deterministic.
         """
         self._print_phase_header("Phase 0 — Prepare Corpus")
         PrepareCorpus().run()

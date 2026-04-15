@@ -1,7 +1,7 @@
 """Phase 0 — Prepare Corpus.
 
 Selects diverse seed recipes for every author and writes the flat CSV
-that downstream step 03_evaluate_embeddings uses to ingest recipes into
+that downstream step 03_evaluate_postgre uses to ingest recipes into
 pgvector.
 
 This phase is style-independent: the same CSV is shared by all query

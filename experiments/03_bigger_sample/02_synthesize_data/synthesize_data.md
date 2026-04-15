@@ -38,7 +38,7 @@ python run.py --style all    # all categories back-to-back
 cd pipeline/02_synthesize_data
 
 # Phase 0 — select seed recipes and write recipes_for_pgvector.csv
-# Style-independent: run once, shared by all categories and 03_evaluate_embeddings.
+# Style-independent: run once, shared by all categories and 03_evaluate_postgre.
 python run.py --style cat1 --phase prepare
 
 # Phase 1 — generate queries (one per seed recipe)
@@ -109,7 +109,7 @@ Selects diverse seed recipes for every author and writes `recipes_for_pgvector.c
 4. Skip recipes with fewer than 3 total distinct connectors.
 5. Greedily select every recipe whose signal connectors overlap ≤50% with all already-selected seeds.
 
-**Style-independent:** the same CSV is shared by all query categories and by `03_evaluate_embeddings`. Safe to re-run — output is deterministic.
+**Style-independent:** the same CSV is shared by all query categories and by `03_evaluate_postgre`. Safe to re-run — output is deterministic.
 
 **Input:** `01_process_data/cleaned/recipe_summaries.parquet`  
 **Output:** `recipes_for_pgvector.csv`
@@ -292,7 +292,7 @@ styles = {"cat1": [CAT1], "cat2": [CAT2], "cat3": [CAT3], "all": [CAT1, CAT2, CA
 | `MIN_CONNECTORS`        | `3`                                                  | Minimum total connectors required for a seed recipe                     |
 | `LLM_MAX_ATTEMPTS`      | `3`                                                  | Total LLM call attempts (1 original + 2 retries)                        |
 | `LLM_BACKOFF_BASE`      | `2`                                                  | Exponential backoff base in seconds (2s, 4s)                            |
-| `PGVECTOR_CSV_PATH`     | `BASE_DIR / "recipes_for_pgvector.csv"`              | Output path for the corpus CSV (shared with `03_evaluate_embeddings`)   |
+| `PGVECTOR_CSV_PATH`     | `BASE_DIR / "recipes_for_pgvector.csv"`              | Output path for the corpus CSV (shared with `03_evaluate_postgre`)   |
 
 ---
 
