@@ -88,3 +88,6 @@ npm-debug.log*
 *.swp
 *.bak
 Thumbs.db
+
+# Experiment cache directories (large pre-computed corpora)
+experiments/**/cache/
