@@ -60,6 +60,8 @@ embeddings_cache/
 *.parquet
 *.sqlite
 *.db
+*.ndjson
+*.zip
 
 # Logs
 *.log

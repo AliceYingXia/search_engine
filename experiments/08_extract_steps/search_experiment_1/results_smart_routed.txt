@@ -1,0 +1,323 @@
+
+================================================================================
+QUERY: What recipes refer to field netsuite_object?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 11.876  384059_45431227_v15             expent_connector json_parser netsuite ne
+  # 2  bm25= 11.270  136763_46053043_v4              clock netsuite snowflake workato_smart_l
+  # 3  bm25= 10.417  800219_42730296_v1              clock netsuite snowflake workato_list wo
+  # 4  bm25= 10.098  2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 5  bm25=  9.837  800219_23098636_v1              netsuite workato_recipe_function
+  # 6  bm25=  9.697  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 7  bm25=  9.632  2497091_47096666_v22            logger netsuite slack_bot workato_list w
+  # 8  bm25=  9.632  2443559_47097324_v7             logger netsuite slack_bot workato_list w
+  # 9  bm25=  9.403  2443558_24999575_v1             netsuite_secondary workato_api_platform
+  #10  bm25=  9.182  2443559_24999520_v10            netsuite salesforce workato_db_table wor
+
+================================================================================
+QUERY: If I update field netsuite_object, what recipes will be affected?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 12.253  800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 2  bm25= 11.959  800219_42730295_v1              clock netsuite snowflake workato_list wo
+  # 3  bm25= 11.849  800219_42730291_v1              clock netsuite snowflake workato_variabl
+  # 4  bm25= 11.712  800219_45184743_v1              clock netsuite snowflake workato_variabl
+  # 5  bm25= 11.691  800219_42730292_v1              clock netsuite snowflake workato_variabl
+  # 6  bm25= 11.650  800219_42730290_v1              clock netsuite snowflake workato_variabl
+  # 7  bm25= 11.545  800219_45235938_v4              clock netsuite snowflake workato_variabl
+  # 8  bm25= 11.513  2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 9  bm25= 11.412  800219_42730293_v1              clock netsuite snowflake workato_list wo
+  #10  bm25= 11.412  800219_42730297_v1              clock netsuite snowflake workato_list wo
+
+================================================================================
+QUERY: What recipes refer to field search_settings of NetSuite?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 18.207  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  bm25= 16.728  2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 3  bm25= 16.207  2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  # 4  bm25= 15.378  2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 5  bm25= 15.368  384059_24999439_v37             lookup_table netsuite salesforce slack_b
+  # 6  bm25= 15.121  2443559_24999520_v10            netsuite salesforce workato_db_table wor
+  # 7  bm25= 14.840  136763_23363741_v2              netsuite workato_recipe_function
+  # 8  bm25= 13.674  2443559_24999419_v33            json_parser netsuite open_ai salesforce 
+  # 9  bm25= 13.499  384059_45431227_v15             expent_connector json_parser netsuite ne
+  #10  bm25= 13.247  136763_46053043_v4              clock netsuite snowflake workato_smart_l
+
+================================================================================
+QUERY: If I update field search_settings of NetSuite, what recipes will be affected?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 18.729  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  bm25= 18.169  2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 3  bm25= 17.721  136763_23363741_v2              netsuite workato_recipe_function
+  # 4  bm25= 16.797  2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  # 5  bm25= 15.739  384059_24999439_v37             lookup_table netsuite salesforce slack_b
+  # 6  bm25= 15.513  2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 7  bm25= 15.450  2443559_24999419_v33            json_parser netsuite open_ai salesforce 
+  # 8  bm25= 14.386  800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 9  bm25= 14.080  800219_42730295_v1              clock netsuite snowflake workato_list wo
+  #10  bm25= 14.065  2443559_24999520_v10            netsuite salesforce workato_db_table wor
+
+================================================================================
+QUERY: What recipes refer to field internal_id of NetSuite?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 17.732  2443558_24999573_v5             workato_api_platform workato_recipe_func
+  # 2  bm25= 17.252  3165548_61850500_v1             work_genie_connector workato_recipe_func
+  # 3  bm25= 17.183  2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 4  bm25= 17.069  800229_63231981_v1              json_parser workato_db_table workato_rec
+  # 5  bm25= 17.069  2366099_63066092_v6             json_parser workato_db_table workato_rec
+  # 6  bm25= 17.045  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 7  bm25= 16.799  3165548_61850498_v1             work_genie_connector workato_recipe_func
+  # 8  bm25= 16.723  3382944_60986291_v20            byin_workato_recipe_ops_connector workat
+  # 9  bm25= 16.604  2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  #10  bm25= 16.375  136763_24999514_v3              clock lookup_table workato_recipe_functi
+
+================================================================================
+QUERY: If I update field internal_id of NetSuite, what recipes will be affected?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 18.834  2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 2  bm25= 18.112  2443559_24999535_v6             clock netsuite snowflake workato_custom_
+  # 3  bm25= 17.804  136763_23363741_v2              netsuite workato_recipe_function
+  # 4  bm25= 17.732  2443558_24999573_v5             workato_api_platform workato_recipe_func
+  # 5  bm25= 17.567  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 6  bm25= 17.252  3165548_61850500_v1             work_genie_connector workato_recipe_func
+  # 7  bm25= 17.194  2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  # 8  bm25= 17.069  800229_63231981_v1              json_parser workato_db_table workato_rec
+  # 9  bm25= 17.069  2366099_63066092_v6             json_parser workato_db_table workato_rec
+  #10  bm25= 16.902  136763_24999514_v3              clock lookup_table workato_recipe_functi
+
+================================================================================
+QUERY: What recipes refer to field sobject_name of Salesforce?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 10.485  69943_63310229_v9               salesforce workato_recipe_function
+  # 2  bm25= 10.485  800229_63358063_v1              salesforce workato_recipe_function
+  # 3  bm25=  9.659  69943_47523573_v35              salesforce slack_bot workato_db_table wo
+  # 4  bm25=  9.610  1873346_64004395_v3             clock salesforce snowflake workato_varia
+  # 5  bm25=  9.421  2436037_62355254_v1             salesforce slack_bot
+  # 6  bm25=  8.921  2436032_58140962_v1             email lookup_table salesforce
+  # 7  bm25=  8.859  2436037_62956898_v6             clock google_sheets salesforce workato_a
+  # 8  bm25=  8.852  2436037_50243248_v17            clock corporate_api_connector google_she
+  # 9  bm25=  8.470  1873346_47040868_v2             salesforce workato_list workato_recipe_f
+  #10  bm25=  8.461  1873346_62943407_v10            clock csv_parser lookup_table salesforce
+
+================================================================================
+QUERY: If I update field sobject_name of SDFC, how many recipes will be affected?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  9.617  1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  bm25=  8.847  1672048_21272916_v17            corporate_api_connector namely namely_co
+  # 3  bm25=  8.511  136763_17980527_v38             namely_connector workato_list workato_re
+  # 4  bm25=  8.511  1672048_18452542_v8             namely_connector workato_list workato_re
+  # 5  bm25=  8.446  384059_23099424_v16             lookup_table salesforce slack_bot snowfl
+  # 6  bm25=  8.445  136763_23099454_v8              email google_sheets intercom lookup_tabl
+  # 7  bm25=  8.349  1672048_18452745_v5             corporate_api_connector gmail namely_con
+  # 8  bm25=  7.989  3000083_59780709_v1             namely workato_db_table workato_recipe_f
+  # 9  bm25=  7.989  3880919_59478343_v11            namely workato_db_table workato_recipe_f
+  #10  bm25=  7.859  384059_51318330_v2              lookup_table salesforce slack_bot snowfl
+
+================================================================================
+QUERY: If I update field sobject_name of SDFC, what recipes will be affected?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  9.652  69943_63310229_v9               salesforce workato_recipe_function
+  # 2  bm25=  9.652  800229_63358063_v1              salesforce workato_recipe_function
+  # 3  bm25=  8.865  69943_47523573_v35              salesforce slack_bot workato_db_table wo
+  # 4  bm25=  8.446  384059_23099424_v16             lookup_table salesforce slack_bot snowfl
+  # 5  bm25=  8.445  136763_23099454_v8              email google_sheets intercom lookup_tabl
+  # 6  bm25=  8.358  137112_65648657_v21             clock google_docs_connector google_drive
+  # 7  bm25=  8.326  2436037_62956898_v6             clock google_sheets salesforce workato_a
+  # 8  bm25=  8.274  1873346_64004395_v3             clock salesforce snowflake workato_varia
+  # 9  bm25=  8.103  2436037_62355254_v1             salesforce slack_bot
+  #10  bm25=  7.991  2436032_58140962_v1             email lookup_table salesforce
+
+================================================================================
+QUERY: What recipes refer to field external_id of Salesforce?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  7.311  2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 2  bm25=  7.001  5136354_54640076_v77            byin_workato_recipe_ops_connector workda
+  # 3  bm25=  6.989  3165547_59090695_v2             workato_recipe_function
+  # 4  bm25=  6.989  602425_58998687_v3              workato_recipe_function
+  # 5  bm25=  6.893  618946_54306262_v6              byin_workato_recipe_ops_connector servic
+  # 6  bm25=  6.866  3165546_54307778_v6             service_now work_genie_connector workato
+  # 7  bm25=  6.838  69943_63310229_v9               salesforce workato_recipe_function
+  # 8  bm25=  6.838  800229_63358063_v1              salesforce workato_recipe_function
+  # 9  bm25=  6.707  3165546_49552444_v14            service_now work_genie_connector workato
+  #10  bm25=  6.701  800219_20449001_v1              salesforce workato_recipe_function
+
+================================================================================
+QUERY: If I update field external_id of SDFC, how many recipes will be affected?
+Type:  technical
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  9.617  1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  bm25=  8.847  1672048_21272916_v17            corporate_api_connector namely namely_co
+  # 3  bm25=  8.511  136763_17980527_v38             namely_connector workato_list workato_re
+  # 4  bm25=  8.511  1672048_18452542_v8             namely_connector workato_list workato_re
+  # 5  bm25=  8.349  1672048_18452745_v5             corporate_api_connector gmail namely_con
+  # 6  bm25=  7.989  3000083_59780709_v1             namely workato_db_table workato_recipe_f
+  # 7  bm25=  7.989  3880919_59478343_v11            namely workato_db_table workato_recipe_f
+  # 8  bm25=  7.615  800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 9  bm25=  7.576  8621_44279170_v3                intercom_connector logger workato_servic
+  #10  bm25=  7.550  1672048_55342243_v12            corporate_api_connector lookup_table nam
+
+================================================================================
+QUERY: What recipes synch between SDFC and Netsuite?
+Type:  mixed
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  8.366  136763_27089482_v71             netsuite workato_api_platform workato_re
+  # 2  bm25=  6.456  384059_24999421_v10             salesforce workato_recipe_function worka
+  # 3  bm25=  6.263  384059_24999537_v3              clock workato_recipe_function
+  # 4  bm25=  6.094  136763_24999442_v3              slack_bot workato_app workato_recipe_fun
+  # 5  bm25=  6.050  2443559_24999520_v10            netsuite salesforce workato_db_table wor
+  # 6  bm25=  6.041  2497091_63660743_v6             amazon_s3 netsuite workato_db_table work
+  # 7  bm25=  5.949  136763_24999515_v2              clock lookup_table netsuite_secondary
+  # 8  bm25=  5.933  136763_63660739_v1              netsuite_rest workato_db_table workato_r
+  # 9  bm25=  5.897  136763_24999516_v2              clock lookup_table netsuite_secondary
+  #10  bm25=  5.874  2497091_63555699_v23            netsuite_rest workato_db_table workato_r
+
+================================================================================
+QUERY: Which recipes are involved in the Procure to Pay process?
+Type:  business_intent
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  8.462  384059_45433965_v2              coupa lookup_table workato_recipe_functi
+  # 2  bm25=  8.286  384059_24999377_v5              coupa workato_recipe_function
+  # 3  bm25=  8.129  137989_41406088_v11             clock coupa_connector snowflake workato_
+  # 4  bm25=  8.098  2443559_24999344_v4             coupa coupa_connector workato_recipe_fun
+  # 5  bm25=  8.087  5619544_63864997_v43            byin_workato_recipe_ops_connector workat
+  # 6  bm25=  8.058  321290_65235926_v14             coupa workato_genie
+  # 7  bm25=  7.787  384059_24999383_v5              coupa coupa_connector slack slack_bot wo
+  # 8  bm25=  7.150  385399_63570434_v3              salesforce workato_variable workato_work
+  # 9  bm25=  7.018  2436037_46531956_v6             corporate_api_connector logger outreach 
+  #10  bm25=  6.815  384059_54432929_v4              work_genie_connector workato_recipe_func
+
+================================================================================
+QUERY: What recipes are involved in the Quote to Cash process?
+Type:  business_intent
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  9.831  384059_24999421_v10             salesforce workato_recipe_function worka
+  # 2  bm25=  8.895  618946_58611058_v6              byin_workato_recipe_ops_connector workat
+  # 3  bm25=  8.693  69943_48870820_v9               salesforce workato_recipe_function
+  # 4  bm25=  7.967  4818262_63668876_v6             json_parser steelbrick workato_genie wor
+  # 5  bm25=  7.862  618946_58277663_v7              steelbrick workato_recipe_function
+  # 6  bm25=  7.850  3382944_61084184_v16            steelbrick workato_recipe_function
+  # 7  bm25=  7.721  384059_23099447_v4              workato_mapper workato_recipe_function w
+  # 8  bm25=  7.711  800229_63732872_v1              workato_mapper workato_recipe_function w
+  # 9  bm25=  7.676  800229_46026472_v16             salesforce workato_recipe_function worka
+  #10  bm25=  7.580  3382944_60736866_v46            json_parser steelbrick workato_recipe_fu
+
+================================================================================
+QUERY: Which recipes post Slack alerts for high-priority incidents from ServiceNow?
+Type:  mixed
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 20.587  618946_47419230_v60             byin_workato_recipe_ops_connector servic
+  # 2  bm25= 19.861  618946_54306262_v6              byin_workato_recipe_ops_connector servic
+  # 3  bm25= 19.667  3165546_54669884_v3             service_now workato_recipe_function
+  # 4  bm25= 19.650  3165546_54307778_v6             service_now work_genie_connector workato
+  # 5  bm25= 19.635  3165548_64200934_v5             service_now workato_db_table workato_gen
+  # 6  bm25= 19.457  3165546_54669886_v3             service_now work_genie_connector
+  # 7  bm25= 19.410  3165548_63801882_v5             service_now workato_genie
+  # 8  bm25= 19.410  5770830_63320750_v19            service_now workato_genie
+  # 9  bm25= 19.364  3165548_63801879_v5             service_now workato_db_table workato_gen
+  #10  bm25= 19.318  5770830_63320747_v21            service_now workato_db_table workato_gen
+
+================================================================================
+QUERY: Please find recipes where Zendesk ticket webhook searches Salesforce contacts and posts to Slack.
+Type:  mixed
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 12.541  618946_47419230_v60             byin_workato_recipe_ops_connector servic
+  # 2  bm25= 12.103  3165546_54669884_v3             service_now workato_recipe_function
+  # 3  bm25= 11.865  2436037_53399893_v10            google_calendar lookup_table marketo sal
+  # 4  bm25= 11.709  3165546_49552444_v14            service_now work_genie_connector workato
+  # 5  bm25= 10.972  3165548_64200934_v5             service_now workato_db_table workato_gen
+  # 6  bm25= 10.958  3165548_49552443_v7             service_now workato_recipe_function work
+  # 7  bm25= 10.932  800219_23099455_v1              google_drive json_parser salesforce slac
+  # 8  bm25= 10.885  800219_23112896_v1              clock google_drive json_parser lookup_ta
+  # 9  bm25= 10.816  800229_23112865_v7              lookup_table salesforce slack_bot snowfl
+  #10  bm25= 10.711  136763_23099456_v3              salesforce slack slack_bot snowflake wor
+
+================================================================================
+QUERY: What recipes send notifications when a Salesforce lead is updated?
+Type:  mixed
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 10.069  69943_57786500_v9               corporate_api_connector lookup_table out
+  # 2  bm25=  9.977  69943_57786472_v2               intercom_v1_4_connector logger salesforc
+  # 3  bm25=  9.346  69943_40465907_v4               outreach workato_recipe_function
+  # 4  bm25=  9.217  8621_45189769_v2                salesforce workato_service workato_varia
+  # 5  bm25=  9.136  2436032_44212360_v2             clock gmail google_sheets workato_smart_
+  # 6  bm25=  9.047  69943_63072929_v3               google_sheets logger salesforce workato_
+  # 7  bm25=  9.046  2436037_45178537_v6             salesforce workato_service workato_varia
+  # 8  bm25=  8.643  1873346_47040879_v2             email lookup_table salesforce slack_bot 
+  # 9  bm25=  8.632  2436037_45179077_v19            clock corporate_api_connector google_she
+  #10  bm25=  8.562  2436037_45224423_v5             corporate_api_connector logger salesforc
+
+================================================================================
+QUERY: Show me recipes that support customer support automation.
+Type:  business_intent
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 12.224  3165548_65654042_v2             coupa workato_genie
+  # 2  bm25= 10.793  136763_66137678_v18             anthropic_by_connectors_connector json_p
+  # 3  bm25=  7.237  2023367_48045665_v2             slack_bot sycomp_connector
+  # 4  bm25=  6.997  2136196_43286103_v6             slack_bot
+  # 5  bm25=  6.852  137989_54004018_v18             google_sheets lookup_table slack snowfla
+  # 6  bm25=  6.821  2541045_55342807_v2             email fresh_desk json_parser slack_bot w
+  # 7  bm25=  6.784  1873346_47040872_v15            clock lookup_table snowflake workato_app
+  # 8  bm25=  6.681  3955905_58280610_v177           slack_bot workato_custom_code workato_db
+  # 9  bm25=  6.672  291297_46512771_v4              json_parser lookup_table salesforce slac
+  #10  bm25=  6.614  1995989_57570062_v3             workato_db_table workato_workflow_task
+
+================================================================================
+QUERY: Find all automations that are part of the financial close process.
+Type:  business_intent
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 10.142  800219_42511525_v3              netsuite snowflake workato_list workato_
+  # 2  bm25=  8.357  209875_54254763_v17             byin_workato_recipe_ops_connector jira
+  # 3  bm25=  7.580  800219_45235938_v4              clock netsuite snowflake workato_variabl
+  # 4  bm25=  7.450  800219_42761762_v1              snowflake workato_recipe_function
+  # 5  bm25=  7.302  136763_63831656_v2              clock netsuite snowflake workato_variabl
+  # 6  bm25=  7.196  15806_46121407_v1               salesforce workato_finance_internal_api_
+  # 7  bm25=  7.025  800219_42734455_v1              netsuite snowflake workato_variable
+  # 8  bm25=  6.901  800219_42734459_v1              netsuite snowflake workato_variable
+  # 9  bm25=  6.839  800219_42734460_v1              netsuite snowflake
+  #10  bm25=  6.535  2497091_45585337_v67            netsuite_rest workato_internal_workspace

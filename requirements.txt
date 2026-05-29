@@ -17,8 +17,12 @@ opensearch-py
 openai==2.29.0
 httpx==0.28.1
 
+# Stemming for dictionary lookup in search agent (Porter stemmer)
+nltk
+
 # Environment variable loading (.env for API keys)
 python-dotenv==1.2.2
+langfuse
 
 # SSL / certificate handling (macOS)
 certifi==2026.2.25

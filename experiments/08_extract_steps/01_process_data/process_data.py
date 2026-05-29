@@ -49,6 +49,12 @@ _UUID_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Trailing tenant/account IDs appended to field names (e.g. cf_field_name_109001).
+_TRAILING_ID_RE = re.compile(r"_\d{4,}$")
+
+# Strips all numeric ID segments from connector names (e.g. connector_3165546_1699532902 → connector).
+_CONNECTOR_ID_RE = re.compile(r"(_\d{4,})+$")
+
 # Datapill expressions embedded in URL strings — strip from the static prefix onward.
 _DATAPILL_RE = re.compile(r"#\{_dp\(.*", re.DOTALL)
 
@@ -283,15 +289,17 @@ def build_recipe_body(root: dict) -> dict:
     Walk the recipe tree once and collect all summary fields.
 
     Returns a dict with:
-      connectors  — sorted distinct provider names (list, indexed as keyword)
-      actions     — sorted distinct action/trigger names (no provider prefix)
-      fields      — sorted distinct input + output schema field names
-      step_count  — total node count
-      search_text — full indented step summary text
+      connectors    — sorted distinct provider names
+      actions       — sorted distinct provider/name pairs (triggers + actions)
+      input_fields  — sorted distinct input key names across all action steps
+      datapill_fields — sorted distinct output schema field names
+      step_count    — total node count
+      search_text   — full indented step summary text
     """
-    providers: set[str] = set()
-    actions:   set[str] = set()
-    fields:    set[str] = set()
+    providers:       set[str] = set()
+    actions:         set[str] = set()
+    input_fields:    set[str] = set()
+    datapill_fields: set[str] = set()
     step_count = 0
     lines: list[str] = []
 
@@ -301,7 +309,7 @@ def build_recipe_body(root: dict) -> dict:
                 continue
             n = item.get("name") or ""
             if n and not _UUID_RE.match(n) and not n.isdigit():
-                fields.add(n.lower())
+                datapill_fields.add(_TRAILING_ID_RE.sub("", n.lower()))
             collect_datapill_names(item.get("properties", []))
 
     def walk(step: dict, depth: int = 0) -> None:
@@ -313,10 +321,12 @@ def build_recipe_body(root: dict) -> dict:
         name     = step.get("name") or ""
 
         if provider:
-            providers.add(provider.lower())
+            providers.add(_CONNECTOR_ID_RE.sub("", provider))
 
-        if kw in ACTION_KEYWORDS | {"trigger"} and name:
-            actions.add(name.lower())
+        if kw in ACTION_KEYWORDS | {"trigger"} and provider and name:
+            clean_provider = _CONNECTOR_ID_RE.sub("", provider)
+            clean_name = _CONNECTOR_ID_RE.sub("", name)
+            actions.add(f"{clean_provider}/{clean_name}")
 
         if kw in ACTION_KEYWORDS:
             inp = step.get("input") or {}
@@ -324,7 +334,7 @@ def build_recipe_body(root: dict) -> dict:
                 for k in inp:
                     sk = str(k)
                     if k not in _INPUT_SKIP and not _UUID_RE.match(sk) and not sk.isdigit():
-                        fields.add(sk.lower())
+                        input_fields.add(_TRAILING_ID_RE.sub("", sk.lower()))
 
         collect_datapill_names(step.get("extended_output_schema") or [])
 
@@ -335,14 +345,15 @@ def build_recipe_body(root: dict) -> dict:
 
     walk(root)
 
-    search_text = "\n".join(lines).lower()
+    search_text = "\n".join(lines)
 
     return {
-        "connectors":  sorted(providers),
-        "actions":     sorted(actions),
-        "fields":      sorted(fields),
-        "step_count":  step_count,
-        "search_text": search_text,
+        "connectors":       " ".join(sorted(providers)),
+        "actions":          " ".join(sorted(actions)),
+        "input_fields":     " ".join(sorted(input_fields)),
+        "datapill_fields":  " ".join(sorted(datapill_fields)),
+        "step_count":       step_count,
+        "search_text":      search_text,
     }
 
 
@@ -397,40 +408,8 @@ def build_summaries(input_path: Path, output_path: Path) -> None:
 
     pd.DataFrame(records).to_parquet(output_path, index=False)
     print(f"Done.  Recipes written: {len(records)}  |  Output: {output_path}")
-
-    dict_path = output_path.with_name(
-        output_path.stem.replace("recipe_summaries", "dictionaries") + ".json"
-    )
-    write_dictionaries(records, dict_path)
-
     if errors:
         print(f"  Errors: {errors}")
-
-
-def write_dictionaries(records: list[dict], output_path: Path) -> None:
-    """
-    Aggregate unique connectors, actions, and (multi-segment) fields across records.
-    Fields are filtered to underscore-containing identifiers only — single-word fields
-    like 'name', 'email', 'id' are excluded to avoid prose collisions at query time.
-    """
-    connectors: set[str] = set()
-    actions:    set[str] = set()
-    fields:     set[str] = set()
-    for r in records:
-        connectors.update(r.get("connectors", []))
-        actions.update(r.get("actions", []))
-        fields.update(f for f in r.get("fields", []) if "_" in f)
-
-    payload = {
-        "connectors": sorted(connectors),
-        "actions":    sorted(actions),
-        "fields":     sorted(fields),
-    }
-    output_path.write_text(json.dumps(payload, indent=2))
-    print(
-        f"Dictionaries: {len(connectors)} connectors, {len(actions)} actions, "
-        f"{len(fields)} fields (underscore-only) → {output_path}"
-    )
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,943 @@
+
+================================================================================
+QUERY: What recipes refer to field netsuite_object?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1134ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02967  d10 /f5    800219_23098636_v1              netsuite workato_recipe_function
+  # 2  rrf=0.02867  d14 /f6    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.02742  d15 /f11   594058_44921324_v5              clock netsuite
+  # 4  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 5  rrf=0.01639    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    2366099_60168741_v18            clock jira jira_service_desk lookup_tabl
+  # 3  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 4  rrf=0.01613    - /f2    3535598_60887804_v1             clock jira jira_service_desk lookup_tabl
+  # 5  rrf=0.01587  d3  /  -   136763_24999609_v19             netsuite_secondary workato_list workato_
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 3  rrf=0.01613    - /f2    384059_45431227_v15             expent_connector json_parser netsuite ne
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01587  d3  /  -   136763_24999609_v19             netsuite_secondary workato_list workato_
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02964  d14 /f2    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.02896  d15 /f4    594058_44921324_v5              clock netsuite
+  # 3  rrf=0.02837  d10 /f11   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 5  rrf=0.01639    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.04577  d14 /f2    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.04458  d15 /f4    594058_44921324_v5              clock netsuite
+  # 3  rrf=0.04245  d10 /f11   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.03279    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+  # 5  rrf=0.03175    - /f3    384059_63102495_v4              netsuite snowflake
+
+================================================================================
+QUERY: If I update field netsuite_object, what recipes will be affected?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1120ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 2  rrf=0.01639  d1  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 3  rrf=0.01613    - /f2    800219_42730295_v1              clock netsuite snowflake workato_list wo
+  # 4  rrf=0.01613  d2  /  -   800219_44273198_v1              lookup_table workato_list workato_recipe
+  # 5  rrf=0.01587  d3  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    3165548_65654039_v3             coupa workato_genie
+  # 2  rrf=0.01639  d1  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   800219_44273198_v1              lookup_table workato_list workato_recipe
+  # 4  rrf=0.01613    - /f2    136763_3792718_v15              jira py_eval workato_list workato_recipe
+  # 5  rrf=0.01587    - /f3    2349888_39772798_v58            clock rest workato_variable
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 2  rrf=0.01639  d1  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 3  rrf=0.01613    - /f2    800219_42730295_v1              clock netsuite snowflake workato_list wo
+  # 4  rrf=0.01613  d2  /  -   800219_44273198_v1              lookup_table workato_list workato_recipe
+  # 5  rrf=0.01587  d3  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 2  rrf=0.01639  d1  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 3  rrf=0.01613    - /f2    800219_42730295_v1              clock netsuite snowflake workato_list wo
+  # 4  rrf=0.01613  d2  /  -   800219_44273198_v1              lookup_table workato_list workato_recipe
+  # 5  rrf=0.01587  d3  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 2  rrf=0.03226    - /f2    800219_42730295_v1              clock netsuite snowflake workato_list wo
+  # 3  rrf=0.03175    - /f3    800219_42730291_v1              clock netsuite snowflake workato_variabl
+  # 4  rrf=0.03125    - /f4    800219_45184743_v1              clock netsuite snowflake workato_variabl
+  # 5  rrf=0.03077    - /f5    800219_42730292_v1              clock netsuite snowflake workato_variabl
+
+================================================================================
+QUERY: What recipes refer to field search_settings of NetSuite?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1151ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02991  d14 /f1    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 3  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 4  rrf=0.01613    - /f2    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 5  rrf=0.01587  d3  /  -   3165548_63826477_v2             netsuite_rest workato_genie
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  # 3  rrf=0.01613    - /f2    2443559_66799217_v1             netsuite slack_bot workato_db_table work
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01587  d3  /  -   3165548_63826477_v2             netsuite_rest workato_genie
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02721  d13 /f14   800219_23098636_v1              netsuite workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 3  rrf=0.01639    - /f1    136763_46053043_v4              clock netsuite snowflake workato_smart_l
+  # 4  rrf=0.01613    - /f2    2497091_65866905_v4             netsuite workato_genie
+  # 5  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02991  d14 /f1    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 3  rrf=0.01613    - /f2    6012707_63356795_v15            google_search_connector workato_genie
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01587  d3  /  -   3165548_63826477_v2             netsuite_rest workato_genie
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.04630  d14 /f1    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.03226    - /f2    6012707_63356795_v15            google_search_connector workato_genie
+  # 3  rrf=0.03175    - /f3    4818262_63794265_v4             google_search_connector workato_genie
+  # 4  rrf=0.03125    - /f4    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 5  rrf=0.03077    - /f5    3165548_57004600_v2             google_search_connector work_genie_conne
+
+================================================================================
+QUERY: If I update field search_settings of NetSuite, what recipes will be affected?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1104ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   5372612_61278153_v2             workato_app workato_genie_connector
+  # 2  rrf=0.01639    - /f1    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.01613    - /f2    2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 4  rrf=0.01613  d2  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 5  rrf=0.01587    - /f3    136763_23363741_v2              netsuite workato_recipe_function
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03041  d2  /f10   800219_23098636_v1              netsuite workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   5372612_61278153_v2             workato_app workato_genie_connector
+  # 3  rrf=0.01639    - /f1    2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  # 4  rrf=0.01613    - /f2    384059_24999421_v10             salesforce workato_recipe_function worka
+  # 5  rrf=0.01587    - /f3    136763_63660739_v1              netsuite_rest workato_db_table workato_r
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03002  d2  /f12   800219_23098636_v1              netsuite workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   5372612_61278153_v2             workato_app workato_genie_connector
+  # 3  rrf=0.01639    - /f1    800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 4  rrf=0.01613    - /f2    800219_45184743_v1              clock netsuite snowflake workato_variabl
+  # 5  rrf=0.01587    - /f3    800219_42730297_v1              clock netsuite snowflake workato_list wo
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   5372612_61278153_v2             workato_app workato_genie_connector
+  # 2  rrf=0.01639    - /f1    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.01613    - /f2    2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 4  rrf=0.01613  d2  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 5  rrf=0.01587    - /f3    136763_23363741_v2              netsuite workato_recipe_function
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.03226    - /f2    2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 3  rrf=0.03175    - /f3    136763_23363741_v2              netsuite workato_recipe_function
+  # 4  rrf=0.03125    - /f4    6012707_63356795_v15            google_search_connector workato_genie
+  # 5  rrf=0.03077    - /f5    4818262_63794265_v4             google_search_connector workato_genie
+
+================================================================================
+QUERY: What recipes refer to field internal_id of NetSuite?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1102ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02944  d10 /f6    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.02879  d11 /f8    3382944_60986291_v20            byin_workato_recipe_ops_connector workat
+  # 3  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 4  rrf=0.01639    - /f1    2443558_24999573_v5             workato_api_platform workato_recipe_func
+  # 5  rrf=0.01613    - /f2    3165548_61850500_v1             work_genie_connector workato_recipe_func
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02840  d13 /f8    2497091_65866905_v4             netsuite workato_genie
+  # 2  rrf=0.02721  d14 /f13   136763_64736491_v2              logger netsuite salesforce slack_bot wor
+  # 3  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 4  rrf=0.01639    - /f1    2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  # 5  rrf=0.01613    - /f2    2443559_66799217_v1             netsuite slack_bot workato_db_table work
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02983  d13 /f2    2497091_65866905_v4             netsuite workato_genie
+  # 2  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 3  rrf=0.01639    - /f1    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01587    - /f3    2443559_66799217_v1             netsuite slack_bot workato_db_table work
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02944  d10 /f6    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.02879  d11 /f8    3382944_60986291_v20            byin_workato_recipe_ops_connector workat
+  # 3  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 4  rrf=0.01639    - /f1    2443558_24999573_v5             workato_api_platform workato_recipe_func
+  # 5  rrf=0.01613    - /f2    3165548_61850500_v1             work_genie_connector workato_recipe_func
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.04459  d10 /f6    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.04350  d11 /f8    3382944_60986291_v20            byin_workato_recipe_ops_connector workat
+  # 3  rrf=0.03279    - /f1    2443558_24999573_v5             workato_api_platform workato_recipe_func
+  # 4  rrf=0.03226    - /f2    3165548_61850500_v1             work_genie_connector workato_recipe_func
+  # 5  rrf=0.03175    - /f3    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+
+================================================================================
+QUERY: If I update field internal_id of NetSuite, what recipes will be affected?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1119ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03089  d9  /f1    2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 2  rrf=0.02890  d14 /f5    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.01639  d1  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+  # 5  rrf=0.01613    - /f2    2443559_24999535_v6             clock netsuite snowflake workato_custom_
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03068  d1  /f10   800219_23098636_v1              netsuite workato_recipe_function
+  # 2  rrf=0.02760  d14 /f11   136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.01639    - /f1    2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+  # 4  rrf=0.01613  d2  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+  # 5  rrf=0.01613    - /f2    384059_24999421_v10             salesforce workato_recipe_function worka
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02920  d9  /f8    2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 2  rrf=0.01639    - /f1    800219_42730294_v1              clock netsuite snowflake workato_list wo
+  # 3  rrf=0.01639  d1  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+  # 5  rrf=0.01613    - /f2    800219_42730297_v1              clock netsuite snowflake workato_list wo
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03089  d9  /f1    2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 2  rrf=0.02890  d14 /f5    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.01639  d1  /  -   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+  # 5  rrf=0.01613    - /f2    2443559_24999535_v6             clock netsuite snowflake workato_custom_
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.04728  d9  /f1    2443559_24999580_v5             corporate_api_connector coupa netsuite n
+  # 2  rrf=0.04428  d14 /f5    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.03226    - /f2    2443559_24999535_v6             clock netsuite snowflake workato_custom_
+  # 4  rrf=0.03175    - /f3    136763_23363741_v2              netsuite workato_recipe_function
+  # 5  rrf=0.03125    - /f4    2443558_24999573_v5             workato_api_platform workato_recipe_func
+
+================================================================================
+QUERY: What recipes refer to field sobject_name of Salesforce?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1123ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 3  rrf=0.01613    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+  # 5  rrf=0.01587  d3  /  -   4499296_57683215_v20            salesforce workato_recipe_function
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02881  d12 /f7    1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 2  rrf=0.02819  d9  /f13   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 3  rrf=0.01639    - /f1    2366099_60168741_v18            clock jira jira_service_desk lookup_tabl
+  # 4  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 5  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    2136196_47015702_v3             salesforce workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 3  rrf=0.01613    - /f2    2436032_58140962_v1             email lookup_table salesforce
+  # 4  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+  # 5  rrf=0.01587  d3  /  -   4499296_57683215_v20            salesforce workato_recipe_function
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 3  rrf=0.01613    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+  # 5  rrf=0.01587  d3  /  -   4499296_57683215_v20            salesforce workato_recipe_function
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.03226    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 3  rrf=0.03175    - /f3    69943_47523573_v35              salesforce slack_bot workato_db_table wo
+  # 4  rrf=0.03125    - /f4    1873346_64004395_v3             clock salesforce snowflake workato_varia
+  # 5  rrf=0.03077    - /f5    2436037_62355254_v1             salesforce slack_bot
+
+================================================================================
+QUERY: If I update field sobject_name of SDFC, how many recipes will be affected?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1110ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    1672048_21272916_v17            corporate_api_connector namely namely_co
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587  d3  /  -   8621_45189766_v2                salesforce workato_service
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    2420261_66346677_v4             snowflake workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    973497_63197554_v12             clock jira logger lookup_table workato_v
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587  d3  /  -   8621_45189766_v2                salesforce workato_service
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    384059_51318330_v2              lookup_table salesforce slack_bot snowfl
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    8621_43238169_v12               salesforce workato_recipe_function worka
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    1873346_50397107_v4             clock lookup_table salesforce snowflake 
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    1672048_21272916_v17            corporate_api_connector namely namely_co
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587  d3  /  -   8621_45189766_v2                salesforce workato_service
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  rrf=0.03226    - /f2    1672048_21272916_v17            corporate_api_connector namely namely_co
+  # 3  rrf=0.03175    - /f3    136763_17980527_v38             namely_connector workato_list workato_re
+  # 4  rrf=0.03125    - /f4    1672048_18452542_v8             namely_connector workato_list workato_re
+  # 5  rrf=0.03077    - /f5    384059_23099424_v16             lookup_table salesforce slack_bot snowfl
+
+================================================================================
+QUERY: If I update field sobject_name of SDFC, what recipes will be affected?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1111ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    69943_47523573_v35              salesforce slack_bot workato_db_table wo
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    3165548_65654039_v3             coupa workato_genie
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    136763_3792718_v15              jira py_eval workato_list workato_recipe
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    2349888_39772798_v58            clock rest workato_variable
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 2  rrf=0.01639    - /f1    800219_23112896_v1              clock google_drive json_parser lookup_ta
+  # 3  rrf=0.01613    - /f2    1873345_43949583_v1             salesforce workato_recipe_function worka
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    136763_3956474_v46              snowflake workato_list workato_recipe_fu
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    69943_47523573_v35              salesforce slack_bot workato_db_table wo
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.03226    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 3  rrf=0.03175    - /f3    69943_47523573_v35              salesforce slack_bot workato_db_table wo
+  # 4  rrf=0.03125    - /f4    384059_23099424_v16             lookup_table salesforce slack_bot snowfl
+  # 5  rrf=0.03077    - /f5    136763_23099454_v8              email google_sheets intercom lookup_tabl
+
+================================================================================
+QUERY: What recipes refer to field external_id of Salesforce?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1151ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 2  rrf=0.01639    - /f1    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 3  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+  # 4  rrf=0.01613    - /f2    5136354_54640076_v77            byin_workato_recipe_ops_connector workda
+  # 5  rrf=0.01587  d3  /  -   4499296_57683215_v20            salesforce workato_recipe_function
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    2366099_60168741_v18            clock jira jira_service_desk lookup_tabl
+  # 2  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 3  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+  # 4  rrf=0.01613    - /f2    3535598_60887804_v1             clock jira jira_service_desk lookup_tabl
+  # 5  rrf=0.01587  d3  /  -   4499296_57683215_v20            salesforce workato_recipe_function
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 2  rrf=0.01639    - /f1    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 3  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+  # 4  rrf=0.01613    - /f2    3382944_61679710_v14            byin_workato_recipe_ops_connector click_
+  # 5  rrf=0.01587  d3  /  -   4499296_57683215_v20            salesforce workato_recipe_function
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    3382944_63325496_v5             microsoft_entra_id_azure_active_director
+  # 2  rrf=0.01639  d1  /  -   3535598_57784296_v1             json_parser workato_recipe_function work
+  # 3  rrf=0.01613    - /f2    3382944_63325494_v5             microsoft_entra_id_azure_active_director
+  # 4  rrf=0.01613  d2  /  -   602425_54218687_v23             salesforce workato_recipe_function worka
+  # 5  rrf=0.01587  d3  /  -   4499296_57683215_v20            salesforce workato_recipe_function
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    3382944_63325496_v5             microsoft_entra_id_azure_active_director
+  # 2  rrf=0.03226    - /f2    3382944_63325494_v5             microsoft_entra_id_azure_active_director
+  # 3  rrf=0.03175    - /f3    3382944_63325495_v4             microsoft_entra_id_azure_active_director
+  # 4  rrf=0.03125    - /f4    3382944_63325489_v3             microsoft_entra_id_azure_active_director
+  # 5  rrf=0.03077    - /f5    3382944_63325486_v5             microsoft_entra_id_azure_active_director
+
+================================================================================
+QUERY: If I update field external_id of SDFC, how many recipes will be affected?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1113ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  rrf=0.01639  d1  /  -   8621_45189738_v1                salesforce workato_recipe_function
+  # 3  rrf=0.01613    - /f2    1672048_21272916_v17            corporate_api_connector namely namely_co
+  # 4  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 5  rrf=0.01587  d3  /  -   50737_46196018_v2               salesforce workato_recipe_function worka
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    2420261_66346677_v4             snowflake workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   8621_45189738_v1                salesforce workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 4  rrf=0.01613    - /f2    973497_63197554_v12             clock jira logger lookup_table workato_v
+  # 5  rrf=0.01587    - /f3    800229_65588304_v1              snowflake workato_recipe_function workat
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    800219_45184743_v1              clock netsuite snowflake workato_variabl
+  # 2  rrf=0.01639  d1  /  -   8621_45189738_v1                salesforce workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 4  rrf=0.01613    - /f2    800219_23099141_v1              workato_custom_code workato_list workato
+  # 5  rrf=0.01587    - /f3    2420261_66346677_v4             snowflake workato_recipe_function
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  rrf=0.01639  d1  /  -   8621_45189738_v1                salesforce workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 4  rrf=0.01613    - /f2    3382944_63325496_v5             microsoft_entra_id_azure_active_director
+  # 5  rrf=0.01587    - /f3    3382944_63325494_v5             microsoft_entra_id_azure_active_director
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    1672048_18452684_v23            corporate_api_connector namely_connector
+  # 2  rrf=0.03226    - /f2    3382944_63325496_v5             microsoft_entra_id_azure_active_director
+  # 3  rrf=0.03175    - /f3    3382944_63325494_v5             microsoft_entra_id_azure_active_director
+  # 4  rrf=0.03125    - /f4    3382944_63325495_v4             microsoft_entra_id_azure_active_director
+  # 5  rrf=0.03077    - /f5    3382944_63325489_v3             microsoft_entra_id_azure_active_director
+
+================================================================================
+QUERY: What recipes refer to field netsuite_object?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1115ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02967  d10 /f5    800219_23098636_v1              netsuite workato_recipe_function
+  # 2  rrf=0.02867  d14 /f6    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.02742  d15 /f11   594058_44921324_v5              clock netsuite
+  # 4  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 5  rrf=0.01639    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    2366099_60168741_v18            clock jira jira_service_desk lookup_tabl
+  # 3  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 4  rrf=0.01613    - /f2    3535598_60887804_v1             clock jira jira_service_desk lookup_tabl
+  # 5  rrf=0.01587  d3  /  -   136763_24999609_v19             netsuite_secondary workato_list workato_
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 3  rrf=0.01613    - /f2    384059_45431227_v15             expent_connector json_parser netsuite ne
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01587  d3  /  -   136763_24999609_v19             netsuite_secondary workato_list workato_
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02964  d14 /f2    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.02896  d15 /f4    594058_44921324_v5              clock netsuite
+  # 3  rrf=0.02837  d10 /f11   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 5  rrf=0.01639    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.04577  d14 /f2    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.04458  d15 /f4    594058_44921324_v5              clock netsuite
+  # 3  rrf=0.04245  d10 /f11   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.03279    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+  # 5  rrf=0.03175    - /f3    384059_63102495_v4              netsuite snowflake
+
+================================================================================
+QUERY: If I update field sobject_name of SDFC, what recipes will be affected?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1103ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    69943_47523573_v35              salesforce slack_bot workato_db_table wo
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    3165548_65654039_v3             coupa workato_genie
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    136763_3792718_v15              jira py_eval workato_list workato_recipe
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    2349888_39772798_v58            clock rest workato_variable
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 2  rrf=0.01639    - /f1    800219_23112896_v1              clock google_drive json_parser lookup_ta
+  # 3  rrf=0.01613    - /f2    1873345_43949583_v1             salesforce workato_recipe_function worka
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    136763_3956474_v46              snowflake workato_list workato_recipe_fu
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639  d1  /  -   1020461_60576252_v40            salesforce workato_db_table workato_reci
+  # 3  rrf=0.01613    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   3165548_63743137_v1             salesforce workato_db_table workato_reci
+  # 5  rrf=0.01587    - /f3    69943_47523573_v35              salesforce slack_bot workato_db_table wo
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.03279    - /f1    69943_63310229_v9               salesforce workato_recipe_function
+  # 2  rrf=0.03226    - /f2    800229_63358063_v1              salesforce workato_recipe_function
+  # 3  rrf=0.03175    - /f3    69943_47523573_v35              salesforce slack_bot workato_db_table wo
+  # 4  rrf=0.03125    - /f4    384059_23099424_v16             lookup_table salesforce slack_bot snowfl
+  # 5  rrf=0.03077    - /f5    136763_23099454_v8              email google_sheets intercom lookup_tabl
+
+================================================================================
+QUERY: What recipes refer to field netsuite_object?
+Type:  structured (underscore tokens)
+================================================================================
+Embedded in 1117ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02967  d10 /f5    800219_23098636_v1              netsuite workato_recipe_function
+  # 2  rrf=0.02867  d14 /f6    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 3  rrf=0.02742  d15 /f11   594058_44921324_v5              clock netsuite
+  # 4  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 5  rrf=0.01639    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    2366099_60168741_v18            clock jira jira_service_desk lookup_tabl
+  # 3  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 4  rrf=0.01613    - /f2    3535598_60887804_v1             clock jira jira_service_desk lookup_tabl
+  # 5  rrf=0.01587  d3  /  -   136763_24999609_v19             netsuite_secondary workato_list workato_
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+  # 3  rrf=0.01613    - /f2    384059_45431227_v15             expent_connector json_parser netsuite ne
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01587  d3  /  -   136763_24999609_v19             netsuite_secondary workato_list workato_
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02964  d14 /f2    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.02896  d15 /f4    594058_44921324_v5              clock netsuite
+  # 3  rrf=0.02837  d10 /f11   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 5  rrf=0.01639    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+
+--- routed                     (w_fts=2.0, w_dense=1.0) ---
+  # 1  rrf=0.04577  d14 /f2    136763_23098295_v2              netsuite netsuite_secondary workato_reci
+  # 2  rrf=0.04458  d15 /f4    594058_44921324_v5              clock netsuite
+  # 3  rrf=0.04245  d10 /f11   800219_23098636_v1              netsuite workato_recipe_function
+  # 4  rrf=0.03279    - /f1    384059_45431227_v15             expent_connector json_parser netsuite ne
+  # 5  rrf=0.03175    - /f3    384059_63102495_v4              netsuite snowflake
+
+================================================================================
+QUERY: What recipes synch between SDFC and Netsuite?
+Type:  natural language
+================================================================================
+Embedded in 1114ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 2  rrf=0.01639    - /f1    5619544_66087828_v2             coupa workato_recipe_function workato_va
+  # 3  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 4  rrf=0.01613    - /f2    800229_63231983_v1              aws_secrets_manager_connector json_parse
+  # 5  rrf=0.01587  d3  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03126  d5  /f3    384059_24999421_v10             salesforce workato_recipe_function worka
+  # 2  rrf=0.02920  d8  /f9    136763_64736491_v2              logger netsuite salesforce slack_bot wor
+  # 3  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 4  rrf=0.01639    - /f1    136763_63660739_v1              netsuite_rest workato_db_table workato_r
+  # 5  rrf=0.01613    - /f2    136763_27089482_v71             netsuite workato_api_platform workato_re
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02885  d13 /f6    594058_44921324_v5              clock netsuite
+  # 2  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 3  rrf=0.01639    - /f1    77630_55811547_v1               automation_quality_and_security_aqs__con
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01613    - /f2    602425_59251444_v16             automation_quality_and_security_aqs__con
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02885  d13 /f6    594058_44921324_v5              clock netsuite
+  # 2  rrf=0.01639  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 3  rrf=0.01639    - /f1    77630_55811547_v1               automation_quality_and_security_aqs__con
+  # 4  rrf=0.01613  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.01613    - /f2    602425_59251444_v16             automation_quality_and_security_aqs__con
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.03895  d5  /f3    384059_24999421_v10             salesforce workato_recipe_function worka
+  # 2  rrf=0.03655  d8  /f9    136763_64736491_v2              logger netsuite salesforce slack_bot wor
+  # 3  rrf=0.02459  d1  /  -   3165548_63826475_v1             netsuite_rest workato_genie
+  # 4  rrf=0.02419  d2  /  -   3382944_61497969_v5             netsuite_rest workato_recipe_function
+  # 5  rrf=0.02381  d3  /  -   384059_24999423_v18             lookup_table netsuite salesforce slack_b
+
+================================================================================
+QUERY: Which recipes are involved in the Procure to Pay process?
+Type:  natural language
+================================================================================
+Embedded in 1131ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   321290_65236774_v8              coupa workato_genie
+  # 2  rrf=0.01639    - /f1    800229_49963352_v1              salesforce workato_recipe_function
+  # 3  rrf=0.01613    - /f2    69943_58150847_v6               clock salesforce
+  # 4  rrf=0.01613  d2  /  -   5619544_63874031_v35            byin_workato_recipe_ops_connector workat
+  # 5  rrf=0.01587  d3  /  -   384059_24999377_v5              coupa workato_recipe_function
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03200  d3  /f2    384059_24999377_v5              coupa workato_recipe_function
+  # 2  rrf=0.03125  d4  /f4    2443559_24999344_v4             coupa coupa_connector workato_recipe_fun
+  # 3  rrf=0.03110  d8  /f1    384059_45433965_v2              coupa lookup_table workato_recipe_functi
+  # 4  rrf=0.01639  d1  /  -   321290_65236774_v8              coupa workato_genie
+  # 5  rrf=0.01613  d2  /  -   5619544_63874031_v35            byin_workato_recipe_ops_connector workat
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    693339_66328483_v8              jira the_confluence_cloud_connector work
+  # 2  rrf=0.01639  d1  /  -   321290_65236774_v8              coupa workato_genie
+  # 3  rrf=0.01613    - /f2    693339_66333894_v3              jira py_eval the_confluence_cloud_connec
+  # 4  rrf=0.01613  d2  /  -   5619544_63874031_v35            byin_workato_recipe_ops_connector workat
+  # 5  rrf=0.01587  d3  /  -   384059_24999377_v5              coupa workato_recipe_function
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    693339_66328483_v8              jira the_confluence_cloud_connector work
+  # 2  rrf=0.01639  d1  /  -   321290_65236774_v8              coupa workato_genie
+  # 3  rrf=0.01613    - /f2    693339_66333894_v3              jira py_eval the_confluence_cloud_connec
+  # 4  rrf=0.01613  d2  /  -   5619544_63874031_v35            byin_workato_recipe_ops_connector workat
+  # 5  rrf=0.01587  d3  /  -   384059_24999377_v5              coupa workato_recipe_function
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.03968  d3  /f3    384059_24999377_v5              coupa workato_recipe_function
+  # 2  rrf=0.03859  d4  /f6    2443559_24999344_v4             coupa coupa_connector workato_recipe_fun
+  # 3  rrf=0.03819  d8  /f2    384059_45433965_v2              coupa lookup_table workato_recipe_functi
+  # 4  rrf=0.02459  d1  /  -   321290_65236774_v8              coupa workato_genie
+  # 5  rrf=0.02419  d2  /  -   5619544_63874031_v35            byin_workato_recipe_ops_connector workat
+
+================================================================================
+QUERY: What recipes are involved in the Quote to Cash process?
+Type:  natural language
+================================================================================
+Embedded in 1120ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    1873346_62943407_v10            clock csv_parser lookup_table salesforce
+  # 2  rrf=0.01639  d1  /  -   618946_58328182_v29             byin_workato_recipe_ops_connector workat
+  # 3  rrf=0.01613    - /f2    3005568_46482062_v47            salesforce workato_recipe_function worka
+  # 4  rrf=0.01613  d2  /  -   136763_52294328_v67             salesforce workato_api_platform workato_
+  # 5  rrf=0.01587  d3  /  -   618946_59030904_v16             byin_workato_recipe_ops_connector workat
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03058  d8  /f3    69943_48870820_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639    - /f1    384059_24999421_v10             salesforce workato_recipe_function worka
+  # 3  rrf=0.01639  d1  /  -   618946_58328182_v29             byin_workato_recipe_ops_connector workat
+  # 4  rrf=0.01613    - /f2    618946_58611058_v6              byin_workato_recipe_ops_connector workat
+  # 5  rrf=0.01613  d2  /  -   136763_52294328_v67             salesforce workato_api_platform workato_
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02941  d8  /f8    69943_48870820_v9               salesforce workato_recipe_function
+  # 2  rrf=0.01639    - /f1    693339_66328483_v8              jira the_confluence_cloud_connector work
+  # 3  rrf=0.01639  d1  /  -   618946_58328182_v29             byin_workato_recipe_ops_connector workat
+  # 4  rrf=0.01613    - /f2    800229_46026472_v16             salesforce workato_recipe_function worka
+  # 5  rrf=0.01613  d2  /  -   136763_52294328_v67             salesforce workato_api_platform workato_
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    693339_66328483_v8              jira the_confluence_cloud_connector work
+  # 2  rrf=0.01639  d1  /  -   618946_58328182_v29             byin_workato_recipe_ops_connector workat
+  # 3  rrf=0.01613    - /f2    693339_66333894_v3              jira py_eval the_confluence_cloud_connec
+  # 4  rrf=0.01613  d2  /  -   136763_52294328_v67             salesforce workato_api_platform workato_
+  # 5  rrf=0.01587  d3  /  -   618946_59030904_v16             byin_workato_recipe_ops_connector workat
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.03744  d8  /f5    69943_48870820_v9               salesforce workato_recipe_function
+  # 2  rrf=0.02459  d1  /  -   618946_58328182_v29             byin_workato_recipe_ops_connector workat
+  # 3  rrf=0.02419  d2  /  -   136763_52294328_v67             salesforce workato_api_platform workato_
+  # 4  rrf=0.02381  d3  /  -   618946_59030904_v16             byin_workato_recipe_ops_connector workat
+  # 5  rrf=0.02344  d4  /  -   3165548_62240702_v1             steelbrick workato_recipe_function
+
+================================================================================
+QUERY: Show me recipes that support customer support automation.
+Type:  natural language
+================================================================================
+Embedded in 1105ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 2  rrf=0.01639    - /f1    800229_7795446_v4               salesforce snowflake workato_service wor
+  # 3  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 4  rrf=0.01613    - /f2    69943_57786472_v2               intercom_v1_4_connector logger salesforc
+  # 5  rrf=0.01587  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03008  d7  /f6    2541045_55342807_v2             email fresh_desk json_parser slack_bot w
+  # 2  rrf=0.01639    - /f1    3165548_65654042_v2             coupa workato_genie
+  # 3  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 5  rrf=0.01613    - /f2    136763_66137678_v18             anthropic_by_connectors_connector json_p
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 2  rrf=0.01639    - /f1    1672048_18452768_v7             google_calendar workato_recipe_function 
+  # 3  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 4  rrf=0.01613    - /f2    3382944_54221370_v14            salesforce workato_recipe_function
+  # 5  rrf=0.01587  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    77630_55811547_v1               automation_quality_and_security_aqs__con
+  # 2  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 4  rrf=0.01613    - /f2    602425_59251444_v16             automation_quality_and_security_aqs__con
+  # 5  rrf=0.01587  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.02459  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 2  rrf=0.02419  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 3  rrf=0.02381  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+  # 4  rrf=0.02344  d4  /  -   512482_63741043_v5              workato_genie workato_recipe_function
+  # 5  rrf=0.02308  d5  /  -   5081019_65864617_v5             rest workato_genie
+
+================================================================================
+QUERY: Which recipes post Slack alerts for high-priority incidents from ServiceNow?
+Type:  natural language
+================================================================================
+Embedded in 1117ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   291297_59870741_v1              slack_bot workato_recipe_function
+  # 2  rrf=0.01639    - /f1    3165546_54669884_v3             service_now workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   3955905_58338034_v3             slack_bot workato_recipe_function
+  # 4  rrf=0.01613    - /f2    618946_47419230_v60             byin_workato_recipe_ops_connector servic
+  # 5  rrf=0.01587    - /f3    3165546_54307779_v6             service_now work_genie_connector workato
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   291297_59870741_v1              slack_bot workato_recipe_function
+  # 2  rrf=0.01639    - /f1    3165548_64200934_v5             service_now workato_db_table workato_gen
+  # 3  rrf=0.01613  d2  /  -   3955905_58338034_v3             slack_bot workato_recipe_function
+  # 4  rrf=0.01613    - /f2    5770830_63320751_v10            service_now workato_genie
+  # 5  rrf=0.01587    - /f3    618946_47419230_v60             byin_workato_recipe_ops_connector servic
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    618946_47419230_v60             byin_workato_recipe_ops_connector servic
+  # 2  rrf=0.01639  d1  /  -   291297_59870741_v1              slack_bot workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   3955905_58338034_v3             slack_bot workato_recipe_function
+  # 4  rrf=0.01613    - /f2    3165548_64200934_v5             service_now workato_db_table workato_gen
+  # 5  rrf=0.01587    - /f3    618946_54306262_v6              byin_workato_recipe_ops_connector servic
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   291297_59870741_v1              slack_bot workato_recipe_function
+  # 2  rrf=0.01639    - /f1    69943_45189746_v2               outreach_from_community_connector workat
+  # 3  rrf=0.01613  d2  /  -   3955905_58338034_v3             slack_bot workato_recipe_function
+  # 4  rrf=0.01613    - /f2    3165546_54669884_v3             service_now workato_recipe_function
+  # 5  rrf=0.01587    - /f3    618946_47419230_v60             byin_workato_recipe_ops_connector servic
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.02459  d1  /  -   291297_59870741_v1              slack_bot workato_recipe_function
+  # 2  rrf=0.02419  d2  /  -   3955905_58338034_v3             slack_bot workato_recipe_function
+  # 3  rrf=0.02381  d3  /  -   2023832_40003413_v9             workato_custom_code workato_recipe_funct
+  # 4  rrf=0.02344  d4  /  -   291297_56549102_v8              slack_bot workato_recipe_function
+  # 5  rrf=0.02308  d5  /  -   1088959_43209171_v4             slack_bot workato_recipe_function
+
+================================================================================
+QUERY: Find all automations that are part of the financial close process.
+Type:  natural language
+================================================================================
+Embedded in 1141ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   3535598_58518622_v2             py_eval work_genie_connector workato_rec
+  # 2  rrf=0.01639    - /f1    2541045_44625751_v10            corporate_api_connector intercom_connect
+  # 3  rrf=0.01613    - /f2    8621_45178508_v3                gong_connector logger lookup_table sales
+  # 4  rrf=0.01613  d2  /  -   800229_64736492_v1              clock workato_recipe_function workato_va
+  # 5  rrf=0.01587  d3  /  -   602425_66687814_v1              workato_recipe_function
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    800219_42511525_v3              netsuite snowflake workato_list workato_
+  # 2  rrf=0.01639  d1  /  -   3535598_58518622_v2             py_eval work_genie_connector workato_rec
+  # 3  rrf=0.01613  d2  /  -   800229_64736492_v1              clock workato_recipe_function workato_va
+  # 4  rrf=0.01613    - /f2    209875_54254763_v17             byin_workato_recipe_ops_connector jira
+  # 5  rrf=0.01587    - /f3    800219_45235938_v4              clock netsuite snowflake workato_variabl
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    693339_66328483_v8              jira the_confluence_cloud_connector work
+  # 2  rrf=0.01639  d1  /  -   3535598_58518622_v2             py_eval work_genie_connector workato_rec
+  # 3  rrf=0.01613  d2  /  -   800229_64736492_v1              clock workato_recipe_function workato_va
+  # 4  rrf=0.01613    - /f2    2136196_45586052_v4             salesforce slack_bot
+  # 5  rrf=0.01587  d3  /  -   602425_66687814_v1              workato_recipe_function
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    693339_66328483_v8              jira the_confluence_cloud_connector work
+  # 2  rrf=0.01639  d1  /  -   3535598_58518622_v2             py_eval work_genie_connector workato_rec
+  # 3  rrf=0.01613    - /f2    693339_66333894_v3              jira py_eval the_confluence_cloud_connec
+  # 4  rrf=0.01613  d2  /  -   800229_64736492_v1              clock workato_recipe_function workato_va
+  # 5  rrf=0.01587  d3  /  -   602425_66687814_v1              workato_recipe_function
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.02459  d1  /  -   3535598_58518622_v2             py_eval work_genie_connector workato_rec
+  # 2  rrf=0.02419  d2  /  -   800229_64736492_v1              clock workato_recipe_function workato_va
+  # 3  rrf=0.02381  d3  /  -   602425_66687814_v1              workato_recipe_function
+  # 4  rrf=0.02344  d4  /  -   2136196_46501051_v7             clock csv_parser google_drive salesforce
+  # 5  rrf=0.02308  d5  /  -   136763_24999578_v12             netsuite workato_api_platform workato_re
+
+================================================================================
+QUERY: Please find recipes where Zendesk ticket webhook searches Salesforce contacts and posts to Slack.
+Type:  natural language
+================================================================================
+Embedded in 1100ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   291297_49404331_v4              salesforce slack_bot workato_recipe_func
+  # 2  rrf=0.01639    - /f1    2436037_53399893_v10            google_calendar lookup_table marketo sal
+  # 3  rrf=0.01613    - /f2    3165546_49552444_v14            service_now work_genie_connector workato
+  # 4  rrf=0.01613  d2  /  -   291297_46512762_v2              salesforce slack_bot
+  # 5  rrf=0.01587    - /f3    800219_23099455_v1              google_drive json_parser salesforce slac
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   291297_49404331_v4              salesforce slack_bot workato_recipe_func
+  # 2  rrf=0.01639    - /f1    3165546_49823711_v11            work_genie_connector zendesk
+  # 3  rrf=0.01613    - /f2    3165548_63557973_v4             workato_genie zendesk
+  # 4  rrf=0.01613  d2  /  -   291297_46512762_v2              salesforce slack_bot
+  # 5  rrf=0.01587  d3  /  -   800219_23099195_v1              salesforce slack_bot
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   291297_49404331_v4              salesforce slack_bot workato_recipe_func
+  # 2  rrf=0.01639    - /f1    618946_47419230_v60             byin_workato_recipe_ops_connector servic
+  # 3  rrf=0.01613    - /f2    2436037_53399893_v10            google_calendar lookup_table marketo sal
+  # 4  rrf=0.01613  d2  /  -   291297_46512762_v2              salesforce slack_bot
+  # 5  rrf=0.01587  d3  /  -   800219_23099195_v1              salesforce slack_bot
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   291297_49404331_v4              salesforce slack_bot workato_recipe_func
+  # 2  rrf=0.01639    - /f1    77630_55811547_v1               automation_quality_and_security_aqs__con
+  # 3  rrf=0.01613  d2  /  -   291297_46512762_v2              salesforce slack_bot
+  # 4  rrf=0.01613    - /f2    602425_59251444_v16             automation_quality_and_security_aqs__con
+  # 5  rrf=0.01587    - /f3    3165547_59355450_v3             automation_quality_and_security_aqs__con
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.02459  d1  /  -   291297_49404331_v4              salesforce slack_bot workato_recipe_func
+  # 2  rrf=0.02419  d2  /  -   291297_46512762_v2              salesforce slack_bot
+  # 3  rrf=0.02381  d3  /  -   800219_23099195_v1              salesforce slack_bot
+  # 4  rrf=0.02344  d4  /  -   15806_44083185_v12              salesforce slack_bot
+  # 5  rrf=0.02308  d5  /  -   2085133_44653660_v47            logger salesforce slack_bot
+
+================================================================================
+QUERY: What recipes send notifications when a Salesforce lead is updated?
+Type:  natural language
+================================================================================
+Embedded in 1125ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    69943_57786500_v9               corporate_api_connector lookup_table out
+  # 2  rrf=0.01639  d1  /  -   50737_46196018_v2               salesforce workato_recipe_function worka
+  # 3  rrf=0.01613    - /f2    69943_63072929_v3               google_sheets logger salesforce workato_
+  # 4  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 5  rrf=0.01587  d3  /  -   3000083_46512867_v3             salesforce workato_pub_sub
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   50737_46196018_v2               salesforce workato_recipe_function worka
+  # 2  rrf=0.01639    - /f1    69943_57786499_v3               json_parser rest slack_bot workato_db_ta
+  # 3  rrf=0.01613    - /f2    2436037_45179077_v19            clock corporate_api_connector google_she
+  # 4  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 5  rrf=0.01587    - /f3    3535598_57784300_v5             outreach_connector rest slack_bot work_g
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.02908  d13 /f5    2436032_44791099_v3             email salesforce slack_bot workato_list 
+  # 2  rrf=0.01639    - /f1    69943_57786500_v9               corporate_api_connector lookup_table out
+  # 3  rrf=0.01639  d1  /  -   50737_46196018_v2               salesforce workato_recipe_function worka
+  # 4  rrf=0.01613    - /f2    69943_40465907_v4               outreach workato_recipe_function
+  # 5  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    592451_52752084_v30             lead_iq_connector logger lookup_table wo
+  # 2  rrf=0.01639  d1  /  -   50737_46196018_v2               salesforce workato_recipe_function worka
+  # 3  rrf=0.01613  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 4  rrf=0.01613    - /f2    2436037_56455151_v6             lead_iq_connector logger lookup_table wo
+  # 5  rrf=0.01587    - /f3    83671_56455484_v5               lead_iq_connector logger lookup_table wo
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.03668  d13 /f2    2436032_44791099_v3             email salesforce slack_bot workato_list 
+  # 2  rrf=0.02459  d1  /  -   50737_46196018_v2               salesforce workato_recipe_function worka
+  # 3  rrf=0.02419  d2  /  -   8621_45189766_v2                salesforce workato_service
+  # 4  rrf=0.02381  d3  /  -   3000083_46512867_v3             salesforce workato_pub_sub
+  # 5  rrf=0.02344  d4  /  -   602425_54218221_v5              salesforce workato_recipe_function
+
+================================================================================
+QUERY: Show me recipes that support customer support automation.
+Type:  natural language
+================================================================================
+Embedded in 1107ms
+
+--- search_text_only           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 2  rrf=0.01639    - /f1    800229_7795446_v4               salesforce snowflake workato_service wor
+  # 3  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 4  rrf=0.01613    - /f2    69943_57786472_v2               intercom_v1_4_connector logger salesforc
+  # 5  rrf=0.01587  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+
+--- description_usage          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.03008  d7  /f6    2541045_55342807_v2             email fresh_desk json_parser slack_bot w
+  # 2  rrf=0.01639    - /f1    3165548_65654042_v2             coupa workato_genie
+  # 3  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 4  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 5  rrf=0.01613    - /f2    136763_66137678_v18             anthropic_by_connectors_connector json_p
+
+--- cross_fields_all           (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 2  rrf=0.01639    - /f1    1672048_18452768_v7             google_calendar workato_recipe_function 
+  # 3  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 4  rrf=0.01613    - /f2    3382944_54221370_v14            salesforce workato_recipe_function
+  # 5  rrf=0.01587  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+
+--- cross_fields_tech          (w_fts=1.0, w_dense=1.0) ---
+  # 1  rrf=0.01639    - /f1    77630_55811547_v1               automation_quality_and_security_aqs__con
+  # 2  rrf=0.01639  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 3  rrf=0.01613  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 4  rrf=0.01613    - /f2    602425_59251444_v16             automation_quality_and_security_aqs__con
+  # 5  rrf=0.01587  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+
+--- routed                     (w_fts=1.0, w_dense=1.5) ---
+  # 1  rrf=0.02459  d1  /  -   618946_43783299_v2              open_ai workato_recipe_function
+  # 2  rrf=0.02419  d2  /  -   973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+  # 3  rrf=0.02381  d3  /  -   4818262_64719195_v4             workato_genie workato_pub_sub
+  # 4  rrf=0.02344  d4  /  -   512482_63741043_v5              workato_genie workato_recipe_function
+  # 5  rrf=0.02308  d5  /  -   5081019_65864617_v5             rest workato_genie

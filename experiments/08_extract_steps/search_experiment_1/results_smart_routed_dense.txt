@@ -1,0 +1,543 @@
+
+================================================================================
+QUERY:     What recipes refer to field netsuite_object?
+Type:      technical
+Rewritten: field netsuite_object
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  9.675  384059_45431227_v15             expent_connector json_parser netsuite ne
+        This procurement-to-ERP automation supports supplier onboarding by taking intake
+  # 2  bm25=  9.457  800219_23098636_v1              netsuite workato_recipe_function
+        This IT/identity-management recipe connects a callable Workato function to NetSu
+  # 3  bm25=  9.403  2443558_24999575_v1             netsuite_secondary workato_api_platform
+        This IT/ERP automation provides an API endpoint that manages employee records in
+  # 4  bm25=  9.298  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+        This IT/user access management automation updates NetSuite employee access based
+  # 5  bm25=  9.277  136763_46053043_v4              clock netsuite snowflake workato_smart_l
+        This finance/accounting automation is a scheduled recipe that pulls allocation o
+  # 6  bm25=  9.246  2497091_47096666_v22            logger netsuite slack_bot workato_list w
+        This finance operations automation is event-driven from a Slack bot command and 
+  # 7  bm25=  9.246  2443559_47097324_v7             logger netsuite slack_bot workato_list w
+        This finance operations automation is event-driven from a Slack bot command and 
+  # 8  bm25=  9.110  594058_44921324_v5              clock netsuite
+        This sales operations automation runs on a scheduled basis to query NetSuite for
+  # 9  bm25=  9.044  800219_42730294_v1              clock netsuite snowflake workato_list wo
+        This Finance/ERP-to-data-warehouse automation runs on a scheduled basis to extra
+  #10  bm25=  8.803  800219_42730295_v1              clock netsuite snowflake workato_list wo
+        This finance and ERP-to-data-warehouse automation runs on a schedule to extract 
+
+================================================================================
+QUERY:     If I update field netsuite_object, what recipes will be affected?
+Type:      technical
+Rewritten: update field netsuite_object affected recipes
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 12.253  800219_42730294_v1              clock netsuite snowflake workato_list wo
+        This Finance/ERP-to-data-warehouse automation runs on a scheduled basis to extra
+  # 2  bm25= 11.959  800219_42730295_v1              clock netsuite snowflake workato_list wo
+        This finance and ERP-to-data-warehouse automation runs on a schedule to extract 
+  # 3  bm25= 11.849  800219_42730291_v1              clock netsuite snowflake workato_variabl
+        This operations/finance integration recipe runs on a schedule to synchronize sta
+  # 4  bm25= 11.712  800219_45184743_v1              clock netsuite snowflake workato_variabl
+        This finance data integration recipe runs on a schedule to extract consolidated 
+  # 5  bm25= 11.691  800219_42730292_v1              clock netsuite snowflake workato_variabl
+        This scheduled data integration recipe supports ERP-to-warehouse synchronization
+  # 6  bm25= 11.650  800219_42730290_v1              clock netsuite snowflake workato_variabl
+        This finance/data operations recipe runs on a schedule to sync NetSuite currency
+  # 7  bm25= 11.545  800219_45235938_v4              clock netsuite snowflake workato_variabl
+        This finance/data engineering recipe runs on a schedule to extract accounting pe
+  # 8  bm25= 11.412  800219_42730293_v1              clock netsuite snowflake workato_list wo
+        This finance and accounting automation runs on a schedule to extract account mas
+  # 9  bm25= 11.412  800219_42730297_v1              clock netsuite snowflake workato_list wo
+        This scheduled data integration recipe supports finance and analytics by replica
+  #10  bm25= 11.011  800219_42730296_v1              clock netsuite snowflake workato_list wo
+        This finance/ERP data integration recipe is a scheduled automation that extracts
+
+================================================================================
+QUERY:     What recipes refer to field search_settings of NetSuite?
+Type:      technical
+Rewritten: field search_settings NetSuite
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 17.807  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+        This IT/user access management automation updates NetSuite employee access based
+  # 2  bm25= 15.839  2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+        This HR/IT operations recipe is function-triggered and synchronizes employee pro
+  # 3  bm25= 15.054  2443559_24999580_v5             corporate_api_connector coupa netsuite n
+        This HR/Finance operations automation is a function-triggered recipe that syncs 
+  # 4  bm25= 14.975  384059_24999439_v37             lookup_table netsuite salesforce slack_b
+        This Quote-to-Cash automation in the sales operations domain is a function-trigg
+  # 5  bm25= 14.664  2443559_24999420_v10            netsuite salesforce slack_bot snowflake 
+        This finance/operations automation is function-triggered to create or update a N
+  # 6  bm25= 14.465  136763_23363741_v2              netsuite workato_recipe_function
+        This IT/HR operations automation is a function-triggered recipe that updates emp
+  # 7  bm25= 13.436  2443559_24999520_v10            netsuite salesforce workato_db_table wor
+        This finance operations automation is a function-triggered integration between N
+  # 8  bm25= 13.385  2443559_24999419_v33            json_parser netsuite open_ai salesforce 
+        This finance/RevOps automation syncs customer account setup across Snowflake, Sa
+  # 9  bm25= 11.957  384059_24999444_v28             netsuite salesforce snowflake workato_re
+        This quote-to-cash automation orchestrates subscription creation and updates acr
+  #10  bm25= 11.709  384059_24999537_v3              clock workato_recipe_function
+        This HR/ERP data synchronization automation runs on a scheduled basis to keep em
+
+================================================================================
+QUERY:     If I update field search_settings of NetSuite, what recipes will be affected?
+Type:      mixed
+Rewritten: update field search_settings NetSuite affected recipes
+================================================================================
+Embedded in 74002ms
+
+--- smart_routed               [dense-only, mixed] ---
+  # 1  dense=0.8105  5372612_61278153_v2             workato_app workato_genie_connector
+        This IT operations and automation-governance recipe is event-driven and starts w
+  # 2  dense=0.8021  800219_23098636_v1              netsuite workato_recipe_function
+        This IT/identity-management recipe connects a callable Workato function to NetSu
+  # 3  dense=0.7993  806258_45232686_v2              snowflake workato_recipe_function workat
+        This IT/data operations recipe is a function-triggered service that queries Snow
+  # 4  dense=0.7974  3741118_51254253_v17            workato_app workato_genie_connector
+        This IT operations automation monitors Workato recipe execution events and keeps
+  # 5  dense=0.7971  800219_44273198_v1              lookup_table workato_list workato_recipe
+        This function-triggered recipe supports product/configuration operations by stan
+  # 6  dense=0.7957  1088959_17094326_v6             workato_app workato_recipe_function
+        This Security Operations Automation (SOAR) helper recipe is function-triggered a
+  # 7  dense=0.7950  384059_24999423_v18             lookup_table netsuite salesforce slack_b
+        This is a product and catalog management automation that keeps Salesforce produc
+  # 8  dense=0.7946  800219_23098650_v1              captivate_iq_connector workato_recipe_fu
+        This IT/operations automation is a function-triggered recipe that works between 
+  # 9  dense=0.7908  800219_15395354_v10             json_parser workato_api_connector workat
+        This IT operations automation is a function-triggered Workato recipe that update
+  #10  dense=0.7887  3165546_47132333_v109           work_genie_connector workato_app
+        This IT/automation operations recipe is event-driven and runs when another Worka
+
+================================================================================
+QUERY:     What recipes refer to field internal_id of NetSuite?
+Type:      technical
+Rewritten: field internal_id NetSuite
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25= 17.342  2443558_24999573_v5             workato_api_platform workato_recipe_func
+        This HR-to-finance automation exposes a Workato API endpoint that accepts employ
+  # 2  bm25= 16.860  3165548_61850500_v1             work_genie_connector workato_recipe_func
+        This customer operations automation connects a Work Genie process trigger with N
+  # 3  bm25= 16.669  800229_63231981_v1              json_parser workato_db_table workato_rec
+        This finance operations automation is function-triggered and coordinates Workato
+  # 4  bm25= 16.669  2366099_63066092_v6             json_parser workato_db_table workato_rec
+        This operations automation supports finance/ERP processing by coordinating Worka
+  # 5  bm25= 16.646  136763_23098295_v2              netsuite netsuite_secondary workato_reci
+        This IT/user access management automation updates NetSuite employee access based
+  # 6  bm25= 16.406  3165548_61850498_v1             work_genie_connector workato_recipe_func
+        This operations automation is function-triggered from Work Genie and integrates 
+  # 7  bm25= 16.320  3382944_60986291_v20            byin_workato_recipe_ops_connector workat
+        This sales/finance operations automation is function-triggered from a Workato pr
+  # 8  bm25= 16.236  2443558_24999583_v5             coupa netsuite netsuite_secondary snowfl
+        This HR/IT operations recipe is function-triggered and synchronizes employee pro
+  # 9  bm25= 15.986  136763_24999514_v3              clock lookup_table workato_recipe_functi
+        This finance/accounting automation runs on a schedule to synchronize the chart o
+  #10  bm25= 15.903  384059_24999339_v4              clock csv_parser email workato_custom_co
+        This HR/IT operations automation runs on a schedule to reconcile employee record
+
+================================================================================
+QUERY:     If I update field internal_id of NetSuite, what recipes will be affected?
+Type:      mixed
+Rewritten: update field internal_id NetSuite affected recipes
+================================================================================
+Embedded in 1773ms
+
+--- smart_routed               [dense-only, mixed] ---
+  # 1  dense=0.8268  800219_23098636_v1              netsuite workato_recipe_function
+        This IT/identity-management recipe connects a callable Workato function to NetSu
+  # 2  dense=0.8213  384059_24999423_v18             lookup_table netsuite salesforce slack_b
+        This is a product and catalog management automation that keeps Salesforce produc
+  # 3  dense=0.8211  3165548_63826475_v1             netsuite_rest workato_genie
+        This finance/ERP automation is a function-triggered workflow that pulls a specif
+  # 4  dense=0.8045  2973760_56321356_v5             graph_ql_connector workato_recipe_functi
+        This integration and IT automation recipe is function-triggered and updates inte
+  # 5  dense=0.8024  800219_44273198_v1              lookup_table workato_list workato_recipe
+        This function-triggered recipe supports product/configuration operations by stan
+  # 6  dense=0.8022  1088959_17094337_v6             workato_app workato_recipe_function
+        This SOAR automation in the IT operations/integration management domain is funct
+  # 7  dense=0.8017  3382944_61497969_v5             netsuite_rest workato_recipe_function
+        This finance/ERP automation exposes a Workato callable function that retrieves a
+  # 8  dense=0.8016  136763_23098781_v2              netsuite_rest workato_custom_code workat
+        This IT/identity and access management recipe is function-triggered and coordina
+  # 9  dense=0.8007  2443559_24999580_v5             corporate_api_connector coupa netsuite n
+        This HR/Finance operations automation is a function-triggered recipe that syncs 
+  #10  dense=0.8000  136763_24999522_v16             lookup_table netsuite workato_recipe_fun
+        This finance/quote-to-cash automation is event-driven from NetSuite and coordina
+
+================================================================================
+QUERY:     What recipes refer to field sobject_name of Salesforce?
+Type:      technical
+Rewritten: field sobject_name Salesforce
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  5.342  69943_22528063_v2               salesforce workato_variable
+        This sales operations automation runs in Salesforce and is event-driven, trigger
+  # 2  bm25=  5.336  1873346_61658534_v1             salesforce workato_variable
+        This sales operations automation runs event-driven in Salesforce when a new oppo
+  # 3  bm25=  5.312  2436037_62887153_v2             salesforce
+        This Salesforce automation supports marketing operations and CRM data hygiene by
+  # 4  bm25=  5.310  1873346_60999102_v2             salesforce
+        This sales operations automation is event-driven in Salesforce, triggered when a
+  # 5  bm25=  5.308  2646343_45178623_v9             salesforce workato_internal_api_connecto
+        This event-driven automation supports order fulfillment and marketing operations
+  # 6  bm25=  5.306  136763_23098741_v4              salesforce workato_recipe_function
+        This IT access management automation runs as a Workato Recipe Function and conne
+  # 7  bm25=  5.299  2436037_63656048_v2             clock salesforce workato_ai_connector
+        This sales operations automation is event-driven in Salesforce and enriches newl
+  # 8  bm25=  5.299  2436037_62008292_v5             clock salesforce workato_ai_connector
+        This sales operations automation runs in Salesforce whenever a new record is cre
+  # 9  bm25=  5.299  136763_42523741_v2              salesforce workato_recipe_function
+        This IT operations automation manages Salesforce user licensing and access clean
+  #10  bm25=  5.284  800219_27651429_v1              salesforce workato_variable
+        This CRM automation is event-driven in Salesforce, triggered by a Salesforce Pla
+
+================================================================================
+QUERY:     If I update field sobject_name of SDFC, how many recipes will be affected?
+Type:      technical
+Rewritten: update field sobject_name SDFC affected recipes
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  6.690  800229_23098807_v7              salesforce snowflake workato_db_table wo
+        This HR/IT access automation is a function-triggered recipe that orchestrates ro
+  # 2  bm25=  6.634  15806_56105456_v16              logger salesforce snowflake workato_db_t
+        This event-driven data operations recipe monitors real-time updates in a Workato
+  # 3  bm25=  6.334  800219_23112860_v1              salesforce snowflake workato_recipe_func
+        This customer-ops automation is a function-triggered recipe that ties together S
+  # 4  bm25=  6.307  800219_23112896_v1              clock google_drive json_parser lookup_ta
+        This operations and customer lifecycle automation runs on a schedule to process 
+  # 5  bm25=  6.245  136763_3956234_v9               lookup_table salesforce snowflake workat
+        This IT/operations automation is a function-triggered recipe that connects Sales
+  # 6  bm25=  6.245  800229_23099421_v3              lookup_table salesforce snowflake workat
+        This automation supports identity and workspace provisioning operations by valid
+  # 7  bm25=  6.194  137989_58902341_v3              clock salesforce snowflake workato_recip
+        This data engineering automation runs on a schedule to keep Salesforce metadata 
+  # 8  bm25=  6.137  136763_23099454_v8              email google_sheets intercom lookup_tabl
+        This customer operations and churn/contract management automation is function-tr
+  # 9  bm25=  6.021  800229_23112906_v6              clock logger lookup_table salesforce sla
+        This operations automation runs on a schedule to manage datacenter-related acces
+  #10  bm25=  5.988  1873345_43949586_v2             freshdesk_connector lookup_table salesfo
+        This customer support automation links Workato Recipe Functions with Lookup Tabl
+
+================================================================================
+QUERY:     If I update field sobject_name of SDFC, what recipes will be affected?
+Type:      mixed
+Rewritten: update field sobject_name Salesforce recipes affected
+================================================================================
+Embedded in 1138ms
+
+--- smart_routed               [dense-only, mixed] ---
+  # 1  dense=0.8429  1020461_60576252_v40            salesforce workato_db_table workato_reci
+        This IT/RevOps automation is a function-triggered recipe that reads a configured
+  # 2  dense=0.8413  3165548_63743137_v1             salesforce workato_db_table workato_reci
+        This automation supports CRM data governance and knowledge management by collect
+  # 3  dense=0.8368  50737_46196018_v2               salesforce workato_recipe_function worka
+        This sales operations automation updates lead records in Salesforce based on inp
+  # 4  dense=0.8365  8621_45189766_v2                salesforce workato_service
+        This sales operations automation is an event-driven recipe that receives an HTTP
+  # 5  dense=0.8350  3165548_63629318_v1             salesforce workato_genie
+        This customer support automation updates Salesforce case records based on inputs
+  # 6  dense=0.8340  8621_45189738_v1                salesforce workato_recipe_function
+        This sales operations and marketing attribution automation updates a Bizible/mar
+  # 7  dense=0.8319  3382944_63360188_v18            salesforce workato_db_table workato_geni
+        This sales operations automation updates a Salesforce Opportunity when a Workato
+  # 8  dense=0.8305  1088959_17094326_v6             workato_app workato_recipe_function
+        This Security Operations Automation (SOAR) helper recipe is function-triggered a
+  # 9  dense=0.8302  800219_44273198_v1              lookup_table workato_list workato_recipe
+        This function-triggered recipe supports product/configuration operations by stan
+  #10  dense=0.8300  137989_57339992_v4              salesforce snowflake workato_variable
+        This Sales Operations automation keeps Salesforce account team member updates sy
+
+================================================================================
+QUERY:     What recipes refer to field external_id of Salesforce?
+Type:      technical
+Rewritten: Salesforce external_id field
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  5.609  3165548_58647313_v5             work_genie_connector workato_list workat
+        This sales operations automation is function-triggered and orchestrates alert ro
+  # 2  bm25=  5.577  602425_57242773_v33             byin_workato_recipe_ops_connector workat
+        This sales operations automation is a function-triggered Workato recipe that orc
+  # 3  bm25=  5.475  8621_45091288_v2                intercom_connector workato_service
+        This customer support/CRM automation is an event-driven recipe triggered by an i
+  # 4  bm25=  5.464  3165548_54231450_v11            work_genie_connector workato_recipe_func
+        This sales automation recipe is function-triggered from Work Genie and creates a
+  # 5  bm25=  5.464  602425_53657216_v16             byin_workato_recipe_ops_connector workat
+        This sales operations automation is function-triggered from a process workflow a
+  # 6  bm25=  5.439  3165548_54231454_v11            work_genie_connector workato_recipe_func
+        This sales operations automation is function-triggered from Work Genie and creat
+  # 7  bm25=  5.414  3165548_52199024_v4             work_genie_connector workato_recipe_func
+        This customer support automation connects a Work Genie process with Salesforce S
+  # 8  bm25=  5.390  1020461_48010816_v39            byin_workato_recipe_ops_connector workat
+        This customer support automation connects a process orchestration layer with Sal
+  # 9  bm25=  5.337  15806_43201867_v2               intercom_connector workato_recipe_functi
+        This customer support and CRM data hygiene automation updates Intercom contact r
+  #10  bm25=  5.335  1873346_47040866_v4             csv_parser json_parser lookup_table sale
+        This sales operations automation is event-driven from a Slack bot command and or
+
+================================================================================
+QUERY:     If I update field external_id of SDFC, how many recipes will be affected?
+Type:      technical
+Rewritten: update field external_id SDFC affected recipes
+================================================================================
+
+--- smart_routed              ---
+  # 1  bm25=  7.615  800219_42730294_v1              clock netsuite snowflake workato_list wo
+        This Finance/ERP-to-data-warehouse automation runs on a scheduled basis to extra
+  # 2  bm25=  7.576  8621_44279170_v3                intercom_connector logger workato_servic
+        This customer support automation is function-triggered via a Workato HTTP endpoi
+  # 3  bm25=  7.444  800219_42730295_v1              clock netsuite snowflake workato_list wo
+        This finance and ERP-to-data-warehouse automation runs on a schedule to extract 
+  # 4  bm25=  7.363  8621_30452103_v2                intercom_connector
+        This customer support automation in the Intercom domain is event-driven and runs
+  # 5  bm25=  7.325  800219_42730292_v1              clock netsuite snowflake workato_variabl
+        This scheduled data integration recipe supports ERP-to-warehouse synchronization
+  # 6  bm25=  7.324  800219_45184743_v1              clock netsuite snowflake workato_variabl
+        This finance data integration recipe runs on a schedule to extract consolidated 
+  # 7  bm25=  7.307  800219_42730290_v1              clock netsuite snowflake workato_variabl
+        This finance/data operations recipe runs on a schedule to sync NetSuite currency
+  # 8  bm25=  7.125  800219_42730293_v1              clock netsuite snowflake workato_list wo
+        This finance and accounting automation runs on a schedule to extract account mas
+  # 9  bm25=  7.125  800219_42730297_v1              clock netsuite snowflake workato_list wo
+        This scheduled data integration recipe supports finance and analytics by replica
+  #10  bm25=  7.113  136763_36925585_v4              slack slack_bot snowflake
+        This IT/operations automation is event-driven from a Slack bot and uses Snowflak
+
+================================================================================
+QUERY:     What recipes synch between SDFC and Netsuite?
+Type:      mixed
+Rewritten: recipes sync Salesforce NetSuite
+================================================================================
+Embedded in 1119ms
+
+--- smart_routed               [dense-only, mixed] ---
+  # 1  dense=0.8436  3165548_63826475_v1             netsuite_rest workato_genie
+        This finance/ERP automation is a function-triggered workflow that pulls a specif
+  # 2  dense=0.8390  3382944_61497969_v5             netsuite_rest workato_recipe_function
+        This finance/ERP automation exposes a Workato callable function that retrieves a
+  # 3  dense=0.8302  384059_24999423_v18             lookup_table netsuite salesforce slack_b
+        This is a product and catalog management automation that keeps Salesforce produc
+  # 4  dense=0.8270  2443559_24999520_v10            netsuite salesforce workato_db_table wor
+        This finance operations automation is a function-triggered integration between N
+  # 5  dense=0.8249  384059_24999421_v10             salesforce workato_recipe_function worka
+        This sales operations automation monitors new records in Salesforce and, based o
+  # 6  dense=0.8231  3165548_61850495_v1             netsuite_rest workato_recipe_function
+        This finance/ERP utility recipe provides an on-demand lookup of a customer recor
+  # 7  dense=0.8220  800219_42734455_v1              netsuite snowflake workato_variable
+        This finance/accounting automation keeps NetSuite transaction updates in sync wi
+  # 8  dense=0.8210  136763_64736491_v2              logger netsuite salesforce slack_bot wor
+        This revenue operations and billing automation connects Salesforce, NetSuite, Wo
+  # 9  dense=0.8207  136763_24999609_v19             netsuite_secondary workato_list workato_
+        This finance/accounting automation is a function-triggered Workato recipe that q
+  #10  dense=0.8205  136763_24999522_v16             lookup_table netsuite workato_recipe_fun
+        This finance/quote-to-cash automation is event-driven from NetSuite and coordina
+
+================================================================================
+QUERY:     Which recipes are involved in the Procure to Pay process?
+Type:      business_intent
+Rewritten: Procure to Pay process recipes
+================================================================================
+Embedded in 1129ms
+
+--- smart_routed               [dense-only, business_intent] ---
+  # 1  dense=0.8438  321290_65236774_v8              coupa workato_genie
+        This procurement automation belongs to the finance/operations domain and connect
+  # 2  dense=0.8356  5619544_63874031_v35            byin_workato_recipe_ops_connector workat
+        This procurement automation is function-triggered and orchestrates the retrieval
+  # 3  dense=0.8311  384059_24999377_v5              coupa workato_recipe_function
+        This procure-to-pay automation for finance and procurement is event-driven from 
+  # 4  dense=0.8304  2443559_24999344_v4             coupa coupa_connector workato_recipe_fun
+        This procure-to-pay automation in the finance and procurement domain listens for
+  # 5  dense=0.8287  384059_43978776_v13             coupa lookup_table workato_recipe_functi
+        This finance/procurement automation is a function-triggered recipe that uses Wor
+  # 6  dense=0.8287  239992_63983449_v2              coupa workato_recipe_function
+        This procurement automation supports spend and contract operations by retrieving
+  # 7  dense=0.8275  3165548_65654043_v2             coupa workato_genie
+        This procurement automation is function-triggered from Workato Genie and connect
+  # 8  dense=0.8273  384059_45433965_v2              coupa lookup_table workato_recipe_functi
+        This finance/procurement automation is a function-triggered recipe that uses Wor
+  # 9  dense=0.8262  5619544_63779016_v50            byin_workato_recipe_ops_connector workat
+        This procurement automation, triggered on demand via a Workato process action, r
+  #10  dense=0.8250  3165548_65654041_v2             coupa workato_genie
+        This procurement automation supports purchase order lookups in Coupa via a Worka
+
+================================================================================
+QUERY:     What recipes are involved in the Quote to Cash process?
+Type:      business_intent
+Rewritten: Quote to Cash process recipes
+================================================================================
+Embedded in 1114ms
+
+--- smart_routed               [dense-only, business_intent] ---
+  # 1  dense=0.8789  618946_58328182_v29             byin_workato_recipe_ops_connector workat
+        This revenue operations automation creates a new quote in Salesforce CPQ based o
+  # 2  dense=0.8714  136763_52294328_v67             salesforce workato_api_platform workato_
+        This API-driven Sales Operations automation receives an inbound request in Worka
+  # 3  dense=0.8654  618946_59030904_v16             byin_workato_recipe_ops_connector workat
+        This sales operations automation orchestrates quote creation in a CRM/CPQ workfl
+  # 4  dense=0.8652  3165548_62240702_v1             steelbrick workato_recipe_function
+        This sales operations automation in Salesforce CPQ (SteelBrick) is function-trig
+  # 5  dense=0.8641  69943_49134039_v13              salesforce workato_recipe_function
+        This sales operations automation is function-triggered from a Workato callable r
+  # 6  dense=0.8636  3165548_62240704_v1             work_genie_connector workato_recipe_func
+        This sales operations automation updates Salesforce CPQ quote details from a Wor
+  # 7  dense=0.8617  800229_39617946_v20             json_parser logger salesforce salesforce
+        This Sales Operations automation is a function-triggered Workato recipe that ass
+  # 8  dense=0.8614  69943_48870820_v9               salesforce workato_recipe_function
+        This sales operations automation is a function-triggered Workato recipe that ret
+  # 9  dense=0.8610  15806_52166502_v1               salesforce workato_recipe_function
+        This sales operations automation is a function-triggered recipe that takes a quo
+  #10  dense=0.8602  136763_59816433_v5              salesforce workato_api_platform workato_
+        This quote operations automation is an API-driven Workato recipe that integrates
+
+================================================================================
+QUERY:     Which recipes post Slack alerts for high-priority incidents from ServiceNow?
+Type:      mixed
+Rewritten: Slack alerts high-priority incidents ServiceNow recipes
+================================================================================
+Embedded in 1128ms
+
+--- smart_routed               [dense-only, mixed] ---
+  # 1  dense=0.8974  291297_59870741_v1              slack_bot workato_recipe_function
+        This IT operations and incident-notification recipe is function-triggered and ru
+  # 2  dense=0.8859  3955905_58338034_v3             slack_bot workato_recipe_function
+        This IT operations and incident-notification recipe is function-triggered within
+  # 3  dense=0.8845  2023832_40003413_v9             workato_custom_code workato_recipe_funct
+        This SOAR and incident communications automation is function-triggered within Wo
+  # 4  dense=0.8838  291297_56549102_v8              slack_bot workato_recipe_function
+        This IT/operations automation is a function-triggered recipe that takes error an
+  # 5  dense=0.8783  1088959_43209171_v4             slack_bot workato_recipe_function
+        This SOAR automation is a function-triggered recipe that connects Slack with Wor
+  # 6  dense=0.8740  3955905_57756690_v413           slack_bot workato_db_table workato_recip
+        This incident management and service status automation is event-driven from a Sl
+  # 7  dense=0.8738  3531759_45690842_v5             slack_bot workato_recipe_function
+        This IT operations automation is function-triggered in Workato and integrates Wo
+  # 8  dense=0.8737  1088959_26218935_v7             json_parser slack_bot workato_recipe_fun
+        This Security Operations (SOAR) automation is function-triggered and orchestrate
+  # 9  dense=0.8724  136763_47040877_v3              slack_bot workato_recipe_function
+        This IT operations automation is event-driven from a Slack bot command and integ
+  #10  dense=0.8710  3831478_49332085_v11            slack_bot workato_recipe_function workat
+        This IT operations automation is a function-triggered Workato recipe that takes 
+
+================================================================================
+QUERY:     Please find recipes where Zendesk ticket webhook searches Salesforce contacts and posts to Slack.
+Type:      mixed
+Rewritten: Zendesk ticket webhook Salesforce contacts Slack post
+================================================================================
+Embedded in 1124ms
+
+--- smart_routed               [dense-only, mixed] ---
+  # 1  dense=0.9063  291297_49404331_v4              salesforce slack_bot workato_recipe_func
+        This customer support and sales operations automation connects a Workato callabl
+  # 2  dense=0.9049  291297_46512762_v2              salesforce slack_bot
+        This sales operations automation links Slack and Salesforce to help users quickl
+  # 3  dense=0.9046  800219_23099195_v1              salesforce slack_bot
+        This sales operations automation connects Slack and Salesforce to help users loo
+  # 4  dense=0.9035  15806_44083185_v12              salesforce slack_bot
+        This sales operations automation connects Slack and Salesforce to help teams qui
+  # 5  dense=0.9027  2085133_44653660_v47            logger salesforce slack_bot
+        This sales operations automation connects Slack and Salesforce to power an inter
+  # 6  dense=0.9022  1873346_47040888_v1             salesforce slack_bot
+        This sales operations automation is event-driven from a Slack bot interaction an
+  # 7  dense=0.9010  291297_46512757_v1              salesforce slack_bot
+        This sales operations automation connects Slack and Salesforce to help users qui
+  # 8  dense=0.9009  804371_45505762_v22             salesforce slack_bot
+        This sales operations automation connects Slack and Salesforce to help users loo
+  # 9  dense=0.8997  3831478_66656179_v6             salesforce slack_bot
+        This sales operations automation connects Slack and Salesforce to help users qui
+  #10  dense=0.8983  225008_45504538_v5              salesforce slack_bot
+        This customer success and professional services workflow connects Slack and Sale
+
+================================================================================
+QUERY:     What recipes send notifications when a Salesforce lead is updated?
+Type:      mixed
+Rewritten: Salesforce lead updated send notifications recipes
+================================================================================
+Embedded in 1118ms
+
+--- smart_routed               [dense-only, mixed] ---
+  # 1  dense=0.9054  50737_46196018_v2               salesforce workato_recipe_function worka
+        This sales operations automation updates lead records in Salesforce based on inp
+  # 2  dense=0.8947  8621_45189766_v2                salesforce workato_service
+        This sales operations automation is an event-driven recipe that receives an HTTP
+  # 3  dense=0.8947  3000083_46512867_v3             salesforce workato_pub_sub
+        This sales operations automation listens for updates to a Salesforce custom obje
+  # 4  dense=0.8902  602425_54218221_v5              salesforce workato_recipe_function
+        This sales operations automation is function-triggered and connects Workato with
+  # 5  dense=0.8893  1020461_63360176_v11            salesforce workato_genie
+        This sales operations automation is function-triggered from Workato Genie and cr
+  # 6  dense=0.8870  3382944_63360191_v5             salesforce workato_db_table workato_geni
+        This sales operations automation syncs lead information between Workato Genie, S
+  # 7  dense=0.8861  3165548_54231457_v11            work_genie_connector workato_recipe_func
+        This automation supports Sales Operations by updating Salesforce lead records ba
+  # 8  dense=0.8855  3165548_54231424_v11            salesforce workato_recipe_function
+        This sales operations automation is function-triggered from another Workato reci
+  # 9  dense=0.8842  592451_45223531_v3              outreach_read_only__connector salesforce
+        This sales operations automation is event-driven in Salesforce, responding whene
+  #10  dense=0.8828  3382944_63360187_v12            salesforce workato_db_table workato_geni
+        This is a function-triggered CRM automation that orchestrates lead updates betwe
+
+================================================================================
+QUERY:     Show me recipes that support customer support automation.
+Type:      business_intent
+Rewritten: customer support automation recipes
+================================================================================
+Embedded in 1141ms
+
+--- smart_routed               [dense-only, business_intent] ---
+  # 1  dense=0.8359  618946_43783299_v2              open_ai workato_recipe_function
+        This IT and support automation is function-triggered and uses a Workato Recipe F
+  # 2  dense=0.8328  973497_59900425_v10             rest workato_db_table workato_pub_sub wo
+        This customer support and product feedback automation listens for new or updated
+  # 3  dense=0.8280  4818262_64719195_v4             workato_genie workato_pub_sub
+        This customer support and IT service automation recipe is event-driven, subscrib
+  # 4  dense=0.8275  512482_63741043_v5              workato_genie workato_recipe_function
+        This IT and knowledge-support automation is a function-triggered workflow in Wor
+  # 5  dense=0.8254  5081019_65864617_v5             rest workato_genie
+        This customer insights automation uses Workato Genie and an external REST API to
+  # 6  dense=0.8203  84762_63068216_v16              open_ai_utility pendo_connector workato_
+        This customer support operations recipe is function-triggered via Workato Genie 
+  # 7  dense=0.8165  2541045_55342807_v2             email fresh_desk json_parser slack_bot w
+        This customer support automation is event-driven from a Slack bot command and pu
+  # 8  dense=0.8154  5770830_64579362_v4             workato_genie workato_pub_sub
+        This customer support and operations automation is event-driven, listening for m
+  # 9  dense=0.8133  3165548_54545815_v6             freshdesk_connector workato_recipe_funct
+        This customer support automation is a function-triggered Workato recipe that ext
+  #10  dense=0.8112  5136354_63322750_v11            freshdesk_connector workato_db_table wor
+        This customer support automation connects Workato Genie, Freshdesk, and a Workat
+
+================================================================================
+QUERY:     Find all automations that are part of the financial close process.
+Type:      business_intent
+Rewritten: automations financial close process
+================================================================================
+Embedded in 1125ms
+
+--- smart_routed               [dense-only, business_intent] ---
+  # 1  dense=0.7912  3535598_58518622_v2             py_eval work_genie_connector workato_rec
+        This finance operations automation is function-triggered from Work Genie and orc
+  # 2  dense=0.7908  800229_64736492_v1              clock workato_recipe_function workato_va
+        This finance and billing automation is a scheduled Workato recipe that runs on a
+  # 3  dense=0.7872  602425_66687814_v1              workato_recipe_function
+        This finance automation is function-triggered from Workato and ingests invoice d
+  # 4  dense=0.7869  2136196_46501051_v7             clock csv_parser google_drive salesforce
+        This finance operations automation runs on a schedule to process billing data in
+  # 5  dense=0.7846  136763_24999578_v12             netsuite workato_api_platform workato_re
+        This finance and order-to-cash automation is an API-triggered recipe that connec
+  # 6  dense=0.7826  384059_43978776_v13             coupa lookup_table workato_recipe_functi
+        This finance/procurement automation is a function-triggered recipe that uses Wor
+  # 7  dense=0.7820  136763_46053043_v4              clock netsuite snowflake workato_smart_l
+        This finance/accounting automation is a scheduled recipe that pulls allocation o
+  # 8  dense=0.7819  2443559_62741612_v6             anaplan csv_parser email snowflake worka
+        This finance operations automation is a function-triggered integration between S
+  # 9  dense=0.7812  50737_56890803_v18              email scheduler__connector workato_db_ta
+        This finance operations automation is a Workato recipe function that orchestrate
+  #10  dense=0.7799  384059_52632554_v36             py_eval work_genie_connector workato_rec
+        This finance operations automation supports expense claim processing by orchestr
